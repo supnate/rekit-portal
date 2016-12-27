@@ -13,6 +13,13 @@
       "react-hot-loader/babel",
       "lodash",
       [
+        "import",
+        {
+          "libraryName": "antd",
+          "style": true
+        }
+      ],
+      [
         "module-resolver",
         {
           "alias": {
@@ -56,6 +63,10 @@
     "buildPort": 6079,
     "css": "less"
   },
+  "theme": {
+    "@primary-color": "#108ee9",
+    "@font-size-base": "14px"
+  },
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
@@ -63,6 +74,8 @@
     "build:test": "node ./tools/server.js -m build"
   },
   "dependencies": {
+    "antd": "^2.5.3",
+    "babel-plugin-import": "^1.1.0",
     "babel-polyfill": "^6.13.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.15.0",

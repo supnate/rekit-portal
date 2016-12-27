@@ -97,7 +97,7 @@ module.exports = (type) => { // eslint-disable-line
           loader: 'file-loader'
         }, {
           test: /\.less$/,
-          loader: isDev ? 'style-loader!css-loader?sourceMap!less-loader?sourceMap'
+          loader: isDev ? `style-loader!css-loader?sourceMap!less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(pkgJson.theme)}}`
             : 'style-loader!css-loader!less-loader'
         }, {
           test: /\.css$/,
