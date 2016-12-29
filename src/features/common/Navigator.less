@@ -1,0 +1,54 @@
+@import '../../styles/mixins.less';
+
+.common-navigator {
+  user-select: none;
+
+  .ant-tree-node-content-wrapper {
+    padding-left: 0;
+    vertical-align: top;
+    label {
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+  }
+  .ant-tree-title {
+    > span {
+    }
+    i {
+      margin-right: 5px;
+    }
+  }
+
+  li.actions{
+    i {
+      color: #ec407a;
+    }
+  }
+  li.constants{
+    i {
+      color: #536dfe;
+    }
+  }
+  li.routes{
+    i {
+      color: #26a69a;
+    }
+  }
+  li.components{
+    i {
+      color: #F08036;
+    }
+  }
+
+  .mark {
+    display: inline-block;
+    padding: 0 2px;
+    margin-left: 3px;
+    line-height: 12px;
+    font-size: 8px;
+    transform: translateY(-2px);
+    color: #fff;
+  }
+}

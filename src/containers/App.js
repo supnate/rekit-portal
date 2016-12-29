@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import routeConfig from '../common/routeConfig';
-import SimpleNav from '../features/common/SimpleNav';
-import Navigator from '../features/home/Navigator';
+import Navigator from '../features/common/Navigator';
 
 /*
   This is the root component of your app. Here you define the overall layout
