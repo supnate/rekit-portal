@@ -11,6 +11,7 @@ const hotMiddleware = require('webpack-hot-middleware');
 const pkgJson = require('../package.json');
 const getConfig = require('../webpack-config');
 const ArgumentParser = require('argparse').ArgumentParser;
+const rekitMiddleWare = require('../src/middleware');
 
 const parser = new ArgumentParser({
   addHelp: true,
@@ -40,6 +41,9 @@ function startDevServer() {
   }));
 
   const compiler = webpack(devConfig);
+
+  app.use('rekit-portal', rekitMiddleWare());
+
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
     historyApiFallback: true,
