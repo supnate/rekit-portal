@@ -4,6 +4,7 @@ import { reducer as counterMinusOne } from './counterMinusOne';
 import { reducer as resetCounter } from './resetCounter';
 import { reducer as fetchRedditReactjsList } from './fetchRedditReactjsList';
 import { reducer as fetchRedditBySaga } from './fetchRedditBySaga';
+import { reducer as fetchNavTreeData } from './fetchNavTreeData';
 
 const reducers = [
   counterPlusOne,
@@ -11,6 +12,7 @@ const reducers = [
   resetCounter,
   fetchRedditReactjsList,
   fetchRedditBySaga,
+  fetchNavTreeData,
 ];
 
 export default function reducer(state = initialState, action) {

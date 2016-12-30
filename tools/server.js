@@ -42,7 +42,7 @@ function startDevServer() {
 
   const compiler = webpack(devConfig);
 
-  app.use('rekit-portal', rekitMiddleWare());
+  app.use(rekitMiddleWare());
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -58,7 +58,7 @@ function startDevServer() {
   app.use(express.static(path.join(__dirname, '../')));
 
   // History api fallback
-  app.use(fallback('index.html', { root: path.join(__dirname, '../src') }));
+  // app.use(fallback('index.html', { root: path.join(__dirname, '../src') }));
 
   // Other files should not happen, respond 404
   app.get('*', (req, res) => {

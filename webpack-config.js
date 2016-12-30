@@ -49,6 +49,7 @@ module.exports = (type) => { // eslint-disable-line
           'redux',
           'redux-logger',
           'redux-thunk',
+          'antd',
         ],
       },
       dist: {

@@ -75,6 +75,7 @@
   },
   "dependencies": {
     "antd": "^2.5.3",
+    "axios": "^0.15.3",
     "babel-plugin-import": "^1.1.0",
     "babel-polyfill": "^6.13.0",
     "isomorphic-fetch": "^2.2.1",
