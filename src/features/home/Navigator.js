@@ -2,8 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { autobind } from 'core-decorators';
 import * as actions from './redux/actions';
-import { Icon, Tree, Spin } from 'antd';
+import { Dropdown, Icon, Menu, Tree, Spin } from 'antd';
 
 const TreeNode = Tree.TreeNode;
 
@@ -33,6 +34,34 @@ export class Navigator extends Component {
 
   onSelect(info) {
     console.log('selected', info);
+  }
+
+  @autobind
+  handleContextMenu(evt) {
+    console.log('menu right click: ', evt);
+
+    this.contextMenuArchor.style.display = 'inline-block';
+    const x = evt.event.clientX - this.rootNode.offsetLeft + this.rootNode.scrollLeft; // eslint-disable-line
+    const y = evt.event.clientY - this.rootNode.offsetTop + this.rootNode.scrollTop; // eslint-disable-line
+    this.contextMenuArchor.style.left = `${x}px`;
+    this.contextMenuArchor.style.top = `${y}px`;
+    // This seems to be the most compatible method for now, use standard new Event() when possible such as:
+    // var ev = new Event("look", {"bubbles":true, "cancelable":false});
+    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+    const clickEvent = document.createEvent('HTMLEvents');
+    clickEvent.initEvent('click', true, true);
+    this.contextMenuArchor.dispatchEvent(clickEvent);
+  }
+
+  @autobind
+  handleContextMenuVisibleChange(visible) {
+    if (!visible) {
+      this.contextMenuArchor.style.display = 'none';
+    }
+  }
+
+  handleMenuClick(evt) {
+    console.log('right click: ', evt);
   }
 
   renderTreeNodeTitle(label, icon, ...marks) {
@@ -97,6 +126,17 @@ export class Navigator extends Component {
     );
   }
 
+  renderContextMenu() {
+    return (
+      <Menu
+        onSelect={this.handleMenuClick}
+        selectedKeys={[]}
+      >
+        <Menu.Item key="1">Add component</Menu.Item>
+      </Menu>
+    );
+  }
+
   render() {
     const { features } = this.props.home;
 
@@ -105,8 +145,9 @@ export class Navigator extends Component {
     }
 
     return (
-      <div className="home-navigator">
+      <div className="home-navigator" ref={(node) => { this.rootNode = node; }}>
         <Tree
+          onRightClick={this.handleContextMenu}
           onSelect={this.onSelect}
           defaultExpandedKeys={['product', 'opportunity', 'customer', 'lead', 'product-components']}
         >
@@ -114,6 +155,9 @@ export class Navigator extends Component {
             features.map(f => this.renderFeatureNode(f))
           }
         </Tree>
+        <Dropdown overlay={this.renderContextMenu()} trigger={['click']} onVisibleChange={this.handleContextMenuVisibleChange}>
+          <span ref={(node) => { this.contextMenuArchor = node; }} className="context-menu-archor">&nbsp;</span>
+        </Dropdown>
       </div>
     );
   }

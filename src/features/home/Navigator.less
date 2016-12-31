@@ -1,9 +1,13 @@
 @import '../../styles/mixins.less';
 
 .home-navigator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 0px;
+  bottom: 0px;
   user-select: none;
-
-  transition-duration: 0!important;
+  overflow: auto;
 
   .ant-tree-node-content-wrapper {
     padding-left: 0;
@@ -57,5 +61,16 @@
     font-size: 8px;
     transform: translateY(-2px);
     color: #fff;
+  }
+
+  .context-menu-archor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    cursor: default;
+    font-size: 1px;
+    width: 1px;
+    height: 1px;
   }
 }
