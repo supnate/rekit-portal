@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Navigator from '../features/home/Navigator';
+import DialogsPlace from '../features/rekit-cmds/DialogsPlace';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -21,6 +22,7 @@ export default class App extends Component {
         <div className="page-container">
           {this.props.children}
         </div>
+        <DialogsPlace />
       </div>
     );
   }

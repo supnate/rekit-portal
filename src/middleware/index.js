@@ -6,7 +6,7 @@ const rekitCore = require('rekit-core');
 
 const refactor = rekitCore.refactor;
 
-rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
+rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 const rootPath = '/rekit';
 

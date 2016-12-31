@@ -26,6 +26,7 @@
     'jsx-a11y/label-has-for': 0,
     'import/prefer-default-export': 0,
     'import/no-extraneous-dependencies': 0,
+    'import/no-named-as-default': 0,
     'import/imports-first': 0
   }
 }

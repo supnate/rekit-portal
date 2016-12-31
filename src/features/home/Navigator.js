@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import * as actions from './redux/actions';
 import { Dropdown, Icon, Menu, Tree, Spin } from 'antd';
+import * as actions from './redux/actions';
+import { showCmdDialog } from '../rekit-cmds/redux/actions';
 
 const TreeNode = Tree.TreeNode;
 
@@ -13,6 +14,19 @@ const keys = ['0-0-0', '0-0-1', '0-0'];
 const connectMark = { char: 'C', color: '#2175bc', title: 'Connect' };
 const routeMark = { char: 'R', color: '#f90', title: 'Route' };
 const asyncMark = { char: 'A', color: '#259b24', title: 'Async' };
+
+const menuItems = {
+  addAction: { name: 'Add action', key: 'add-action' },
+  addComponent: { name: 'Add component', key: 'add-component' },
+  addFeature: { name: 'Add feature', key: 'add-feature' },
+  del: { name: 'Delete', key: 'delete' },
+  move: { name: 'Move', key: 'move' },
+  rename: { name: 'Rename', key: 'rename' },
+  showTest: { name: 'Unit test', key: 'show-test' },
+  runTest: { name: 'Run test', key: 'run-test' },
+  runTests: { name: 'Run tests', key: 'run-tests' },
+  showStyle: { name: 'Style', key: 'show-style' },
+};
 
 export class Navigator extends Component {
   static propTypes = {
@@ -26,6 +40,7 @@ export class Navigator extends Component {
 
   state = {
     defaultExpandedKeys: keys,
+    contextMenu: [],
   };
 
   componentDidMount() {
@@ -36,9 +51,77 @@ export class Navigator extends Component {
     console.log('selected', info);
   }
 
+  getMenuItems(treeNodePosStr) {
+    const treeNodePos = treeNodePosStr.split('-').map(index => parseInt(index, 10));
+    let menus = [];
+    if (treeNodePos.length === 2) {
+      menus = [
+        menuItems.addComponent,
+        menuItems.addAction,
+        menuItems.rename,
+        menuItems.runTests,
+        menuItems.del,
+      ];
+    } else if (treeNodePos.length === 3) {
+      switch (treeNodePos[2]) {
+        case 0:
+          break;
+        case 1:
+          menus = [
+            menuItems.addAction,
+            menuItems.runTests,
+          ];
+          break;
+        case 2:
+          menus = [
+            menuItems.addComponent,
+            menuItems.runTests,
+          ];
+          break;
+        case 3:
+          break;
+        default:
+          break;
+      }
+    } else if (treeNodePos.length === 4) {
+      switch (treeNodePos[2]) {
+        case 1:
+          menus = [
+            menuItems.rename,
+            menuItems.move,
+            menuItems.showTest,
+            menuItems.runTest,
+            menuItems.del,
+          ];
+          break;
+        case 2:
+          menus = [
+            menuItems.showStyle,
+            menuItems.rename,
+            menuItems.move,
+            menuItems.showTest,
+            menuItems.runTest,
+            menuItems.del,
+          ];
+          break;
+        default:
+          break;
+      }
+    }
+
+    return menus;
+  }
+
   @autobind
   handleContextMenu(evt) {
     console.log('menu right click: ', evt);
+
+    const menus = this.getMenuItems(evt.node.props.pos);
+    if (!menus.length) return;
+
+    this.setState({
+      contextMenu: menus,
+    });
 
     this.contextMenuArchor.style.display = 'inline-block';
     const x = evt.event.clientX - this.rootNode.offsetLeft + this.rootNode.scrollLeft; // eslint-disable-line
@@ -60,8 +143,10 @@ export class Navigator extends Component {
     }
   }
 
+  @autobind
   handleMenuClick(evt) {
-    console.log('right click: ', evt);
+    console.log('menu click: ', evt);
+    this.props.actions.showCmdDialog('addAction');
   }
 
   renderTreeNodeTitle(label, icon, ...marks) {
@@ -93,7 +178,6 @@ export class Navigator extends Component {
 
   renderFeatureNode(key) {
     const feature = this.props.home.featureById[key];
-    console.log('key: ', key);
     return (
       <TreeNode title={this.renderTreeNodeTitle(feature.name)} key={key}>
         <TreeNode className="routes" title={this.renderTreeNodeTitle('Routes', 'share-alt')} key={`${key}-routes`} />
@@ -129,10 +213,13 @@ export class Navigator extends Component {
   renderContextMenu() {
     return (
       <Menu
+        style={{ minWidth: 150 }}
         onSelect={this.handleMenuClick}
         selectedKeys={[]}
       >
-        <Menu.Item key="1">Add component</Menu.Item>
+        {
+          this.state.contextMenu.map(menuItem => <Menu.Item key={menuItem.key}>{menuItem.name}</Menu.Item>)
+        }
       </Menu>
     );
   }
@@ -173,7 +260,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, showCmdDialog }, dispatch)
   };
 }
 
