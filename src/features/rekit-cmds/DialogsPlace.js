@@ -3,7 +3,7 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddActionForm, CmdDialog } from './';
+import { AddActionForm, CmdDialog, LogViewerDialog } from './';
 
 export class DialogsPlace extends Component {
   static propTypes = {
@@ -16,14 +16,27 @@ export class DialogsPlace extends Component {
     this.props.actions.hideDialog(dialogType);
   }
 
+  @autobind
+  handleCmdSuccess(dialogType) {
+    this.props.actions.hideCmdDialog(dialogType);
+    this.props.actions.showCmdDialog('logViewer');
+  }
+
   render() {
-    const cmds = this.props.rekitCmds;
+    const { rekitCmds } = this.props;
+    const { hideCmdDialog } = this.props.actions;
     return (
       <div className="rekit-cmds-dialogs-place">
-        {cmds.addActionDialogVisible &&
-          <CmdDialog>
-            <AddActionForm onDone={() => this.hideDialog('addAction')} />
+        {rekitCmds.addActionDialogVisible &&
+          <CmdDialog title="Add action" onClose={() => hideCmdDialog('addAction')}>
+            <AddActionForm
+              onCancel={() => hideCmdDialog('addAction')}
+              onDone={() => this.handleCmdSuccess('addAction')}
+            />
           </CmdDialog>
+        }
+        {rekitCmds.logViewerDialogVisible &&
+          <LogViewerDialog onClose={() => hideCmdDialog('logViewer')} />
         }
       </div>
     );

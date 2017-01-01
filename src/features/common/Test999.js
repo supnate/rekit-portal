@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class DefaultPage extends Component {
+export class Test999 extends Component {
   static propTypes = {
     rekitCmds: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -11,7 +11,7 @@ export class DefaultPage extends Component {
 
   render() {
     return (
-      <div className="rekit-cmds-default-page">
+      <div className="common-test-999">
         Page Content: rekit-cmds/DefaultPage
       </div>
     );
@@ -35,4 +35,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(Test999);

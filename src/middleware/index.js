@@ -10,13 +10,41 @@ rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 const rootPath = '/rekit';
 
-function getNavTreeData() {
+function getNavTreeData(req, res) {
   const features = refactor.getFeatures();
   const data = features.map(f => (Object.assign({
     key: f,
     name: _.flow(_.lowerCase, _.upperFirst)(f),
   }, refactor.getFeatureStructure(f))));
-  return JSON.stringify({ features: data });
+  res.write(JSON.stringify({ features: data }));
+  res.end();
+}
+
+function execCmd(req, res) {
+  try {
+    const args = req.body;
+    let logs = [];
+    switch (args.type) {
+      case 'add-action': {
+        if (args.isAsync) {
+          rekitCore.addAsyncAction(args.feature, args.name);
+        } else {
+          rekitCore.addAction(args.feature, args.name);
+        }
+        logs = rekitCore.vio.flush();
+        rekitCore.vio.reset();
+        break;
+      }
+      default:
+        break;
+    }
+    res.write(JSON.stringify(logs));
+    res.end();
+  } catch (e) {
+    res.statusCode = 500;
+    res.write(e.toString());
+    res.end();
+  }
 }
 
 function rekitMiddleware() {
@@ -26,8 +54,10 @@ function rekitMiddleware() {
 
     switch (p) {
       case '/api/nav-tree-data':
-        res.write(getNavTreeData());
-        res.end();
+        getNavTreeData(req, res);
+        break;
+      case '/api/exec-cmd':
+        execCmd(req, res);
         break;
       default:
         next();

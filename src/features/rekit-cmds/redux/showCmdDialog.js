@@ -2,10 +2,10 @@ import {
   REKIT_CMDS_SHOW_CMD_DIALOG,
 } from './constants';
 
-export function showCmdDialog(dialogType) {
+export function showCmdDialog(dialogType, cmdArgs) {
   return {
     type: REKIT_CMDS_SHOW_CMD_DIALOG,
-    data: { dialogType },
+    data: { dialogType, cmdArgs },
   };
 }
 
@@ -15,6 +15,7 @@ export function reducer(state, action) {
       return {
         ...state,
         [`${action.data.dialogType}DialogVisible`]: true,
+        cmdArgs: action.data.cmdArgs,
       };
 
     default:

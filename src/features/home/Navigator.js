@@ -146,7 +146,9 @@ export class Navigator extends Component {
   @autobind
   handleMenuClick(evt) {
     console.log('menu click: ', evt);
-    this.props.actions.showCmdDialog('addAction');
+    this.props.actions.showCmdDialog('addAction', {
+      feature: 'common',
+    });
   }
 
   renderTreeNodeTitle(label, icon, ...marks) {

@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import enUS from 'antd/lib/locale-provider/en_US';
+import { LocaleProvider } from 'antd';
 import Navigator from '../features/home/Navigator';
 import DialogsPlace from '../features/rekit-cmds/DialogsPlace';
 
@@ -15,15 +17,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="sidebar">
-          <Navigator />
+      <LocaleProvider locale={enUS}>
+        <div className="app">
+          <div className="sidebar">
+            <Navigator />
+          </div>
+          <div className="page-container">
+            {this.props.children}
+          </div>
+          <DialogsPlace />
         </div>
-        <div className="page-container">
-          {this.props.children}
-        </div>
-        <DialogsPlace />
-      </div>
+      </LocaleProvider>
     );
   }
 }

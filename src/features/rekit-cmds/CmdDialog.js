@@ -10,6 +10,8 @@ export default class CmdDialog extends PureComponent {
     return (
       <Modal
         visible
+        maskClosable={false}
+        footer=""
         wrapClassName="rekit-cmds-cmd-dialog"
         {...this.props}
       >

@@ -3,7 +3,6 @@ import { reducer as counterPlusOne } from './counterPlusOne';
 import { reducer as counterMinusOne } from './counterMinusOne';
 import { reducer as resetCounter } from './resetCounter';
 import { reducer as fetchRedditReactjsList } from './fetchRedditReactjsList';
-import { reducer as fetchRedditBySaga } from './fetchRedditBySaga';
 import { reducer as fetchNavTreeData } from './fetchNavTreeData';
 
 const reducers = [
@@ -11,7 +10,6 @@ const reducers = [
   counterMinusOne,
   resetCounter,
   fetchRedditReactjsList,
-  fetchRedditBySaga,
   fetchNavTreeData,
 ];
 

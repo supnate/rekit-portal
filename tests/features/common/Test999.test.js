@@ -1,20 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/rekit-cmds/DefaultPage';
+import { Test999 } from 'src/features/common/Test999';
 
-describe('rekit-cmds/DefaultPage', () => {
+describe('common/Test999', () => {
   it('renders node with correct class name', () => {
     const props = {
       rekitCmds: {},
       actions: {},
     };
     const renderedComponent = shallow(
-      <DefaultPage {...props} />
+      <Test999 {...props} />
     );
 
     expect(
-      renderedComponent.find('.rekit-cmds-default-page').node
+      renderedComponent.find('.common-test-999').node
     ).to.exist;
   });
 });

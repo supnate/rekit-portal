@@ -1,5 +1,14 @@
 @import '../../styles/mixins.less';
-@import './DefaultPage.less';
 @import './CmdDialog.less';
 @import './AddActionForm.less';
 @import './DialogsPlace.less';
+@import './LogViewer.less';
+@import './LogViewerDialog.less';
+
+.form-footer, .dialog-footer {
+  margin-top: 30px;
+  text-align: right;
+  button + button {
+    margin-left: 20px;
+  }
+}

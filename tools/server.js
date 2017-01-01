@@ -4,6 +4,7 @@ const path = require('path');
 const shell = require('shelljs');
 const crypto = require('crypto');
 const express = require('express');
+const bodyParser = require('body-parser');
 const fallback = require('express-history-api-fallback');
 const webpack = require('webpack');
 const devMiddleware = require('webpack-dev-middleware');
@@ -42,6 +43,8 @@ function startDevServer() {
 
   const compiler = webpack(devConfig);
 
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(rekitMiddleWare());
 
   app.use(devMiddleware(compiler, {
