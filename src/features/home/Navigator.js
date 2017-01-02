@@ -47,6 +47,12 @@ export class Navigator extends Component {
     this.props.actions.fetchNavTreeData();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.home.navTreeDataNeedReload && !nextProps.home.fetchNavTreeDataPending) {
+      this.props.actions.fetchNavTreeData();
+    }
+  }
+
   onSelect(info) {
     console.log('selected', info);
   }

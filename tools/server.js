@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const http = require('http');
 const shell = require('shelljs');
 const crypto = require('crypto');
 const express = require('express');
@@ -34,6 +35,7 @@ const manifestPath = path.join(__dirname, '../.tmp/dev-vendors-manifest.json');
 // Start an express server for development using webpack dev-middleware and hot-middleware
 function startDevServer() {
   const app = express();
+  const server = http.createServer(app);
   const devConfig = getConfig('dev');
 
   devConfig.plugins.push(new webpack.DllReferencePlugin({
@@ -45,7 +47,7 @@ function startDevServer() {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(rekitMiddleWare());
+  app.use(rekitMiddleWare(server));
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -69,7 +71,12 @@ function startDevServer() {
     res.sendStatus(404);
   });
 
-  app.listen(pkgJson.rekit.devPort, (err) => {
+
+  // var io = require('socket.io')(server);
+  // io.on('connection', function(){ /* … */ });
+  // server.listen(3000);
+
+  server.listen(pkgJson.rekit.devPort, (err) => {
     if (err) {
       console.error(err);
     }

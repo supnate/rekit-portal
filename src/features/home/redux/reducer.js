@@ -17,6 +17,12 @@ export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
     // Put global reducers here
+    case 'PROJECT_FILE_CHANGED':
+      newState = {
+        ...state,
+        navTreeDataNeedReload: true,
+      };
+      break;
     default:
       newState = state;
       break;

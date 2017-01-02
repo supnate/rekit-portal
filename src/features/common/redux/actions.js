@@ -20,3 +20,4 @@ export { test23F } from './test23F';
 export { test23 } from './test23';
 export { testbc, dismissTestbcError } from './testbc';
 export { test555, dismissTest555Error } from './test555';
+export { testabsd } from './testabsd';

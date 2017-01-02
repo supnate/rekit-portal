@@ -21,6 +21,7 @@ import { reducer as test23F } from './test23F';
 import { reducer as test23 } from './test23';
 import { reducer as testbc } from './testbc';
 import { reducer as test555 } from './test555';
+import { reducer as testabsd } from './testabsd';
 
 const reducers = [
   test,
@@ -45,6 +46,7 @@ const reducers = [
   test23,
   testbc,
   test555,
+  testabsd,
 ];
 
 export default function reducer(state = initialState, action) {

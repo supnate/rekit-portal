@@ -57,6 +57,7 @@ export function reducer(state, action) {
           return prev;
         }, {}),
         features: action.data.features.map(f => f.key),
+        navTreeDataNeedReload: false,
         fetchNavTreeDataPending: false,
         fetchNavTreeDataError: null,
       };
