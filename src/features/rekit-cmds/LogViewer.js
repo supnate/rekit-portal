@@ -85,6 +85,7 @@ export default class LogViewer extends PureComponent {
               </li>
             ))
           }
+          {!logs.length && <li>No logs.</li>}
         </ul>
       </div>
     );

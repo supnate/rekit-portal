@@ -3,9 +3,10 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import { Dropdown, Icon, Menu, Modal, Tree, Spin } from 'antd';
+import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
+import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
 import * as actions from './redux/actions';
-import { showCmdDialog } from '../rekit-cmds/redux/actions';
+import { execCmd, showCmdDialog } from '../rekit-cmds/redux/actions';
 
 const TreeNode = Tree.TreeNode;
 
@@ -19,7 +20,7 @@ const menuItems = {
   addAction: { name: 'Add action', key: 'add-action' },
   addComponent: { name: 'Add component', key: 'add-component' },
   addFeature: { name: 'Add feature', key: 'add-feature' },
-  del: { name: 'Delete', key: 'delete' },
+  del: { name: 'Delete', key: 'del' },
   move: { name: 'Move', key: 'move' },
   rename: { name: 'Rename', key: 'rename' },
   showTest: { name: 'Unit test', key: 'show-test' },
@@ -49,7 +50,11 @@ export class Navigator extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.home.navTreeDataNeedReload && !nextProps.home.fetchNavTreeDataPending) {
-      this.props.actions.fetchNavTreeData().then(() => {
+      const hide = message.loading('Reloading project explorer...');
+      this.props.actions.fetchNavTreeData()
+      .then(hide)
+      .catch((e) => {
+        console.log('fetch nav tree data error: ', e);
         Modal.error({
           title: 'Failed to refresh explorer',
           content: 'Please try to refresh the whole page.',
@@ -124,10 +129,29 @@ export class Navigator extends Component {
   }
 
   createCmdContext(evt) {
+    const { home } = this.props;
     const pos = evt.node.props.pos.split('-').map(index => parseInt(index, 10));
 
+    const elementTypes = ['route', 'action', 'component'];
+    const feature = (pos.length > 1 && home.features[pos[1]]) || null;
+    const elementType = elementTypes[pos[2]] || null;
+    let elementName = null;
+    if (pos.length === 4) {
+      switch (elementType) {
+        case 'action':
+          elementName = home.featureById[feature].actions[pos[3]].name;
+          break;
+        case 'component':
+          elementName = home.featureById[feature].components[pos[3]].name;
+          break;
+        default:
+          break;
+      }
+    }
     this.cmdContext = {
-      feature: (pos.length > 1 && this.props.home.features[pos[1]]) || null,
+      feature,
+      elementType,
+      elementName,
     };
   }
 
@@ -167,6 +191,7 @@ export class Navigator extends Component {
   @autobind
   handleMenuClick(evt) {
     console.log('menu click: ', evt);
+    const cmdContext = this.cmdContext;
     switch (evt.key) {
       case 'add-component':
       case 'add-action':
@@ -176,6 +201,34 @@ export class Navigator extends Component {
           type: evt.key,
           ...this.cmdContext,
         });
+        break;
+      case 'del':
+        Modal.confirm({
+          title: 'Confirm',
+          content: `Delete ${cmdContext.elementType}: ${cmdContext.feature}/${cmdContext.elementName} ? `,
+          onOk: () => {
+            const hide = message.loading(`Deleting ${cmdContext.elementName}`, 0);
+            this.props.actions.execCmd({
+              commandName: 'remove',
+              type: cmdContext.elementType,
+              name: `${cmdContext.feature}/${cmdContext.elementName}`,
+            })
+            .then(() => {
+              hide();
+              cmdSuccessNotification({
+                commandName: 'delete',
+                type: cmdContext.elementType,
+              }, this.props.actions.showCmdDialog);
+            })
+            .catch((e = 'Unknown error.') => {
+              Modal.error({
+                title: 'Failed to delete',
+                content: e.toString(),
+              });
+            });
+          }
+        });
+
         break;
       default:
         break;
@@ -293,7 +346,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, showCmdDialog }, dispatch)
+    actions: bindActionCreators({ ...actions, execCmd, showCmdDialog }, dispatch)
   };
 }
 

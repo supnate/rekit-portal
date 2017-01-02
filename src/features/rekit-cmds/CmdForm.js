@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Icon, Input, Modal, Select, Tooltip } from 'antd';
 import * as actions from './redux/actions';
-import { formMeta } from './';
+import * as cmdFormHelper from './cmdFormHelper';
 
 const Option = Select.Option;
 
@@ -32,19 +32,20 @@ export class CmdForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     console.log('form submit');
+    const { cmdArgs } = this.props.rekitCmds;
     this.props.form.validateFieldsAndScroll((errors, values) => {
       if (errors) {
         return;
       }
-      this.props.actions.execCmd({
-        ...values,
-        isAsync: !!values.isAsync,
-        type: 'add-action',
-      }).then(() => {
+
+      const args = cmdFormHelper.convertArgs(values, cmdArgs);
+      console.log(args);
+      this.props.actions.execCmd(args).then(() => {
         this.props.onDone();
-      }).catch(() => {
+      }).catch((e) => {
+        console.log('Failed to exec cmd: ', e);
         Modal.error({
-          title: 'Failed to add action',
+          title: 'Operation failed',
           content: <span style={{ color: 'red', wordBreak: 'break-all' }}>{this.props.rekitCmds.execCmdError}</span>,
         });
       });
@@ -59,14 +60,14 @@ export class CmdForm extends Component {
         return (
           <Select disabled={disabled}>
             {home.features.map(f => (
-              <Select.Option key={home.featureById[f].key}>{home.featureById[f].name}</Select.Option>
+              <Option key={home.featureById[f].key}>{home.featureById[f].name}</Option>
             ))}
           </Select>
         );
       case 'textbox':
-        return <Input />;
+        return <Input disabled={disabled} />;
       case 'checkbox':
-        return <Checkbox />;
+        return <Checkbox disabled={disabled} />;
       default:
         return <span style={{ color: 'red' }}>Unknown widget: {meta.widget}</span>;
     }
@@ -92,6 +93,13 @@ export class CmdForm extends Component {
       label = meta.label;
     }
 
+    const rules = [];
+    if (meta.required) {
+      rules.push({
+        required: true,
+        message: `${meta.label} is required.`,
+      });
+    }
     return (
       <Form.Item
         key={meta.key}
@@ -100,6 +108,7 @@ export class CmdForm extends Component {
       >
         {getFieldDecorator(meta.key, {
           initialValue: meta.initialValue,
+          rules,
         })(
           this.renderWidget(meta)
         )}
@@ -110,7 +119,13 @@ export class CmdForm extends Component {
   render() {
     const { rekitCmds } = this.props;
     const cmdArgs = rekitCmds.cmdArgs;
-    const meta = formMeta(cmdArgs.type, cmdArgs);
+
+    if (!cmdArgs) {
+      // not ready
+      return <div className="rekit-cmds-cmd-form" />;
+    }
+
+    const meta = cmdFormHelper.getMeta(cmdArgs.type, cmdArgs);
 
     return (
       <div className="rekit-cmds-cmd-form">
@@ -122,7 +137,7 @@ export class CmdForm extends Component {
             meta.fields.map(this.renderFormItem)
           }
           <div className="form-footer">
-            <Button type="ghost" onClick={this.props.onCancel}>Cancel</Button>
+            <Button type="ghost" onClick={this.props.onCancel} disabled={rekitCmds.execCmdPending}>Cancel</Button>
             <Button type="primary" htmlType="submit" loading={rekitCmds.execCmdPending}>
               {rekitCmds.execCmdPending ? 'Loading...' : 'Ok'}
             </Button>

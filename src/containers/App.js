@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { LocaleProvider } from 'antd';
 import Navigator from '../features/home/Navigator';
-import DialogsPlace from '../features/rekit-cmds/DialogsPlace';
+import DialogPlace from '../features/rekit-cmds/DialogPlace';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -25,7 +25,7 @@ export default class App extends Component {
           <div className="page-container">
             {this.props.children}
           </div>
-          <DialogsPlace />
+          <DialogPlace />
         </div>
       </LocaleProvider>
     );

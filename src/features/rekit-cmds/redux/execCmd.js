@@ -7,9 +7,10 @@ import {
   REKIT_CMDS_EXEC_CMD_DISMISS_ERROR,
 } from './constants';
 
-const logs = {
-  'add-action': { title: 'Add action success', description: 'See below logs for what has been done:' },
-};
+// const logs = {
+//   'add-action': { title: 'Add action success', description: 'See below logs for what has been done:' },
+//   'add-component': { title: 'Add component success', description: 'See below logs for what has been done:' },
+// };
 
 export function execCmd(args) {
   return (dispatch) => {
@@ -30,7 +31,7 @@ export function execCmd(args) {
       }
       dispatch({
         type: REKIT_CMDS_EXEC_CMD_SUCCESS,
-        data: { logs: res.data, args },
+        data: { execCmdResult: res.data, args },
       });
       resolve(res.data);
     });
@@ -57,9 +58,9 @@ export function reducer(state, action) {
     case REKIT_CMDS_EXEC_CMD_SUCCESS:
       return {
         ...state,
-        cmdLogs: action.data.logs,
-        logsTitle: logs[action.data.args.type].title,
-        logsDescription: logs[action.data.args.type].description,
+        execCmdResult: action.data.execCmdResult,
+        // logsTitle: logs[action.data.args.type].title,
+        // logsDescription: logs[action.data.args.type].description,
         execCmdPending: false,
         execCmdError: null,
       };

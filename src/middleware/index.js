@@ -7,7 +7,7 @@ const rekitCore = require('rekit-core');
 
 const refactor = rekitCore.refactor;
 
-rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
+rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 let io = null;
 
@@ -37,6 +37,7 @@ wp.watch([], [rekitCore.utils.getProjectRoot()], Date.now() - 10);
 wp.on('aggregated', (changes) => {
   // changes: an array of all changed files
   console.log('aggregated: ', changes);
+  rekitCore.vio.reset();
   if (io) io.emit('fileChanged', changes);
 });
 
@@ -55,22 +56,13 @@ function getNavTreeData(req, res) {
 function execCmd(req, res) {
   try {
     const args = req.body;
-    let logs = [];
-    switch (args.type) {
-      case 'add-action': {
-        if (args.isAsync) {
-          rekitCore.addAsyncAction(args.feature, args.name);
-        } else {
-          rekitCore.addAction(args.feature, args.name);
-        }
-        logs = rekitCore.vio.flush();
-        rekitCore.vio.reset();
-        break;
-      }
-      default:
-        break;
-    }
-    res.write(JSON.stringify(logs));
+    rekitCore.handleCommand(args);
+    const logs = rekitCore.vio.flush();
+    rekitCore.vio.reset();
+    res.write(JSON.stringify({
+      args,
+      logs,
+    }));
     res.end();
   } catch (e) {
     res.statusCode = 500;
