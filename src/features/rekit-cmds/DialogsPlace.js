@@ -3,7 +3,8 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { AddActionForm, CmdDialog, LogViewerDialog } from './';
+import { AddActionForm, CmdDialog, CmdForm, LogViewerDialog } from './';
+
 
 export class DialogsPlace extends Component {
   static propTypes = {
@@ -32,6 +33,14 @@ export class DialogsPlace extends Component {
             <AddActionForm
               onCancel={() => hideCmdDialog('addAction')}
               onDone={() => this.handleCmdSuccess('addAction')}
+            />
+          </CmdDialog>
+        }
+        {rekitCmds.cmdDialogVisible &&
+          <CmdDialog title={rekitCmds.cmdArgs.type} onClose={() => hideCmdDialog('cmd')}>
+            <CmdForm
+              onCancel={() => hideCmdDialog('cmd')}
+              onDone={() => this.handleCmdSuccess('cmd')}
             />
           </CmdDialog>
         }

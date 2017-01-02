@@ -15,7 +15,6 @@ export function reducer(state, action) {
       return {
         ...state,
         [`${action.data.dialogType}DialogVisible`]: false,
-        cmdArgs: null,
       };
 
     default:

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import { Dropdown, Icon, Menu, Tree, Spin } from 'antd';
+import { Dropdown, Icon, Menu, Modal, Tree, Spin } from 'antd';
 import * as actions from './redux/actions';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
 
@@ -49,7 +49,12 @@ export class Navigator extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.home.navTreeDataNeedReload && !nextProps.home.fetchNavTreeDataPending) {
-      this.props.actions.fetchNavTreeData();
+      this.props.actions.fetchNavTreeData().then(() => {
+        Modal.error({
+          title: 'Failed to refresh explorer',
+          content: 'Please try to refresh the whole page.',
+        });
+      });
     }
   }
 
@@ -118,16 +123,26 @@ export class Navigator extends Component {
     return menus;
   }
 
+  createCmdContext(evt) {
+    const pos = evt.node.props.pos.split('-').map(index => parseInt(index, 10));
+
+    this.cmdContext = {
+      feature: (pos.length > 1 && this.props.home.features[pos[1]]) || null,
+    };
+  }
+
   @autobind
   handleContextMenu(evt) {
-    console.log('menu right click: ', evt);
-
+    console.log('on context menu: ', evt);
     const menus = this.getMenuItems(evt.node.props.pos);
     if (!menus.length) return;
 
     this.setState({
       contextMenu: menus,
     });
+
+    // When right click, set the current tree node context
+    this.createCmdContext(evt);
 
     this.contextMenuArchor.style.display = 'inline-block';
     const x = evt.event.clientX - this.rootNode.offsetLeft + this.rootNode.scrollLeft; // eslint-disable-line
@@ -152,9 +167,19 @@ export class Navigator extends Component {
   @autobind
   handleMenuClick(evt) {
     console.log('menu click: ', evt);
-    this.props.actions.showCmdDialog('addAction', {
-      feature: 'common',
-    });
+    switch (evt.key) {
+      case 'add-component':
+      case 'add-action':
+      case 'move':
+      case 'rename':
+        this.props.actions.showCmdDialog('cmd', {
+          type: evt.key,
+          ...this.cmdContext,
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   renderTreeNodeTitle(label, icon, ...marks) {

@@ -1,4 +1,6 @@
+
 const initialState = {
+  cmdDialogVisible: false,
   addActionDialogVisible: false,
   logViewerDialogVisible: false,
   cmdLogs: [],
