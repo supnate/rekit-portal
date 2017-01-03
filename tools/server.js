@@ -63,7 +63,7 @@ function startDevServer() {
   app.use(express.static(path.join(__dirname, '../')));
 
   // History api fallback
-  // app.use(fallback('index.html', { root: path.join(__dirname, '../src') }));
+  app.use(fallback('index.html', { root: path.join(__dirname, '../src') }));
 
   // Other files should not happen, respond 404
   app.get('*', (req, res) => {
