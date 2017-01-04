@@ -7,7 +7,7 @@ const rekitCore = require('rekit-core');
 
 const refactor = rekitCore.refactor;
 
-rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit');
+rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
 
 let io = null;
 
