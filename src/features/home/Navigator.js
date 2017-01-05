@@ -6,7 +6,7 @@ import { autobind } from 'core-decorators';
 import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
 import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
 import * as actions from './redux/actions';
-import { execCmd, showCmdDialog } from '../rekit-cmds/redux/actions';
+import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
 
 const TreeNode = Tree.TreeNode;
 
@@ -45,6 +45,8 @@ export class Navigator extends Component {
   };
 
   componentDidMount() {
+    this.props.actions.dismissFetchNavTreeDataError();
+    this.props.actions.dismissExecCmdError();
     this.props.actions.fetchNavTreeData();
   }
 
@@ -346,7 +348,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions, execCmd, showCmdDialog }, dispatch)
+    actions: bindActionCreators({ ...actions, execCmd, showCmdDialog, dismissExecCmdError }, dispatch)
   };
 }
 

@@ -144,14 +144,14 @@ export class DefaultPage extends Component {
       // .force('x', d3.forceX(0))
       ;
 
-    const link = svg.append('g')
-        .attr('class', 'links')
-        .selectAll('line')
-        .data(data.links)
-        .enter()
-        .append('line')
-        .attr('stroke', 'black')
-    ;
+    // const link = svg.append('g')
+    //     .attr('class', 'links')
+    //     .selectAll('line')
+    //     .data(data.links)
+    //     .enter()
+    //     .append('line')
+    //     .attr('stroke', 'black')
+    // ;
     const path = svg.append('svg:g').selectAll('path')
       .data(data.links)
       .enter()
