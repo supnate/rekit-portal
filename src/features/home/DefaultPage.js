@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Hello, RedditList } from './index';
+import { Hello, RedditList } from './';
+import { TestPage, Comp1 } from '../rekit-cmds';
+import { DefaultPage as DP2 } from '../diagram';
 import * as actions from './redux/actions';
 
 export class DefaultPage extends Component {
