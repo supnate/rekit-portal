@@ -7,7 +7,7 @@ import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
 import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
 import * as actions from './redux/actions';
 import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
-
+import { PageNotFound } from '../common';
 const TreeNode = Tree.TreeNode;
 
 const keys = ['0-0-0', '0-0-1', '0-0'];
