@@ -5,3 +5,4 @@ export { counterMinusOne } from './counterMinusOne';
 export { resetCounter } from './resetCounter';
 export { fetchRedditReactjsList, dismissFetchRedditReactjsListError } from './fetchRedditReactjsList';
 export { fetchNavTreeData, dismissFetchNavTreeDataError } from './fetchNavTreeData';
+export { fetchProjectData, dismissFetchProjectDataError } from './fetchProjectData';

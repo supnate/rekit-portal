@@ -9,6 +9,8 @@ const initialState = {
   fetchRedditBySagaError: null,
   fetchNavTreeDataPending: false,
   fetchNavTreeDataError: null,
+  fetchProjectDataPending: false,
+  fetchProjectDataError: null,
 };
 
 export default initialState;

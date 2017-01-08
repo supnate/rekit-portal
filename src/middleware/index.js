@@ -4,6 +4,7 @@ const url = require('url');
 const _ = require('lodash');
 const Watchpack = require('watchpack');
 const rekitCore = require('rekit-core');
+const fetchProjectData = require('./api/fetchProjectData');
 
 const refactor = rekitCore.refactor;
 
@@ -88,16 +89,26 @@ function rekitMiddleware(server) {
     const urlObject = url.parse(req.originalUrl);
     const p = urlObject.pathname.replace(rootPath, '');
 
-    switch (p) {
-      case '/api/nav-tree-data':
-        getNavTreeData(req, res);
-        break;
-      case '/api/exec-cmd':
-        execCmd(req, res);
-        break;
-      default:
-        next();
-        break;
+    try {
+      switch (p) {
+        case '/api/nav-tree-data':
+          getNavTreeData(req, res);
+          break;
+        case '/api/fetch-project-data':
+          res.write(JSON.stringify({ features: fetchProjectData() }));
+          res.end();
+          break;
+        case '/api/exec-cmd':
+          execCmd(req, res);
+          break;
+        default:
+          next();
+          break;
+      }
+    } catch (e) {
+      res.statusCode = 500;
+      res.write(e.toString());
+      res.end();
     }
   };
 }
