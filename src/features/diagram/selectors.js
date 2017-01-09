@@ -71,6 +71,104 @@ export const getProjectDiagramData = createSelector(
         }
       }
     }
+
+    for (let i = 0; i < features.length; i++) {
+      for (let j = i + 1; j < features.length; j++) {
+        links.push({
+          source: features[i],
+          target: features[j],
+          type: 'f-f',
+        });
+      }
+    }
+    return { nodes, links };
+  },
+);
+
+export const getDetailedProjectDiagramData = createSelector(
+  featuresSelector,
+  featureByIdSelector,
+  (features, featureById) => {
+    let links = [];
+    let nodes = [];
+    // [features[2], features[3]]
+    features.forEach((fid) => {
+      const f = featureById[fid];
+      const feature = { name: f.name, id: f.key, r: 30, type: 'feature' };
+      nodes.push(feature);
+
+      [...f.components, ...f.actions, ...f.misc].forEach((item) => {
+        if (!item.deps) return;
+
+        const allDeps = [
+          ...item.deps.actions,
+          ...item.deps.components,
+          ...item.deps.constants,
+          ...item.deps.misc,
+        ];
+
+        nodes.push({
+          name: item.name,
+          id: item.file,
+          type: item.type,
+          file: item.file,
+          r: 6,
+        });
+
+        links.push({
+          source: fid,
+          target: item.file,
+          type: 'child',
+        });
+
+        allDeps.forEach((dep) => {
+          if (dep.feature === 'common' || dep.feature === 'diagram') return;
+          if (dep.feature !== fid) {
+            links.push({
+              source: item.file,
+              target: dep.file,
+              type: 'dep',
+            });
+          }
+
+          // const data = {
+          //   source: fid,
+          //   target: dep.feature,
+          //   type: dep.type,
+          // };
+          // const found = _.find(links, data);
+          // if (found) {
+          //   found.count += 1;
+          // } else {
+          //   links.push({
+          //     ...data,
+          //     count: 1,
+          //   });
+          // }
+        });
+      });
+    });
+
+    // const notFoundLinks = links.filter(l => !_.find(nodes, { id: l.source }) || !_.find(nodes, { id: l.target }));
+    // console.log('not found links: ', notFoundLinks);
+
+    // First, find nodes that link to other none-feature nodes.
+    nodes = nodes.filter(n => n.type === 'feature' || _.find(links, l => l.type === 'dep' && (l.source === n.id || l.target === n.id)));
+
+    // Second, remove links that have no linked nodes
+    links = links.filter(l => _.find(nodes, { id: l.source }) && _.find(nodes, { id: l.target }));
+
+    // Third, add links of features
+    for (let i = 0; i < features.length; i++) {
+      for (let j = i + 1; j < features.length; j++) {
+        links.push({
+          source: features[i],
+          target: features[j],
+          type: 'f-f',
+        });
+      }
+    }
+
     return { nodes, links };
   },
 );

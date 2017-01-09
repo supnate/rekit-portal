@@ -1,15 +1,51 @@
 @import '../../styles/mixins.less';
 
-.diagram-default-page {
+.diagram-container {
   .d3-node {
     width: 600px;
     height: 600px;
     border: 1px solid #eee;
 
+    .feature-node { fill: #fff; }
+    .component-node { fill: #FF9900; }
+    .action-node { fill: #FF81C3; }
+    .misc-node { fill: #00C0FF; }
+
     path.link {
       fill: none;
       stroke: #666;
-      stroke-width: 1.5px;
+      // stroke-width: 1px;
+
+      // &.component { stroke: #FF9900; }
+      // &.action { stroke: #FF81C3; }
+      // &.misc { stroke: #00C0FF; }
+      &.component { stroke: #444; }
+      &.action { stroke: #444; }
+      &.misc { stroke: #444; }
+    }
+
+    .edge-label-bg {
+      &.component { fill: #FF9900; }
+      &.action { fill: #FF81C3; }
+      &.misc { fill: #00C0FF; }
+    }
+
+    // .triangle-marker {
+    //   &.component { fill: #FF9900; }
+    //   &.action { fill: #FF81C3; }
+    //   &.misc { fill: #00C0FF; }
+    // }
+
+    // .edge-label-bg {
+    //   &.component { fill: #444; }
+    //   &.action { fill: #444; }
+    //   &.misc { fill: #444; }
+    // }
+
+    .triangle-marker {
+      &.component { fill: #444; }
+      &.action { fill: #444; }
+      &.misc { fill: #444; }
     }
   }
 }

@@ -3,90 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import * as actions from './redux/actions';
-import { getProjectDiagramData } from './selectors';
+import { getDetailedProjectDiagramData } from './selectors';
 
-import { execCmd, showCmdDialog } from '../rekit-cmds/redux/actions';
-import { TestPage } from '../rekit-cmds';
-import { Hello } from '../home';
-import { PageNotFound } from '../common';
-import { testAction } from '../common/redux/actions';
-
-window.d3 = d3;
-
-export class DefaultPage extends Component {
+export class DetailedDiagram extends Component {
   static propTypes = {
     diagram: PropTypes.object.isRequired,
-    diagramData: PropTypes.any,
-    home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    diagramData: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     console.log('props: ', props.diagramData);
   }
-
-  // getDataSet() {
-  //   const features = [
-  //     {
-  //       name: 'Home',
-  //       components: [
-  //         {
-  //           name: 'DefaultPage', connect: false, urlPath: 'xxx',
-  //           usings: [
-  //             { feature: 'rekit-cmds', type: 'action', name: 'showCmdDialog' },
-  //             { feature: 'rekit-cmds', type: 'action', name: 'execCmd' },
-  //           ]
-  //         },
-  //         {
-  //           name: 'Page2', connect: true, urlPath: false,
-  //           usings: [
-  //             { feature: 'rekit-cmds', type: 'action', name: 'showCmdDialog1' },
-  //             { feature: 'rekit-cmds', type: 'action', name: 'execCmd1' },
-  //           ]
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: 'Rekit cmds',
-  //       actions: [
-  //         { name: 'showCmdDialog' },
-  //         { name: 'execCmd' },
-  //         { name: 'showCmdDialog1' },
-  //         { name: 'execCmd1' },
-  //       ],
-  //     },
-  //   ];
-
-  //   return {
-  //     nodes: [
-  //       { name: 'Home', r: 30 },
-  //       { name: 'Rekit cmds', r: 30 },
-  //       { name: 'Common', r: 30 },
-  //       { name: 'Common2', r: 30 },
-  //     ],
-  //     links: [
-  //       { source: 0, target: 1, type: 'action', pos: 1 },
-  //       { source: 0, target: 1, type: 'component', pos: 2 },
-  //       // { source: 0, target: 1, type: 'component', pos: 3 },
-  //       // { source: 0, target: 1, type: 'component', pos: 4 },
-  //       { source: 0, target: 1, type: 'component', pos: -1 },
-  //       { source: 0, target: 1, type: 'component', pos: -2 },
-  //       // { source: 0, target: 1, type: 'component', pos: -3 },
-  //       // { source: 0, target: 1, type: 'component', pos: -4 },
-
-  //       { source: 0, target: 2, type: 'component', pos: -1 },
-  //       { source: 0, target: 2, type: 'component', pos: 1 },
-
-  //       // { source: 0, target: 2, type: 'component', pos: 0 },
-
-  //       { source: 0, target: 3, type: 'component', pos: 0 },
-
-  //       { source: 1, target: 3, type: 'component', pos: -1 },
-  //       { source: 1, target: 3, type: 'component', pos: 1 },
-  //     ],
-  //   };
-  // }
 
   getCurveData(d) {
     const ax = d.source.x;
@@ -134,7 +63,7 @@ export class DefaultPage extends Component {
       .append('svg:marker')
       .attr('id', String)
       .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 62)
+      .attr('refX', 42)
       .attr('refY', 0)
       .attr('markerWidth', 6)
       .attr('markerHeight', 6)
@@ -149,7 +78,7 @@ export class DefaultPage extends Component {
     const sim = d3
       .forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
-      .force('collide', d3.forceCollide(d => d.r + 8).strength(1).iterations(16))
+      .force('collide', d3.forceCollide(d => d.r + 8).iterations(16))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(chartWidth / 2, chartWidth / 2))
       ;
@@ -171,17 +100,25 @@ export class DefaultPage extends Component {
       d.fy = null;
     }
 
-    const path = svg.append('svg:g').selectAll('path')
-      .data(data.links.filter(d => d.type !== 'f-f'))
-      .enter()
-      .append('svg:path')
-      .attr('class', d => `link ${d.type}`)
-      // .attr('stroke-width', 1)
+    // const path = svg.append('svg:g').selectAll('path')
+    //   .data(data.links)
+    //   .enter()
+    //   .append('svg:path')
+    //   .attr('class', d => `link ${d.type}`)
+    //   // .attr('stroke-width', 1)
+    // ;
 
+    const link = svg.append('g')
+      .attr('class', 'links')
+      .selectAll('line')
+      .data(data.links.filter(l => l.type !== 'f-f'))
+      .enter()
+      .append('line')
+      .attr('stroke', 'black')
     ;
 
     const edgeLabelBg = svg.selectAll('.edge-label-bg')
-      .data(data.links.filter(d => d.type !== 'f-f'))
+      .data(data.links)
       .enter()
       .append('g')
       .append('circle')
@@ -195,7 +132,7 @@ export class DefaultPage extends Component {
     ;
 
     const edgeLabel = svg.selectAll('.edge-label')
-      .data(data.links.filter(d => d.type !== 'f-f'))
+      .data(data.links)
       .enter()
       .append('g')
       .append('svg:text')
@@ -207,33 +144,38 @@ export class DefaultPage extends Component {
       .text(d => d.count);
 
     const node = svg.append('g')
-      .attr('class', 'feature-node')
       .selectAll('circle')
       .data(data.nodes)
       .enter()
-      .append('circle')
+      .append('svg:circle')
+      .attr('class', d => `${d.type}-node`)
       .attr('r', d => d.r)
-      .attr('stroke-width', 1)
+      .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
       .attr('stroke', '#555')
+      // .append('svg:title')
+      // .text(d => d.name)
+      .call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended)
+      )
     ;
-      // .call(d3.drag()
-      // .on('start', dragstarted)
-      // .on('drag', dragged)
-      // .on('end', dragended));
 
     const nodeInner = svg.append('g')
       .attr('class', 'feature-node-inner')
       .selectAll('circle')
-      .data(data.nodes)
+      .data(data.nodes.filter(n => n.type === 'feature'))
       .enter()
       .append('circle')
       .attr('r', d => d.r - 3)
+      .attr('fill', '#aaccff')
       .attr('stroke-width', 1)
       .attr('stroke', '#555')
       .call(d3.drag()
-      .on('start', dragstarted)
-      .on('drag', dragged)
-      .on('end', dragended))
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended)
+      )
     ;
 
     const nodeText = svg.selectAll('.node-text')
@@ -243,7 +185,7 @@ export class DefaultPage extends Component {
       .append('svg:text')
       .attr('class', 'node-text')
       .attr('fill', '#333')
-      .attr('transform', 'translate(0, 2)')
+      .attr('transform', d => `translate(0, ${d.type === 'feature' ? 2 : 12})`)
       .attr('text-anchor', 'middle')
       .attr('font-size', 8)
       .text(d => d.name)
@@ -251,45 +193,50 @@ export class DefaultPage extends Component {
 
     const _this = this; // eslint-disable-line
     function ticked() {
-      path
-        .attr('d', (d) => {
-          const d3Path = d3.path();
-          const curve = _this.getCurveData(d);
-          d3Path.moveTo(curve.ax, curve.ay);
-          d3Path.quadraticCurveTo(curve.mx, curve.my, curve.bx, curve.by);
-          return d3Path.toString();
-        })
-        .attr('marker-end', function(d) { return 'url(#' + d.type + ')'; }) // eslint-disable-line
-        .attr('stroke-width', 1)
+      link
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y)
       ;
 
-      const getEdgeLabelPos = (d) => {
-        const curve = _this.getCurveData(d);
-        const jx = (curve.ax + curve.bx) / 2;
-        const jy = (curve.ay + curve.by) / 2;
-        const x = (curve.mx + jx) / 2;
-        const y = (curve.my + jy) / 2;
-        return { x, y };
-      };
+      // path
+      //   .attr('d', (d) => {
+      //     const d3Path = d3.path();
+      //     const curve = _this.getCurveData(d);
+      //     d3Path.moveTo(curve.ax, curve.ay);
+      //     d3Path.quadraticCurveTo(curve.mx, curve.my, curve.bx, curve.by);
+      //     return d3Path.toString();
+      //   })
+      //   .attr('marker-end', function(d) { return 'url(#' + d.type + ')'; }) // eslint-disable-line
+      //   .attr('stroke-width', 1)
+      // ;
 
-      edgeLabelBg
-        .attr('cx', d => getEdgeLabelPos(d).x)
-        .attr('cy', d => getEdgeLabelPos(d).y)
-      ;
+      // const getEdgeLabelPos = (d) => {
+      //   const curve = _this.getCurveData(d);
+      //   const jx = (curve.ax + curve.bx) / 2;
+      //   const jy = (curve.ay + curve.by) / 2;
+      //   const x = (curve.mx + jx) / 2;
+      //   const y = (curve.my + jy) / 2;
+      //   return { x, y };
+      // };
 
-      edgeLabel
-        .attr('x', d => getEdgeLabelPos(d).x)
-        .attr('y', d => getEdgeLabelPos(d).y)
-      ;
+      // edgeLabelBg
+      //   .attr('cx', d => getEdgeLabelPos(d).x)
+      //   .attr('cy', d => getEdgeLabelPos(d).y)
+      // ;
+
+      // edgeLabel
+      //   .attr('x', d => getEdgeLabelPos(d).x)
+      //   .attr('y', d => getEdgeLabelPos(d).y)
+      // ;
 
       node
-        .attr('fill', '#ffffff')
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
       ;
 
       nodeInner
-        .attr('fill', '#aaccff')
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
       ;
@@ -304,10 +251,16 @@ export class DefaultPage extends Component {
       .nodes(data.nodes)
       .on('tick', ticked);
 
+    const distanceMap = {
+      child: 60,
+      dep: 80,
+      'f-f': 260,
+    };
+
     sim
       .force('link')
       .links(data.links)
-      .distance(d => (d.type === 'f-f' ? 300 : 200))
+      .distance(d => distanceMap[d.type] || 100)
       .iterations(16)
     ;
     console.log('d3 did mount', this.d3Node);
@@ -315,8 +268,8 @@ export class DefaultPage extends Component {
 
   render() {
     return (
-      <div className="diagram-default-page diagram-container">
-        Page Content: diagram/DefaultPage
+      <div className="diagram-detailed-diagram diagram-container">
+        Page Content: diagram/DetailedDiagram
         <div className="d3-node" ref={(node) => { this.d3Node = node; }} />
       </div>
     );
@@ -326,9 +279,8 @@ export class DefaultPage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    home: state.home,
     diagram: state.diagram,
-    diagramData: getProjectDiagramData(state),
+    diagramData: getDetailedProjectDiagramData(state),
   };
 }
 
@@ -342,4 +294,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DefaultPage);
+)(DetailedDiagram);
