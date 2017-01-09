@@ -17,7 +17,6 @@ socket.on('connect', () => {
 });
 
 socket.on('fileChanged', (data) => {
-  console.log('fileChanged: ', data);
   store.dispatch({
     type: 'PROJECT_FILE_CHANGED',
     data,

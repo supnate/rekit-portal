@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+import { Hello } from '../home';
 
 export class TestPage extends Component {
   static propTypes = {

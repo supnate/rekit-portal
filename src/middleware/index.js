@@ -8,7 +8,7 @@ const fetchProjectData = require('./api/fetchProjectData');
 
 const refactor = rekitCore.refactor;
 
-rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
+rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit-portal');
 
 let io = null;
 
@@ -94,7 +94,7 @@ function rekitMiddleware(server) {
         case '/api/nav-tree-data':
           getNavTreeData(req, res);
           break;
-        case '/api/fetch-project-data':
+        case '/api/project-data':
           res.write(JSON.stringify({ features: fetchProjectData() }));
           res.end();
           break;

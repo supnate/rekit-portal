@@ -29,7 +29,7 @@ const menuItems = {
   showStyle: { name: 'Style', key: 'show-style' },
 };
 
-export class Navigator extends Component {
+export class ProjectExplorer extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -43,27 +43,6 @@ export class Navigator extends Component {
     defaultExpandedKeys: keys,
     contextMenu: [],
   };
-
-  componentDidMount() {
-    this.props.actions.dismissFetchNavTreeDataError();
-    this.props.actions.dismissExecCmdError();
-    this.props.actions.fetchNavTreeData();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.home.navTreeDataNeedReload && !nextProps.home.fetchNavTreeDataPending) {
-      const hide = message.loading('Reloading project explorer...');
-      this.props.actions.fetchNavTreeData()
-      .then(hide)
-      .catch((e) => {
-        console.log('fetch nav tree data error: ', e);
-        Modal.error({
-          title: 'Failed to refresh explorer',
-          content: 'Please try to refresh the whole page.',
-        });
-      });
-    }
-  }
 
   onSelect(info) {
     console.log('selected', info);
@@ -292,7 +271,7 @@ export class Navigator extends Component {
 
   renderLoading() {
     return (
-      <div className="home-navigator">
+      <div className="home-project-explorer">
         <Spin />
       </div>
     );
@@ -320,7 +299,7 @@ export class Navigator extends Component {
     }
 
     return (
-      <div className="home-navigator" ref={(node) => { this.rootNode = node; }}>
+      <div className="home-project-explorer" ref={(node) => { this.rootNode = node; }}>
         <Tree
           onRightClick={this.handleContextMenu}
           onSelect={this.onSelect}
@@ -355,4 +334,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Navigator);
+)(ProjectExplorer);

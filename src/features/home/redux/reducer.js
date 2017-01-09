@@ -3,7 +3,6 @@ import { reducer as counterPlusOne } from './counterPlusOne';
 import { reducer as counterMinusOne } from './counterMinusOne';
 import { reducer as resetCounter } from './resetCounter';
 import { reducer as fetchRedditReactjsList } from './fetchRedditReactjsList';
-import { reducer as fetchNavTreeData } from './fetchNavTreeData';
 import { reducer as fetchProjectData } from './fetchProjectData';
 
 const reducers = [
@@ -11,7 +10,6 @@ const reducers = [
   counterMinusOne,
   resetCounter,
   fetchRedditReactjsList,
-  fetchNavTreeData,
   fetchProjectData,
 ];
 
@@ -22,7 +20,7 @@ export default function reducer(state = initialState, action) {
     case 'PROJECT_FILE_CHANGED':
       newState = {
         ...state,
-        navTreeDataNeedReload: true,
+        projectDataNeedReload: true,
       };
       break;
     default:

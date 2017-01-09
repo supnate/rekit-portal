@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   HOME_FETCH_PROJECT_DATA_BEGIN,
   HOME_FETCH_PROJECT_DATA_SUCCESS,
@@ -5,31 +6,28 @@ import {
   HOME_FETCH_PROJECT_DATA_DISMISS_ERROR,
 } from './constants';
 
-export function fetchProjectData(args) {
+export function fetchProjectData() {
   return (dispatch) => {
     dispatch({
       type: HOME_FETCH_PROJECT_DATA_BEGIN,
     });
-    const promise = new Promise((resolve, reject) => {
-      window.setTimeout(() => {
-        if (args && !args.error) { // NOTE: args.error is only used for demo purpose
-          dispatch({
-            type: HOME_FETCH_PROJECT_DATA_SUCCESS,
-            data: {},
-          });
-          resolve();
-        } else {
-          dispatch({
-            type: HOME_FETCH_PROJECT_DATA_FAILURE,
-            data: {
-              error: 'some error',
-            },
-          });
-          reject();
-        }
-      }, 50);
-    });
 
+    const promise = new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get('/rekit/api/project-data');
+        dispatch({
+          type: HOME_FETCH_PROJECT_DATA_SUCCESS,
+          data: res.data,
+        });
+        resolve(res.data);
+      } catch (e) {
+        dispatch({
+          type: HOME_FETCH_PROJECT_DATA_FAILURE,
+          data: { error: e },
+        });
+        reject(e);
+      }
+    });
     return promise;
   };
 }
@@ -52,6 +50,13 @@ export function reducer(state, action) {
     case HOME_FETCH_PROJECT_DATA_SUCCESS:
       return {
         ...state,
+        // projectData: action.data,
+        featureById: action.data.features.reduce((prev, f) => {
+          prev[f.key] = f; // eslint-disable-line
+          return prev;
+        }, {}),
+        features: action.data.features.map(f => f.key),
+        projectDataNeedReload: false,
         fetchProjectDataPending: false,
         fetchProjectDataError: null,
       };
