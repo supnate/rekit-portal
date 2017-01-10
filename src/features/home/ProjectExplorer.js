@@ -236,7 +236,7 @@ export class ProjectExplorer extends Component {
             miscItem.children ?
               this.renderMiscFolder(miscItem)
             :
-              <TreeNode title={this.renderTreeNodeTitle(miscItem.name)} key={miscItem.file} />
+              <TreeNode title={this.renderTreeNodeTitle(miscItem.name, 'file')} key={miscItem.file} />
           ))
         }
       </TreeNode>
@@ -246,19 +246,19 @@ export class ProjectExplorer extends Component {
   renderFeatureNode(key) {
     const feature = this.props.home.featureById[key];
     return (
-      <TreeNode title={this.renderTreeNodeTitle(feature.name)} key={key}>
+      <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
         <TreeNode className="routes" title={this.renderTreeNodeTitle('Routes', 'share-alt')} key={`${key}-routes`} />
         <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${feature.actions.length})`, 'notification')} key={`${key}-actions`}>
           {
             feature.actions.map(action => (
-              <TreeNode title={this.renderTreeNodeTitle(action.name, '', action.isAsync && asyncMark)} key={action.file} />
+              <TreeNode title={this.renderTreeNodeTitle(action.name, 'notification', action.isAsync && asyncMark)} key={action.file} />
             ))
           }
         </TreeNode>
         <TreeNode className="components" title={this.renderTreeNodeTitle(`Components (${feature.components.length})`, 'appstore-o')} key={`${key}-components`}>
           {
             feature.components.map(comp => (
-              <TreeNode title={this.renderTreeNodeTitle(comp.name, '', comp.connectToStore && connectMark)} key={comp.file} />
+              <TreeNode title={this.renderTreeNodeTitle(comp.name, 'appstore-o', comp.connectToStore && connectMark)} key={comp.file} />
             ))
           }
         </TreeNode>
