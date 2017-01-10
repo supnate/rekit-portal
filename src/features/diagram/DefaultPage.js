@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
-import { Popover, Button, Icon, Menu } from 'antd';
+import { Button, Checkbox, Icon, Popover, Radio } from 'antd';
 import * as actions from './redux/actions';
 import { getProjectDiagramData } from './selectors';
 
@@ -317,30 +317,49 @@ export class DefaultPage extends Component {
     console.log('d3 did mount', this.d3Node);
   }
 
+  handleSelectAll(evt) {
+    console.log('select all: ', evt);
+  }
+
   renderFeatureSelect() {
+    const { features, featureById } = this.props.home;
+    const options = features.map(fid => ({
+      label: featureById[fid].name,
+      value: fid,
+    }));
+
     const content = (
-      <div>
-        <p>Content</p>
-        <p>Content</p>
+      <div className="diagram-default-page-feature-selector">
+        <Checkbox.Group options={options} />
       </div>
     );
     return (
-      <Popover content={content} title={<p>Select All</p>}>
+      <Popover content={content}>
         <Button type="ghost">Selected: 5 features <Icon type="down" /></Button>
       </Popover>
     );
   }
 
   renderFocusedFeatureSelect() {
+    const { features, featureById } = this.props.home;
+
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
+
     const content = (
-      <div>
-        <p>Content</p>
-        <p>Content</p>
-      </div>
+      <Radio.Group className="feature-selector-list">
+        {features.map(fid => (
+          <Radio style={radioStyle} value={fid} key={fid}>{featureById[fid].name}</Radio>
+        ))}
+      </Radio.Group>
     );
+
     return (
-      <Popover content={content} title2={<p>Select All</p>}>
-        <Button type="ghost">Focus: None <Icon type="down" /></Button>
+      <Popover content={content}>
+        <Button type="ghost">Focus: none <Icon type="down" /></Button>
       </Popover>
     );
   }

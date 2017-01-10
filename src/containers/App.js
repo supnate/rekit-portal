@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { LocaleProvider, message, Modal, Spin } from 'antd';
-import { ProjectExplorer } from '../features/home';
+import { SidePanel } from '../features/home';
 import DialogPlace from '../features/rekit-cmds/DialogPlace';
 import { fetchProjectData } from '../features/home/redux/actions';
 
@@ -56,9 +56,7 @@ export class App extends Component {
     return (
       <LocaleProvider locale={enUS}>
         <div className="app">
-          <div className="sidebar">
-            <ProjectExplorer />
-          </div>
+          <SidePanel />
           <div className="page-container">
             {this.props.children}
           </div>

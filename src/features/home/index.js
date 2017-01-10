@@ -6,3 +6,4 @@ export TestPage2 from './TestPage2';
 export ProjectExplorer from './ProjectExplorer';
 export AddDialog from './AddDialog';
 export AddActionForm from './AddActionForm';
+export SidePanel from './SidePanel';

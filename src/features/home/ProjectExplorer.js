@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react';
-import { Link } from 'react-router';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -298,13 +297,8 @@ export class ProjectExplorer extends Component {
     if (!features) {
       return this.renderLoading();
     }
-
     return (
       <div className="home-project-explorer" ref={(node) => { this.rootNode = node; }}>
-        <ul>
-          <li><Link to="/diagram">Diagram</Link></li>
-          <li><Link to="/diagram/detailed">Detailed Diagram</Link></li>
-        </ul>
         <Tree
           onRightClick={this.handleContextMenu}
           onSelect={this.onSelect}
