@@ -122,7 +122,6 @@ export const getDetailedProjectDiagramData = createSelector(
         });
 
         allDeps.forEach((dep) => {
-          if (dep.feature === 'common' || dep.feature === 'diagram') return;
           if (dep.feature !== fid) {
             links.push({
               source: item.file,

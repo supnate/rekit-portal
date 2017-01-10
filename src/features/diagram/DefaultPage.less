@@ -1,11 +1,23 @@
 @import '../../styles/mixins.less';
 
 .diagram-container {
-  .d3-node {
-    width: 600px;
-    height: 600px;
-    border: 1px solid #eee;
+  .diagram-page-header {
+    // background-color: #eee;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
 
+    button {
+      float: right;
+      border: none;
+      transform: translateY(4px);
+      &+button {
+        margin-right: 10px;
+      }
+    }
+  }
+  .d3-node {
+    // border: 1px solid #eee;
+    // width: 100%;
     .feature-node { fill: #fff; }
     .component-node { fill: #FF9900; }
     .action-node { fill: #FF81C3; }

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
+import { Popover, Button, Icon, Menu } from 'antd';
 import * as actions from './redux/actions';
 import { getProjectDiagramData } from './selectors';
 
@@ -121,11 +122,14 @@ export class DefaultPage extends Component {
   }
 
   componentDidMount() {
+    const chartWidth = 800;
+    const chartHeight = 800;
+
     const svg = d3
       .select(this.d3Node)
       .append('svg')
-      .attr('width', 600)
-      .attr('height', 600)
+      .attr('width', '100%')
+      .attr('height', chartHeight)
     ;
 
     svg.append('svg:defs').selectAll('marker')
@@ -144,14 +148,14 @@ export class DefaultPage extends Component {
       .attr('d', 'M0,-5L10,0L0,5');
 
     const data = this.props.diagramData;
-    const chartWidth = 600;
+
 
     const sim = d3
       .forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
       .force('collide', d3.forceCollide(d => d.r + 8).strength(1).iterations(16))
       .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(chartWidth / 2, chartWidth / 2))
+      .force('center', d3.forceCenter(chartWidth / 2, chartHeight / 2))
       ;
 
     function dragstarted(d) {
@@ -313,10 +317,42 @@ export class DefaultPage extends Component {
     console.log('d3 did mount', this.d3Node);
   }
 
+  renderFeatureSelect() {
+    const content = (
+      <div>
+        <p>Content</p>
+        <p>Content</p>
+      </div>
+    );
+    return (
+      <Popover content={content} title={<p>Select All</p>}>
+        <Button type="ghost">Selected: 5 features <Icon type="down" /></Button>
+      </Popover>
+    );
+  }
+
+  renderFocusedFeatureSelect() {
+    const content = (
+      <div>
+        <p>Content</p>
+        <p>Content</p>
+      </div>
+    );
+    return (
+      <Popover content={content} title2={<p>Select All</p>}>
+        <Button type="ghost">Focus: None <Icon type="down" /></Button>
+      </Popover>
+    );
+  }
+
   render() {
     return (
       <div className="diagram-default-page diagram-container">
-        Page Content: diagram/DefaultPage
+        <div className="diagram-page-header">
+          {this.renderFocusedFeatureSelect()}
+          {this.renderFeatureSelect()}
+          <h2>Project Overview</h2>
+        </div>
         <div className="d3-node" ref={(node) => { this.d3Node = node; }} />
       </div>
     );
