@@ -1,18 +1,69 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
+import { browserHistory } from 'react-router';
+import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Icon, Tabs } from 'antd';
 import * as actions from './redux/actions';
+import { CodeView } from './';
+
+const TabPane = Tabs.TabPane;
 
 export class ComponentView extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   };
 
-  render() {
+  static defaultProps = {
+    params: {},
+  };
+
+  getComponentData() {
+    const { featureById } = this.props.home;
+    const { feature, component } = this.props.params;
+    return _.find(featureById[feature].components, { name: component });
+  }
+
+  @autobind
+  handleTabChange(tabKey) {
+    const data = this.getComponentData();
+    browserHistory.push(`/component/${data.feature}/${data.name}/${tabKey}`);
+  }
+
+  renderNotFound() {
     return (
       <div className="home-component-view">
-        Page Content: home/ComponentView
+        Not found.
+      </div>
+    );
+  }
+
+  render() {
+    const data = this.getComponentData();
+    if (!data) {
+      return this.renderNotFound();
+    }
+
+    const tabKey = this.props.params.tabKey || 'diagram';
+    return (
+      <div className="home-component-view">
+        <div className="page-title">
+          <h2 style={{ fontWeight: 'normal' }}>
+            <Icon type="appstore-o" style={{ color: '#F08036' }} /> {this.props.params.feature} / {data.name}
+          </h2>
+        </div>
+        <br />
+        <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
+          <TabPane tab="Diagram" key="diagram" />
+          <TabPane tab="Code" key="code" />
+          <TabPane tab="Style" key="style" />
+          <TabPane tab="Test" key="test" />
+        </Tabs>
+        {tabKey && <CodeView file={data.file} />}
+
       </div>
     );
   }

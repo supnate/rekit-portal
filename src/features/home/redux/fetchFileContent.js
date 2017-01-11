@@ -1,0 +1,75 @@
+import {
+  HOME_FETCH_FILE_CONTENT_BEGIN,
+  HOME_FETCH_FILE_CONTENT_SUCCESS,
+  HOME_FETCH_FILE_CONTENT_FAILURE,
+  HOME_FETCH_FILE_CONTENT_DISMISS_ERROR,
+} from './constants';
+
+export function fetchFileContent(args) {
+  return (dispatch) => {
+    dispatch({
+      type: HOME_FETCH_FILE_CONTENT_BEGIN,
+    });
+    const promise = new Promise((resolve, reject) => {
+      window.setTimeout(() => {
+        if (args && !args.error) { // NOTE: args.error is only used for demo purpose
+          dispatch({
+            type: HOME_FETCH_FILE_CONTENT_SUCCESS,
+            data: {},
+          });
+          resolve();
+        } else {
+          dispatch({
+            type: HOME_FETCH_FILE_CONTENT_FAILURE,
+            data: {
+              error: 'some error',
+            },
+          });
+          reject();
+        }
+      }, 50);
+    });
+
+    return promise;
+  };
+}
+
+export function dismissFetchFileContentError() {
+  return {
+    type: HOME_FETCH_FILE_CONTENT_DISMISS_ERROR,
+  };
+}
+
+export function reducer(state, action) {
+  switch (action.type) {
+    case HOME_FETCH_FILE_CONTENT_BEGIN:
+      return {
+        ...state,
+        fetchFileContentPending: true,
+        fetchFileContentError: null,
+      };
+
+    case HOME_FETCH_FILE_CONTENT_SUCCESS:
+      return {
+        ...state,
+        fetchFileContentPending: false,
+        fetchFileContentError: null,
+      };
+
+    case HOME_FETCH_FILE_CONTENT_FAILURE:
+      return {
+        ...state,
+        fetchFileContentPending: false,
+        fetchFileContentError: action.data.error,
+      };
+
+    case HOME_FETCH_FILE_CONTENT_DISMISS_ERROR:
+      return {
+        ...state,
+        fetchFileContentError: null,
+      };
+
+    default:
+      return state;
+  }
+}

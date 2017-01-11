@@ -9,6 +9,7 @@ function fetchProjectData() {
   const features = refactor.getFeatures();
   const data = features.map(f => (Object.assign({
     key: f,
+    type: 'feature',
     name: _.flow(_.lowerCase, _.upperFirst)(f),
   }, refactor.getFeatureStructure(f))));
 

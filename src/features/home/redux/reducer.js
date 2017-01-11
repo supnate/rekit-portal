@@ -1,16 +1,10 @@
 import initialState from './initialState';
-import { reducer as counterPlusOne } from './counterPlusOne';
-import { reducer as counterMinusOne } from './counterMinusOne';
-import { reducer as resetCounter } from './resetCounter';
-import { reducer as fetchRedditReactjsList } from './fetchRedditReactjsList';
 import { reducer as fetchProjectData } from './fetchProjectData';
+import { reducer as fetchFileContent } from './fetchFileContent';
 
 const reducers = [
-  counterPlusOne,
-  counterMinusOne,
-  resetCounter,
-  fetchRedditReactjsList,
   fetchProjectData,
+  fetchFileContent,
 ];
 
 export default function reducer(state = initialState, action) {

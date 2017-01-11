@@ -6,12 +6,12 @@ const initialState = {
   features: null,
   projectDataNeedReload: false,
   projectFileChanged: false,
-  fetchRedditReactjsListError: null,
-  fetchRedditReactjsListPending: false,
   fetchRedditBySagaPending: false,
   fetchRedditBySagaError: null,
   fetchProjectDataPending: false,
   fetchProjectDataError: null,
+  fetchFileContentPending: false,
+  fetchFileContentError: null,
 };
 
 export default initialState;

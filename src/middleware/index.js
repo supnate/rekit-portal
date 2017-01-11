@@ -5,6 +5,7 @@ const _ = require('lodash');
 const Watchpack = require('watchpack');
 const rekitCore = require('rekit-core');
 const fetchProjectData = require('./api/fetchProjectData');
+const getFileContent = require('./api/getFileContent');
 
 const refactor = rekitCore.refactor;
 
@@ -96,6 +97,10 @@ function rekitMiddleware(server) {
           break;
         case '/api/project-data':
           res.write(JSON.stringify({ features: fetchProjectData() }));
+          res.end();
+          break;
+        case '/api/file-content':
+          res.write(JSON.stringify({ content: getFileContent(req.body.file) }));
           res.end();
           break;
         case '/api/exec-cmd':

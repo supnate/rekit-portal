@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,10 +8,8 @@ import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
 import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
 import * as actions from './redux/actions';
 import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
-import { PageNotFound } from '../common';
-const TreeNode = Tree.TreeNode;
 
-const keys = ['0-0-0', '0-0-1', '0-0'];
+const TreeNode = Tree.TreeNode;
 
 const connectMark = { char: 'C', color: '#2175bc', title: 'Connect' };
 const routeMark = { char: 'R', color: '#f90', title: 'Route' };
@@ -151,7 +150,11 @@ export class ProjectExplorer extends Component {
       if (selectedKey !== key) {
         // selection changed
       }
+      // key is the full file path
+      const ele = this.props.home.elementById[key];
+
       selectedKey = key;
+      browserHistory.push(`/component/${ele.feature}/${ele.name}`);
     }
 
     this.setState({

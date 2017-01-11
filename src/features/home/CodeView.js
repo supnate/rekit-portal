@@ -3,16 +3,29 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-export class TestPage1 extends Component {
+export class CodeView extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    file: PropTypes.string.isRequired,
   };
+
+  componentDidMount() {
+
+  }
+
+  renderLoading() {
+    return (
+      <div className="home-code-view">
+        Loading...
+      </div>
+    );
+  }
 
   render() {
     return (
-      <div className="home-test-page-1">
-        Page Content: home/TestPage1
+      <div className="home-code-view">
+        {this.props.file}
       </div>
     );
   }
@@ -35,4 +48,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TestPage1);
+)(CodeView);

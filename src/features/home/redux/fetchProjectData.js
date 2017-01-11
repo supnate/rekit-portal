@@ -47,20 +47,28 @@ export function reducer(state, action) {
         fetchProjectDataError: null,
       };
 
-    case HOME_FETCH_PROJECT_DATA_SUCCESS:
+    case HOME_FETCH_PROJECT_DATA_SUCCESS: {
+      const featureById = {};
+      const elementById = {};
+      action.data.features.forEach((f) => {
+        featureById[f.key] = f;
+        elementById[f.key] = f;
+        [...f.components, ...f.actions, ...f.misc].forEach((ele) => {
+          elementById[ele.file] = ele;
+        });
+      });
+
       return {
         ...state,
         // projectData: action.data,
-        featureById: action.data.features.reduce((prev, f) => {
-          prev[f.key] = f; // eslint-disable-line
-          return prev;
-        }, {}),
+        elementById,
+        featureById,
         features: action.data.features.map(f => f.key),
         projectDataNeedReload: false,
         fetchProjectDataPending: false,
         fetchProjectDataError: null,
       };
-
+    }
     case HOME_FETCH_PROJECT_DATA_FAILURE:
       return {
         ...state,
