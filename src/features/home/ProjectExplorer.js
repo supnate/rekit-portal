@@ -40,13 +40,10 @@ export class ProjectExplorer extends Component {
   };
 
   state = {
-    defaultExpandedKeys: keys,
+    expandedKeys: ['common', 'home', 'diagram', 'rekit-cmds'],
     contextMenu: [],
+    selectedKey: null,
   };
-
-  onSelect(info) {
-    console.log('selected', info);
-  }
 
   getMenuItems(treeNodePosStr) {
     const treeNodePos = treeNodePosStr.split('-').map(index => parseInt(index, 10));
@@ -137,8 +134,50 @@ export class ProjectExplorer extends Component {
   }
 
   @autobind
+  handleSelect(selected, evt) {
+    const key = evt.node.props.eventKey;
+
+    const hasChildren = !!_.get(evt, 'node.props.children.length');
+
+    let expandedKeys = this.state.expandedKeys;
+    let selectedKey = this.state.selectedKey;
+    if (hasChildren) {
+      if (expandedKeys.includes(key)) {
+        expandedKeys = expandedKeys.filter(k => k !== key);
+      } else {
+        expandedKeys = [...expandedKeys, key];
+      }
+    } else {
+      if (selectedKey !== key) {
+        // selection changed
+      }
+      selectedKey = key;
+    }
+
+    this.setState({
+      selectedKey,
+      expandedKeys,
+    });
+  }
+
+  @autobind
+  handleExpand(expanded, evt) {
+    const key = evt.node.props.eventKey;
+
+    let expandedKeys = this.state.expandedKeys;
+    if (expandedKeys.includes(key)) {
+      expandedKeys = expandedKeys.filter(k => k !== key);
+    } else {
+      expandedKeys = [...expandedKeys, key];
+    }
+
+    this.setState({
+      expandedKeys,
+    });
+  }
+
+  @autobind
   handleContextMenu(evt) {
-    console.log('on context menu: ', evt);
     const menus = this.getMenuItems(evt.node.props.pos);
     if (!menus.length) return;
 
@@ -300,9 +339,12 @@ export class ProjectExplorer extends Component {
     return (
       <div className="home-project-explorer" ref={(node) => { this.rootNode = node; }}>
         <Tree
+          autoExpandParent={false}
+          selectedKeys={[this.state.selectedKey]}
+          expandedKeys={this.state.expandedKeys}
           onRightClick={this.handleContextMenu}
-          onSelect={this.onSelect}
-          defaultExpandedKeys={['product', 'opportunity', 'customer', 'lead', 'product-components']}
+          onSelect={this.handleSelect}
+          onExpand={this.handleExpand}
         >
           {
             features.map(f => this.renderFeatureNode(f))

@@ -12,7 +12,7 @@ export default class Root extends React.Component {
     if (!this.routeConfig) this.routeConfig = routeConfig;
     return (
       <Provider store={store}>
-        <Router history={history} routes={this.routeConfig} />
+        <Router history={history} key={Math.random()} routes={routeConfig} />
       </Provider>
     );
   }
