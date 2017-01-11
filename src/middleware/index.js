@@ -100,7 +100,7 @@ function rekitMiddleware(server) {
           res.end();
           break;
         case '/api/file-content':
-          res.write(JSON.stringify({ content: getFileContent(req.body.file) }));
+          res.write(JSON.stringify({ content: getFileContent(req.query.file) }));
           res.end();
           break;
         case '/api/exec-cmd':

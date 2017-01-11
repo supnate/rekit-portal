@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   HOME_FETCH_FILE_CONTENT_BEGIN,
   HOME_FETCH_FILE_CONTENT_SUCCESS,
@@ -5,32 +6,52 @@ import {
   HOME_FETCH_FILE_CONTENT_DISMISS_ERROR,
 } from './constants';
 
-export function fetchFileContent(args) {
+export function fetchFileContent(file) {
   return (dispatch) => {
     dispatch({
       type: HOME_FETCH_FILE_CONTENT_BEGIN,
     });
-    const promise = new Promise((resolve, reject) => {
-      window.setTimeout(() => {
-        if (args && !args.error) { // NOTE: args.error is only used for demo purpose
-          dispatch({
-            type: HOME_FETCH_FILE_CONTENT_SUCCESS,
-            data: {},
-          });
-          resolve();
-        } else {
-          dispatch({
-            type: HOME_FETCH_FILE_CONTENT_FAILURE,
-            data: {
-              error: 'some error',
-            },
-          });
-          reject();
-        }
-      }, 50);
-    });
 
+    const promise = new Promise(async (resolve, reject) => {
+      try {
+        const res = await axios.get('/rekit/api/file-content', {
+          params: { file }
+        });
+        dispatch({
+          type: HOME_FETCH_FILE_CONTENT_SUCCESS,
+          data: { file, content: res.data.content },
+        });
+        resolve(res.data);
+      } catch (e) {
+        dispatch({
+          type: HOME_FETCH_FILE_CONTENT_FAILURE,
+          data: { error: e },
+        });
+        reject(e);
+      }
+    });
     return promise;
+    // const promise = new Promise((resolve, reject) => {
+    //   window.setTimeout(() => {
+    //     if (args && !args.error) { // NOTE: args.error is only used for demo purpose
+    //       dispatch({
+    //         type: HOME_FETCH_FILE_CONTENT_SUCCESS,
+    //         data: {},
+    //       });
+    //       resolve();
+    //     } else {
+    //       dispatch({
+    //         type: HOME_FETCH_FILE_CONTENT_FAILURE,
+    //         data: {
+    //           error: 'some error',
+    //         },
+    //       });
+    //       reject();
+    //     }
+    //   }, 50);
+    // });
+
+    // return promise;
   };
 }
 
@@ -52,6 +73,10 @@ export function reducer(state, action) {
     case HOME_FETCH_FILE_CONTENT_SUCCESS:
       return {
         ...state,
+        fileContentById: {
+          ...state.fileContentById,
+          [action.data.file]: action.data.content,
+        },
         fetchFileContentPending: false,
         fetchFileContentError: null,
       };

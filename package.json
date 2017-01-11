@@ -83,6 +83,7 @@
     "body-parser": "^1.15.2",
     "core-decorators": "^0.15.0",
     "d3": "^4.4.1",
+    "highlight.js": "^9.9.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "react": "^15.4.2",

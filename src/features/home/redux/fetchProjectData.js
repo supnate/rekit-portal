@@ -63,6 +63,7 @@ export function reducer(state, action) {
         // projectData: action.data,
         elementById,
         featureById,
+        fileContentById: {},
         features: action.data.features.map(f => f.key),
         projectDataNeedReload: false,
         fetchProjectDataPending: false,
