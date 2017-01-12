@@ -1,6 +1,10 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
+
+const chartWidth = 800;
+const chartHeight = 600;
 
 export default class ElementDiagram extends PureComponent {
   static propTypes = {
@@ -9,10 +13,7 @@ export default class ElementDiagram extends PureComponent {
   };
 
   componentDidMount() {
-    const chartWidth = 800;
-    const chartHeight = 600;
-
-    const svg = d3
+    this.svg = d3
       .select(this.d3Node)
       .append('svg')
       .attr('width', '100%')
@@ -24,7 +25,7 @@ export default class ElementDiagram extends PureComponent {
       'dep-on': 26,
       'dep-by': 76,
     };
-    svg.append('svg:defs').selectAll('marker')
+    this.svg.append('svg:defs').selectAll('marker')
       .data(['dep-on', 'dep-by'])
       .enter()
       .append('svg:marker')
@@ -40,42 +41,63 @@ export default class ElementDiagram extends PureComponent {
       .attr('d', 'M0,-5L10,0L0,5')
     ;
 
-    const data = getElementDiagramData(this.props.homeStore, this.props.elementId);// this.props.diagramData;
-console.log('data: ', data);
+    // this.link = this.svg.append('g');
+    // this.node = this.svg.append('g');
+    // this.featureNodeInner = this.svg.append('g');
+    // this.nodeText = this.svg.append('g');
 
-    const sim = d3
+    
+
+    this.refresh(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('receive props.');
+    this.refresh(nextProps);
+  }
+
+  @autobind
+  dragstarted(d) {
+    if (!d3.event.active) this.sim.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+
+  @autobind
+  dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+  }
+
+  @autobind
+  dragended(d) {
+    if (!d3.event.active) this.sim.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  }
+
+  refresh(props) {
+    const data = getElementDiagramData(props.homeStore, props.elementId);// this.props.diagramData;
+    console.log('refresh data: ', data);
+
+    this.svg.selectAll('g').remove();
+
+    this.sim = d3
       .forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
       .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(chartWidth / 2, chartHeight / 2))
-      ;
+    ;
 
-    function dragstarted(d) {
-      if (!d3.event.active) sim.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-
-    function dragged(d) {
-      d.fx = d3.event.x;
-      d.fy = d3.event.y;
-    }
-
-    function dragended(d) {
-      if (!d3.event.active) sim.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
-
-    const link = svg.append('g')
-      .attr('class', 'links')
+    const link = this.svg.append('g')
       .selectAll('line')
+      .attr('class', 'line')
       .data(data.links.filter(l => l.type !== 'no-line'))
       .enter()
       .append('line')
       .attr('stroke', '#555')
-      .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === this.props.elementId ? 'dep-on' : 'dep-by'})` : ''))
+      .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === props.elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
 
     const nodeColorMap = {
@@ -86,9 +108,9 @@ console.log('data: ', data);
       feature: '#FFFFFF',
     };
 
-    const node = svg.append('g')
-      .attr('class', 'feature-node')
+    const node = this.svg.append('g')
       .selectAll('circle')
+      .attr('class', 'element-node')
       .data(data.nodes)
       .enter()
       .append('circle')
@@ -96,15 +118,18 @@ console.log('data: ', data);
       .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
       .attr('stroke', '#555')
       .attr('fill', d => nodeColorMap[d.type])
+    ;
+    node
       .call(d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended)
-      );
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended)
+      )
+    ;
 
-    const featureNodeInner = svg.append('g')
-      .attr('class', 'feature-node')
+    const featureNodeInner = this.svg.append('g')
       .selectAll('circle')
+      .attr('class', 'element-node-inner')
       .data(data.nodes.filter(n => n.type === 'feature'))
       .enter()
       .append('circle')
@@ -112,14 +137,19 @@ console.log('data: ', data);
       .attr('stroke-width', 1)
       .attr('stroke', '#555')
       .attr('fill', '#00C0FF')
+    ;
+    featureNodeInner
       .call(d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended)
-      );
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended)
+      )
+    ;
 
-    const nodeText = svg.selectAll('.node-text')
+    const nodeText = this.svg.append('g')
+      .selectAll('.node-text')
       // .data(data.nodes.filter(n => n.id === this.props.elementId))
+      .attr('class', 'element-node-text')
       .data(data.nodes)
       .enter()
       .append('g')
@@ -162,25 +192,17 @@ console.log('data: ', data);
       dep: 100,
       'no-line': 260,
     };
-    sim
+
+    this.sim
       .nodes(data.nodes)
       .on('tick', ticked);
 
-    sim
+    this.sim
       .force('link')
       .links(data.links)
       .distance(d => distanceMap[d.type] || 50)
       // .iterations(16)
     ;
-    console.log('d3 did mount', this.d3Node);
-  }
-
-  initDiagram() {
-    
-  }
-
-  refreshDiagram(data) {
-
   }
 
   render() {

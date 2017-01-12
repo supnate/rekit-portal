@@ -75,10 +75,11 @@ export const getElementDiagramData = createSelector(
     // remove duplicated nodes
     nodes = _.uniqBy(nodes, 'id');
     links = _.uniqBy(links, l => `${l.source}->${l.target}`);
+    // const getSortKey = n => console.log(elementById[n.id].feature) || (elementById[n.id].feature || elementById[n].type);
+    // nodes.sort((n1, n2) => getSortKey(n1).localeCompare(getSortKey(n2)));
 
     // add features node
     nodes.forEach((n) => {
-      console.log(elementById, n.id);
       const ele = elementById[n.id];
       if (ele.feature !== element.feature) {
         if (!_.find(nodes, { id: ele.feature })) {
@@ -102,6 +103,19 @@ export const getElementDiagramData = createSelector(
         });
       }
     });
+
+    const featureNodes = nodes.filter(n => n.type === 'feature');
+
+    // Third, add links of features
+    for (let i = 0; i < featureNodes.length; i++) {
+      for (let j = i + 1; j < featureNodes.length; j++) {
+        links.push({
+          source: featureNodes[i],
+          target: featureNodes[j],
+          type: 'no-line',
+        });
+      }
+    }
 
     return { nodes, links };
   },
