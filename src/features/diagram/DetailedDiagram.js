@@ -280,7 +280,7 @@ export class DetailedDiagram extends Component {
 function mapStateToProps(state) {
   return {
     diagram: state.diagram,
-    diagramData: getDetailedProjectDiagramData(state),
+    diagramData: getDetailedProjectDiagramData(state.home),
   };
 }
 

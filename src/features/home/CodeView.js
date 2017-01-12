@@ -51,9 +51,8 @@ export class CodeView extends PureComponent {
           content: e.toString(),
         });
       });
-    } else {
-      return Promise.resolve();
     }
+    return Promise.resolve();
   }
 
   render() {

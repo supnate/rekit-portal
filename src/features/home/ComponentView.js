@@ -83,7 +83,7 @@ export class ComponentView extends Component {
           <TabPane tab="Style" key="style" />
           <TabPane tab="Test" key="test" />
         </Tabs>
-        {tabKey === 'diagram' && <ElementDiagram />}
+        {tabKey === 'diagram' && <ElementDiagram homeStore={this.props.home} elementId={data.file} />}
         {tabKey !== 'diagram' && <CodeView file={codeFile} />}
 
       </div>

@@ -383,7 +383,7 @@ function mapStateToProps(state) {
   return {
     home: state.home,
     diagram: state.diagram,
-    diagramData: getProjectDiagramData(state),
+    diagramData: getProjectDiagramData(state.home),
   };
 }
 
