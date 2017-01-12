@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import * as actions from './redux/actions';
-import { getDetailedProjectDiagramData } from './selectors';
+import { getDetailedDiagramData } from './selectors/getDetailedDiagramData';
 
 export class DetailedDiagram extends Component {
   static propTypes = {
@@ -280,7 +280,7 @@ export class DetailedDiagram extends Component {
 function mapStateToProps(state) {
   return {
     diagram: state.diagram,
-    diagramData: getDetailedProjectDiagramData(state.home),
+    diagramData: getDetailedDiagramData(state.home),
   };
 }
 

@@ -1,6 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import * as d3 from 'd3';
-import { getElementDiagramData } from './selectors';
+import { getElementDiagramData } from './selectors/getElementDiagramData';
 
 export default class ElementDiagram extends PureComponent {
   static propTypes = {
@@ -19,13 +19,18 @@ export default class ElementDiagram extends PureComponent {
       .attr('height', chartHeight)
     ;
 
+    // TODO: Why not equal to r?
+    const refXMap = {
+      'dep-on': 26,
+      'dep-by': 76,
+    };
     svg.append('svg:defs').selectAll('marker')
-      .data(['action', 'component', 'misc'])
+      .data(['dep-on', 'dep-by'])
       .enter()
       .append('svg:marker')
       .attr('id', String)
       .attr('viewBox', '0 -5 10 10')
-      .attr('refX', 62)
+      .attr('refX', d => refXMap[d])
       .attr('refY', 0)
       .attr('markerWidth', 6)
       .attr('markerHeight', 6)
@@ -41,7 +46,7 @@ console.log('data: ', data);
     const sim = d3
       .forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
-      .force('collide', d3.forceCollide(d => d.r + 8).strength(1).iterations(16))
+      .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(chartWidth / 2, chartHeight / 2))
       ;
@@ -66,11 +71,20 @@ console.log('data: ', data);
     const link = svg.append('g')
       .attr('class', 'links')
       .selectAll('line')
-      .data(data.links)
+      .data(data.links.filter(l => l.type !== 'no-line'))
       .enter()
       .append('line')
-      .attr('stroke', 'black')
+      .attr('stroke', '#555')
+      .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === this.props.elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
+
+    const nodeColorMap = {
+      action: '#FF81C3',
+      component: '#FF9900',
+      misc: '#8D6E63',
+      // feature: '#00C0FF',
+      feature: '#FFFFFF',
+    };
 
     const node = svg.append('g')
       .attr('class', 'feature-node')
@@ -79,8 +93,25 @@ console.log('data: ', data);
       .enter()
       .append('circle')
       .attr('r', d => d.r)
+      .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
+      .attr('stroke', '#555')
+      .attr('fill', d => nodeColorMap[d.type])
+      .call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended)
+      );
+
+    const featureNodeInner = svg.append('g')
+      .attr('class', 'feature-node')
+      .selectAll('circle')
+      .data(data.nodes.filter(n => n.type === 'feature'))
+      .enter()
+      .append('circle')
+      .attr('r', d => d.r - 2)
       .attr('stroke-width', 1)
       .attr('stroke', '#555')
+      .attr('fill', '#00C0FF')
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -111,7 +142,11 @@ console.log('data: ', data);
       ;
 
       node
-        .attr('fill', '#aaccff')
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+      ;
+
+      featureNodeInner
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
       ;
@@ -122,6 +157,11 @@ console.log('data: ', data);
       ;
     }
 
+    const distanceMap = {
+      child: 100,
+      dep: 100,
+      'no-line': 260,
+    };
     sim
       .nodes(data.nodes)
       .on('tick', ticked);
@@ -129,10 +169,18 @@ console.log('data: ', data);
     sim
       .force('link')
       .links(data.links)
-      .distance(d => 100)
+      .distance(d => distanceMap[d.type] || 50)
       // .iterations(16)
     ;
     console.log('d3 did mount', this.d3Node);
+  }
+
+  initDiagram() {
+    
+  }
+
+  refreshDiagram(data) {
+
   }
 
   render() {

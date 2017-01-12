@@ -50,12 +50,19 @@ export function reducer(state, action) {
     case HOME_FETCH_PROJECT_DATA_SUCCESS: {
       const featureById = {};
       const elementById = {};
+
+      const setElementById = (ele) => {
+        if (ele.children) {
+          // Only applies to misc
+          ele.children.forEach(setElementById);
+        } else {
+          elementById[ele.file] = ele;
+        }
+      };
       action.data.features.forEach((f) => {
         featureById[f.key] = f;
         elementById[f.key] = f;
-        [...f.components, ...f.actions, ...f.misc].forEach((ele) => {
-          elementById[ele.file] = ele;
-        });
+        [...f.components, ...f.actions, ...f.misc].forEach(setElementById);
       });
 
       return {

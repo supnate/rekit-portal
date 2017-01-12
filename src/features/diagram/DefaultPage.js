@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import { Button, Checkbox, Icon, Popover, Radio } from 'antd';
 import * as actions from './redux/actions';
-import { getProjectDiagramData } from './selectors';
+import { getOverviewDiagramData } from './selectors/getOverviewDiagramData';
 
 import { execCmd, showCmdDialog } from '../rekit-cmds/redux/actions';
 import { TestPage } from '../rekit-cmds';
@@ -383,7 +383,7 @@ function mapStateToProps(state) {
   return {
     home: state.home,
     diagram: state.diagram,
-    diagramData: getProjectDiagramData(state.home),
+    diagramData: getOverviewDiagramData(state.home),
   };
 }
 

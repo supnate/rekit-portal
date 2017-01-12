@@ -22,7 +22,7 @@ export const getElementDiagramData = createSelector(
       id: element.file,
       type: element.type,
       file: element.file,
-      r: 30,
+      r: 40,
     });
 
     features.forEach((fid) => {
@@ -46,7 +46,7 @@ export const getElementDiagramData = createSelector(
               id: dep.file,
               type: dep.type,
               file: dep.file,
-              r: 8,
+              r: 10,
             });
             links.push({
               source: item.file,
@@ -60,7 +60,7 @@ export const getElementDiagramData = createSelector(
               id: item.file,
               type: item.type,
               file: item.file,
-              r: 8,
+              r: 10,
             });
             links.push({
               source: item.file,
@@ -74,6 +74,34 @@ export const getElementDiagramData = createSelector(
 
     // remove duplicated nodes
     nodes = _.uniqBy(nodes, 'id');
+    links = _.uniqBy(links, l => `${l.source}->${l.target}`);
+
+    // add features node
+    nodes.forEach((n) => {
+      console.log(elementById, n.id);
+      const ele = elementById[n.id];
+      if (ele.feature !== element.feature) {
+        if (!_.find(nodes, { id: ele.feature })) {
+          nodes.push({
+            name: featureById[ele.feature].name,
+            id: ele.feature,
+            type: 'feature',
+            r: 20,
+          });
+
+          links.push({
+            source: element.file,
+            target: ele.feature,
+            type: 'no-line',
+          });
+        }
+        links.push({
+          source: ele.feature,
+          target: n.id,
+          type: 'child',
+        });
+      }
+    });
 
     return { nodes, links };
   },
