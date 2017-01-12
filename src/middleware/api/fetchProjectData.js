@@ -3,17 +3,17 @@
 const _ = require('lodash');
 const rekitCore = require('rekit-core');
 
-const { refactor } = rekitCore;
+const { refactor, utils } = rekitCore;
 
 function fetchProjectData() {
-  const features = refactor.getFeatures();
-  const data = features.map(f => (Object.assign({
+  const fids = refactor.getFeatures();
+  const features = fids.map(f => (Object.assign({
     key: f,
     type: 'feature',
     name: _.flow(_.lowerCase, _.upperFirst)(f),
   }, refactor.getFeatureStructure(f))));
 
-  data.forEach((f) => {
+  features.forEach((f) => {
     f.components.forEach((item) => {
       item.deps = refactor.getDeps(item.file);
     });
@@ -27,7 +27,11 @@ function fetchProjectData() {
     });
   });
 
-  return data;
+  return {
+    features,
+    projectRoot: utils.getProjectRoot(),
+    cssExt: utils.getCssExt(),
+  };
 }
 
 module.exports = fetchProjectData;

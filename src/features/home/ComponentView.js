@@ -6,7 +6,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Icon, Tabs } from 'antd';
 import * as actions from './redux/actions';
+import { ElementDiagram } from '../diagram';
 import { CodeView } from './';
+
 
 const TabPane = Tabs.TabPane;
 
@@ -47,7 +49,26 @@ export class ComponentView extends Component {
       return this.renderNotFound();
     }
 
+    const { home } = this.props;
+
+    let codeFile;
     const tabKey = this.props.params.tabKey || 'diagram';
+
+    switch (tabKey) {
+      case 'code':
+        codeFile = data.file;
+        break;
+      case 'style':
+        codeFile = `${home.projectRoot}/src/features/${data.feature}/${data.name}.${home.cssExt}`;
+        break;
+      case 'test':
+        codeFile = `${home.projectRoot}/tests/features/${data.feature}/${data.name}.test.js`;
+        break;
+      default:
+        codeFile = data.file;
+        break;
+    }
+
     return (
       <div className="home-component-view">
         <div className="page-title">
@@ -62,7 +83,8 @@ export class ComponentView extends Component {
           <TabPane tab="Style" key="style" />
           <TabPane tab="Test" key="test" />
         </Tabs>
-        {tabKey && <CodeView file={data.file} />}
+        {tabKey === 'diagram' && <ElementDiagram />}
+        {tabKey !== 'diagram' && <CodeView file={codeFile} />}
 
       </div>
     );

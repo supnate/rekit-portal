@@ -63,6 +63,8 @@ export function reducer(state, action) {
         // projectData: action.data,
         elementById,
         featureById,
+        projectRoot: action.data.projectRoot,
+        cssExt: action.data.cssExt,
         fileContentById: {},
         features: action.data.features.map(f => f.key),
         projectDataNeedReload: false,

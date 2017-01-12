@@ -96,7 +96,7 @@ function rekitMiddleware(server) {
           getNavTreeData(req, res);
           break;
         case '/api/project-data':
-          res.write(JSON.stringify({ features: fetchProjectData() }));
+          res.write(JSON.stringify(fetchProjectData()));
           res.end();
           break;
         case '/api/file-content':
