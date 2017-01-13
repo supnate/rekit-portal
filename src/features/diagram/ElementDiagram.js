@@ -2,7 +2,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
-import { Checkbox } from 'antd';
+import { Checkbox, Col, Icon, Popover, Row } from 'antd';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
 import colors from './colors';
 
@@ -239,11 +239,38 @@ export default class ElementDiagram extends PureComponent {
       showText: evt.target.checked,
     });
   }
+
+  renderContextHelp() {
+    return (
+      <div className="diagram-element-diagram-help">
+        <ul>
+          <li><span className="feature" /> Feature</li>
+          <li><span className="action" /> Action</li>
+          <li><span className="component" /> Component</li>
+          <li><span className="misc" /> Misc</li>
+        </ul>
+        <p>
+          This diagram provides a focused view of the relationship between the selected element and others.
+        </p>
+        <p>
+          It's helpful for understanding the project quickly, especially when the project grows and becomes complicated.
+        </p>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="diagram-element-diagram">
         <div className="diagram-header">
-          <Checkbox checked={this.state.showText} onChange={this.handleToggleText}>Show text</Checkbox>
+          <Row>
+            <Col span="18">
+              <Checkbox checked={this.state.showText} onChange={this.handleToggleText}>Show labels</Checkbox>
+            </Col>
+            <Col span="6" style={{ textAlign: 'right' }}>
+              <Popover placement="leftTop" title="Element diagram" content={this.renderContextHelp()}> &nbsp;<Icon style={{ color: '#108ee9', fontSize: 16 }} type="question-circle-o" /></Popover>
+            </Col>
+          </Row>
         </div>
         <div className={`d3-node ${!this.state.showText ? 'no-text' : ''}`} ref={(node) => { this.d3Node = node; }} />
       </div>
