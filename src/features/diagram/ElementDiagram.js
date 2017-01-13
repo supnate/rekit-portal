@@ -2,6 +2,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
+import { Checkbox } from 'antd';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
 import colors from './colors';
 
@@ -12,6 +13,10 @@ export default class ElementDiagram extends PureComponent {
   static propTypes = {
     homeStore: PropTypes.object.isRequired,
     elementId: PropTypes.string.isRequired,
+  };
+
+  state = {
+    showText: true,
   };
 
   componentDidMount() {
@@ -154,13 +159,11 @@ export default class ElementDiagram extends PureComponent {
     const nodeText = this.svg.append('g')
       .selectAll('.node-text')
       // .data(data.nodes.filter(n => n.id === this.props.elementId))
-      .attr('class', 'element-node-text')
       .data(data.nodes)
       .enter()
       .append('g')
       .append('svg:text')
-      .attr('class', 'node-text')
-      .attr('fill', '#333')
+      .attr('class', d => `element-node-text ${d.id !== props.elementId && d.type !== 'feature' ? 'dep-node' : ''}`)
       .attr('transform', 'translate(0, 2)')
       .attr('text-anchor', 'middle')
       .attr('cursor', 'pointer')
@@ -230,10 +233,19 @@ export default class ElementDiagram extends PureComponent {
     console.log('node click: ', ele);
   }
 
+  @autobind
+  handleToggleText(evt) {
+    this.setState({
+      showText: evt.target.checked,
+    });
+  }
   render() {
     return (
       <div className="diagram-element-diagram">
-        <div className="d3-node" ref={(node) => { this.d3Node = node; }} />
+        <div className="diagram-header">
+          <Checkbox checked={this.state.showText} onChange={this.handleToggleText}>Show text</Checkbox>
+        </div>
+        <div className={`d3-node ${!this.state.showText ? 'no-text' : ''}`} ref={(node) => { this.d3Node = node; }} />
       </div>
     );
   }
