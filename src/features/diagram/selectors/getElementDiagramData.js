@@ -81,6 +81,10 @@ export const getElementDiagramData = createSelector(
     // add features node
     nodes.forEach((n) => {
       const ele = elementById[n.id];
+      if (n.type === 'constant') {
+        n.name = 'constants';
+        n.type = 'misc';
+      }
       if (ele.feature !== element.feature) {
         if (!_.find(nodes, { id: ele.feature })) {
           nodes.push({
