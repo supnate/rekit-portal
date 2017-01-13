@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import enUS from 'antd/lib/locale-provider/en_US';
-import { LocaleProvider, message, Modal, Spin } from 'antd';
+import { Layout, LocaleProvider, message, Modal, Spin } from 'antd';
 import { SidePanel } from './';
 import DialogPlace from '../rekit-cmds/DialogPlace';
 import { fetchProjectData } from './redux/actions';
+
+const { Sider, Content } = Layout;
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -47,7 +49,13 @@ export class App extends Component {
       </div>
     );
   }
-
+// <div className="home-app">
+//           <SidePanel />
+//           <div className="page-container">
+//             {this.props.children}
+//           </div>
+//           <DialogPlace />
+//         </div>
   render() {
     if (!this.props.home.features) {
       return this.renderLoading();
@@ -55,13 +63,14 @@ export class App extends Component {
 
     return (
       <LocaleProvider locale={enUS}>
-        <div className="home-app">
-          <SidePanel />
-          <div className="page-container">
+        <Layout className="home-app">
+          <Sider width="320">
+            <SidePanel />
+          </Sider>
+          <Content className="page-container">
             {this.props.children}
-          </div>
-          <DialogPlace />
-        </div>
+          </Content>
+        </Layout>
       </LocaleProvider>
     );
   }
