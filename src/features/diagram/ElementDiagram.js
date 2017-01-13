@@ -1,4 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
@@ -46,8 +47,6 @@ export default class ElementDiagram extends PureComponent {
     // this.node = this.svg.append('g');
     // this.featureNodeInner = this.svg.append('g');
     // this.nodeText = this.svg.append('g');
-
-    
 
     this.refresh(this.props);
   }
@@ -118,7 +117,9 @@ export default class ElementDiagram extends PureComponent {
       .attr('r', d => d.r)
       .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
       .attr('stroke', '#555')
+      .attr('cursor', 'pointer')
       .attr('fill', d => colors[d.type])
+      .on('click', this.handleNodeClick)
     ;
     node
       .call(d3.drag()
@@ -135,9 +136,11 @@ export default class ElementDiagram extends PureComponent {
       .enter()
       .append('circle')
       .attr('r', d => d.r - 2)
+      .attr('cursor', 'pointer')
       .attr('stroke-width', 1)
       .attr('stroke', '#555')
       .attr('fill', '#00C0FF')
+      .on('click', this.handleNodeClick)
     ;
     featureNodeInner
       .call(d3.drag()
@@ -159,8 +162,17 @@ export default class ElementDiagram extends PureComponent {
       .attr('fill', '#333')
       .attr('transform', 'translate(0, 2)')
       .attr('text-anchor', 'middle')
+      .attr('cursor', 'pointer')
       .attr('font-size', 8)
       .text(d => d.name)
+      .on('click', this.handleNodeClick)
+    ;
+    nodeText
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended)
+      )
     ;
 
     const _this = this; // eslint-disable-line
@@ -204,6 +216,17 @@ export default class ElementDiagram extends PureComponent {
       .distance(d => distanceMap[d.type] || 50)
       // .iterations(16)
     ;
+  }
+
+  @autobind
+  handleNodeClick(node) {
+    const home = this.props.homeStore;
+    const ele = home.elementById[node.id];
+    if (ele.type !== 'feature') {
+      const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
+      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+    }
+    console.log('node click: ', ele);
   }
 
   render() {
