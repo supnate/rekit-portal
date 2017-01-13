@@ -3,8 +3,8 @@ import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
 
-const chartWidth = 800;
-const chartHeight = 600;
+const chartWidth = 600;
+const chartHeight = 500;
 
 export default class ElementDiagram extends PureComponent {
   static propTypes = {

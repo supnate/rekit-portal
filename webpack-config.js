@@ -25,6 +25,11 @@ module.exports = (type) => { // eslint-disable-line
     }[type],
     cache: true,
     context: path.join(__dirname, 'src'),
+    performance: {
+      hints: false,
+      maxEntrypointSize: 250,
+      maxAssetSize: 1000,
+    },
     entry: {
       dev: {
         main: [

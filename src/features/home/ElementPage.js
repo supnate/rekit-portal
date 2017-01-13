@@ -9,10 +9,9 @@ import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
 import { CodeView } from './';
 
-
 const TabPane = Tabs.TabPane;
 
-export class ComponentView extends Component {
+export class ElementPage extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -108,4 +107,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ComponentView);
+)(ElementPage);

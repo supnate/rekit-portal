@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import enUS from 'antd/lib/locale-provider/en_US';
 import { LocaleProvider, message, Modal, Spin } from 'antd';
-import { SidePanel } from '../features/home';
-import DialogPlace from '../features/rekit-cmds/DialogPlace';
-import { fetchProjectData } from '../features/home/redux/actions';
+import { SidePanel } from './';
+import DialogPlace from '../rekit-cmds/DialogPlace';
+import { fetchProjectData } from './redux/actions';
 
 /*
   This is the root component of your app. Here you define the overall layout
@@ -41,7 +41,7 @@ export class App extends Component {
 
   renderLoading() {
     return (
-      <div className="app loading">
+      <div className="home-app loading">
         <Spin />
         <span style={{ marginLeft: 20 }}>Loading...</span>
       </div>
@@ -55,7 +55,7 @@ export class App extends Component {
 
     return (
       <LocaleProvider locale={enUS}>
-        <div className="app">
+        <div className="home-app">
           <SidePanel />
           <div className="page-container">
             {this.props.children}

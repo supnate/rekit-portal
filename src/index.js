@@ -3,9 +3,9 @@ import React from 'react';
 import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
 import io from 'socket.io-client';
-import Root from './containers/Root';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import Root from './Root';
 import configStore from './common/configStore';
 
 const store = configStore();
@@ -43,8 +43,8 @@ render(
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./containers/Root', () => {
-    const NextRoot = require('./containers/Root').default; // eslint-disable-line
+  module.hot.accept('./Root', () => {
+    const NextRoot = require('./Root').default; // eslint-disable-line
     render(
       <AppContainer>
         <NextRoot store={store} history={history} />
