@@ -97,6 +97,7 @@ export default class ElementDiagram extends PureComponent {
       .enter()
       .append('line')
       .attr('stroke', '#555')
+      .attr('stroke-dasharray', d => (d.target === props.elementId ? '3, 3' : ''))
       .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === props.elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
 

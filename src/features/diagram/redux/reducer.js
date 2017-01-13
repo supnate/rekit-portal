@@ -1,8 +1,6 @@
 import initialState from './initialState';
-import { reducer as sampleAction } from './sampleAction';
 
 const reducers = [
-  sampleAction,
 ];
 
 export default function reducer(state = initialState, action) {
