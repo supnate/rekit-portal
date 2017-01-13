@@ -4,7 +4,7 @@ import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { Checkbox, Col, Icon, Popover, Row } from 'antd';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
-import colors from './colors';
+import { colors } from '../common';
 
 const chartWidth = 600;
 const chartHeight = 500;
@@ -167,7 +167,6 @@ export default class ElementDiagram extends PureComponent {
       .attr('transform', 'translate(0, 2)')
       .attr('text-anchor', 'middle')
       .attr('cursor', 'pointer')
-      .attr('font-size', 8)
       .text(d => d.name)
       .on('click', this.handleNodeClick)
     ;

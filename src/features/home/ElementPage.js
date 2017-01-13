@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Icon, Tabs } from 'antd';
 import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
+import { colors } from '../common';
 import { CodeView } from './';
 
 const TabPane = Tabs.TabPane;
@@ -71,11 +72,17 @@ export class ElementPage extends Component {
         break;
     }
 
+    const iconTypes = {
+      component: 'appstore-o',
+      action: 'notification',
+      misc: 'file',
+    };
+
     return (
       <div className="home-element-page">
         <div className="page-title">
           <h2 style={{ fontWeight: 'normal' }}>
-            <Icon type="appstore-o" style={{ color: '#F08036' }} /> {this.props.params.feature} / {data.name}
+            <Icon type={iconTypes[data.type] || 'file'} style={{ color: colors[data.type] }} /> {this.props.params.feature} / {data.name}
           </h2>
         </div>
         <br />
