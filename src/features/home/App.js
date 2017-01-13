@@ -19,7 +19,7 @@ export class App extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-    children: PropTypes.node,
+    children: PropTypes.node.isRequired,
   };
 
   componentDidMount() {
@@ -49,13 +49,7 @@ export class App extends Component {
       </div>
     );
   }
-// <div className="home-app">
-//           <SidePanel />
-//           <div className="page-container">
-//             {this.props.children}
-//           </div>
-//           <DialogPlace />
-//         </div>
+
   render() {
     if (!this.props.home.features) {
       return this.renderLoading();
@@ -66,6 +60,7 @@ export class App extends Component {
         <Layout className="home-app">
           <Sider width="320">
             <SidePanel />
+            <DialogPlace />
           </Sider>
           <Content className="page-container">
             {this.props.children}

@@ -2,6 +2,7 @@ import React, { PureComponent, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
+import colors from './colors';
 
 const chartWidth = 600;
 const chartHeight = 500;
@@ -100,13 +101,13 @@ export default class ElementDiagram extends PureComponent {
       .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === props.elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
 
-    const nodeColorMap = {
-      action: '#FF81C3',
-      component: '#FF9900',
-      misc: '#8D6E63',
-      // feature: '#00C0FF',
-      feature: '#FFFFFF',
-    };
+    // const nodeColorMap = {
+    //   action: '#FF81C3',
+    //   component: '#FF9900',
+    //   misc: '#8D6E63',
+    //   // feature: '#00C0FF',
+    //   feature: '#FFFFFF',
+    // };
 
     const node = this.svg.append('g')
       .selectAll('circle')
@@ -117,7 +118,7 @@ export default class ElementDiagram extends PureComponent {
       .attr('r', d => d.r)
       .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
       .attr('stroke', '#555')
-      .attr('fill', d => nodeColorMap[d.type])
+      .attr('fill', d => colors[d.type])
     ;
     node
       .call(d3.drag()

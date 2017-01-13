@@ -147,14 +147,14 @@ export class ProjectExplorer extends Component {
         expandedKeys = [...expandedKeys, key];
       }
     } else {
-      if (selectedKey !== key) {
-        // selection changed
-      }
       // key is the full file path
-      const ele = this.props.home.elementById[key];
-
       selectedKey = key;
-      browserHistory.push(`/component/${ele.feature}/${ele.name}`);
+
+      const prjRoot = this.props.home.projectRoot;
+      const ele = this.props.home.elementById[key];
+      const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
+
+      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
     }
 
     this.setState({

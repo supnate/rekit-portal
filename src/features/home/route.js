@@ -6,6 +6,6 @@ export default {
   path: '',
   name: 'Home',
   childRoutes: [
-    { path: '/component/:feature/:component(/:tabKey)', name: 'Element page', component: ElementPage },
+    { path: '/element/:feature/:file/:type', name: 'Element page', component: ElementPage },
   ],
 };

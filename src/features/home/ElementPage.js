@@ -22,28 +22,31 @@ export class ElementPage extends Component {
     params: {},
   };
 
-  getComponentData() {
-    const { featureById } = this.props.home;
-    const { feature, component } = this.props.params;
-    return _.find(featureById[feature].components, { name: component });
+  getElementData() {
+    const { elementById, projectRoot } = this.props.home;
+    const { feature, file } = this.props.params;
+    const fullPath = `${projectRoot}/src/features/${feature}/${file}`;
+
+    return elementById[fullPath];
+    // return _.find(featureById[feature].components, { name: ele.name });
   }
 
   @autobind
   handleTabChange(tabKey) {
-    const data = this.getComponentData();
-    browserHistory.push(`/component/${data.feature}/${data.name}/${tabKey}`);
+    const data = this.getElementData();
+    browserHistory.push(`/element/${data.feature}/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
   }
 
   renderNotFound() {
     return (
-      <div className="home-component-view">
+      <div className="home-element-page">
         Not found.
       </div>
     );
   }
 
   render() {
-    const data = this.getComponentData();
+    const data = this.getElementData();
     if (!data) {
       return this.renderNotFound();
     }
@@ -51,7 +54,7 @@ export class ElementPage extends Component {
     const { home } = this.props;
 
     let codeFile;
-    const tabKey = this.props.params.tabKey || 'diagram';
+    const tabKey = this.props.params.type || 'diagram';
 
     switch (tabKey) {
       case 'code':
@@ -61,7 +64,7 @@ export class ElementPage extends Component {
         codeFile = `${home.projectRoot}/src/features/${data.feature}/${data.name}.${home.cssExt}`;
         break;
       case 'test':
-        codeFile = `${home.projectRoot}/tests/features/${data.feature}/${data.name}.test.js`;
+        codeFile = `${home.projectRoot}/tests/features/${data.feature}/${this.props.params.file.replace('.js', '')}.test.js`;
         break;
       default:
         codeFile = data.file;
@@ -69,7 +72,7 @@ export class ElementPage extends Component {
     }
 
     return (
-      <div className="home-component-view">
+      <div className="home-element-page">
         <div className="page-title">
           <h2 style={{ fontWeight: 'normal' }}>
             <Icon type="appstore-o" style={{ color: '#F08036' }} /> {this.props.params.feature} / {data.name}
@@ -77,12 +80,13 @@ export class ElementPage extends Component {
         </div>
         <br />
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
-          <TabPane tab="Diagram" key="diagram" />
+          <TabPane tab="Diagram" key="diagram">
+            <ElementDiagram homeStore={this.props.home} elementId={data.file} />
+          </TabPane>
           <TabPane tab="Code" key="code" />
-          <TabPane tab="Style" key="style" />
+          {data.type === 'component' && <TabPane tab="Style" key="style" />}
           <TabPane tab="Test" key="test" />
         </Tabs>
-        {tabKey === 'diagram' && <ElementDiagram homeStore={this.props.home} elementId={data.file} />}
         {tabKey !== 'diagram' && <CodeView file={codeFile} />}
 
       </div>
