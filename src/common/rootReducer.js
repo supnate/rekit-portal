@@ -4,6 +4,7 @@ import homeReducer from '../features/home/redux/reducer';
 import commonReducer from '../features/common/redux/reducer';
 import rekitCmdsReducer from '../features/rekit-cmds/redux/reducer';
 import diagramReducer from '../features/diagram/redux/reducer';
+import rekitToolsReducer from '../features/rekit-tools/redux/reducer';
 
 const rootReducer = combineReducers({ // REKIT_ARCHOR_DO_NOT_CHANGE
   routing: routerReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({ // REKIT_ARCHOR_DO_NOT_CHANGE
   common: commonReducer,
   rekitCmds: rekitCmdsReducer,
   diagram: diagramReducer,
+  rekitTools: rekitToolsReducer,
 }); // REKIT_ARCHOR_DO_NOT_CHANGE
 
 export default rootReducer;

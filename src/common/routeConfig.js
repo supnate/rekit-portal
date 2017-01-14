@@ -4,6 +4,7 @@ import homeRoute from '../features/home/route';
 import commonRoute from '../features/common/route';
 import rekitCmdsRoute from '../features/rekit-cmds/route';
 import diagramRoute from '../features/diagram/route';
+import rekitToolsRoute from '../features/rekit-tools/route';
 
 const routes = [{// REKIT_ARCHOR_DO_NOT_CHANGE
   path: '/',
@@ -13,6 +14,7 @@ const routes = [{// REKIT_ARCHOR_DO_NOT_CHANGE
     commonRoute,
     rekitCmdsRoute,
     diagramRoute,
+    rekitToolsRoute,
     { path: '*', name: 'Page not found', component: PageNotFound },
   ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)), // REKIT_ARCHOR_DO_NOT_CHANGE // If a feature has no router rules, remove it.
 }];

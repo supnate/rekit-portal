@@ -39,7 +39,7 @@ export class ProjectExplorer extends Component {
   };
 
   state = {
-    expandedKeys: ['common', 'home', 'diagram', 'rekit-cmds'],
+    expandedKeys: ['common', 'home', 'diagram', 'rekit-cmds', 'rekit-tools'],
     contextMenu: [],
     selectedKey: null,
   };
