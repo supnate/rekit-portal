@@ -239,13 +239,17 @@ export class ProjectExplorer extends Component {
       case 'del':
         Modal.confirm({
           title: 'Confirm',
-          content: `Delete ${cmdContext.elementType}: ${cmdContext.feature}/${cmdContext.elementName} ? `,
+          content: cmdContext.elementType === 'feature'
+            ? `Delete ${cmdContext.elementType}: ${cmdContext.elementName} ? `
+            : `Delete ${cmdContext.elementType}: ${cmdContext.feature}/${cmdContext.elementName} ? `,
           onOk: () => {
             const hide = message.loading(`Deleting ${cmdContext.elementName}`, 0);
             this.props.actions.execCmd({
               commandName: 'remove',
               type: cmdContext.elementType,
-              name: `${cmdContext.feature}/${cmdContext.elementName}`,
+              name: cmdContext.elementType === 'feature'
+                ? `${cmdContext.elementName}`
+                : `${cmdContext.feature}/${cmdContext.elementName}`,
             })
             .then(() => {
               hide();
