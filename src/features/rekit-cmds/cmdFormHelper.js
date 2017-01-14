@@ -8,10 +8,12 @@ const baseMeta = {
 };
 
 export function getMeta(cmdType, cmdArgs) {
-  const meta = {
-  };
+  const meta = {};
   const fields = [];
   switch (cmdType) {
+    case 'add-feature':
+      fields.push(baseMeta.name);
+      break;
     case 'add-action':
       fields.push(
         { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
@@ -30,7 +32,7 @@ export function getMeta(cmdType, cmdArgs) {
     case 'rename':
     case 'move':
       fields.push(
-        { ...baseMeta.feature, initialValue: cmdArgs.feature, key: 'targetFeature', label: 'Target feature' },
+        cmdArgs.elementType !== 'feature' && { ...baseMeta.feature, initialValue: cmdArgs.feature, key: 'targetFeature', label: 'Target feature' },
         { ...baseMeta.name, initialValue: cmdArgs.elementName, key: 'newName', label: 'New name' },
       );
       break;
@@ -45,7 +47,14 @@ export function getMeta(cmdType, cmdArgs) {
 }
 
 export function convertArgs(values, cmdArgs) {
+  console.log('cmd args: ', cmdArgs);
   switch (cmdArgs.type) {
+    case 'add-feature':
+      return {
+        commandName: 'add',
+        type: 'feature',
+        name: values.name,
+      };
     case 'add-action':
       return {
         commandName: 'add',
@@ -66,8 +75,8 @@ export function convertArgs(values, cmdArgs) {
       return {
         commandName: 'move',
         type: cmdArgs.elementType,
-        source: `${cmdArgs.feature}/${cmdArgs.elementName}`,
-        target: `${values.targetFeature}/${values.newName}`,
+        source: cmdArgs.elementType === 'feature' ? cmdArgs.feature : `${cmdArgs.feature}/${cmdArgs.elementName}`,
+        target: cmdArgs.elementType === 'feature' ? values.newName : `${values.targetFeature}/${values.newName}`,
       };
     default:
       console.log('Unknown cmd type: ', cmdArgs.type);

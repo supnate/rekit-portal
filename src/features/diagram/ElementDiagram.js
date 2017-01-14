@@ -252,7 +252,7 @@ export default class ElementDiagram extends PureComponent {
           This diagram provides a focused view of the relationship between the selected element and others.
         </p>
         <p>
-          It's helpful for understanding the project quickly, especially when the project grows and becomes complicated.
+          It helps to understand a module quickly, and helps to find out those over-complicated modules.
         </p>
       </div>
     );
@@ -267,7 +267,7 @@ export default class ElementDiagram extends PureComponent {
               <Checkbox checked={this.state.showText} onChange={this.handleToggleText}>Show labels</Checkbox>
             </Col>
             <Col span="6" style={{ textAlign: 'right' }}>
-              <Popover placement="leftTop" title="Element diagram" content={this.renderContextHelp()}> &nbsp;<Icon style={{ color: '#108ee9', fontSize: 16 }} type="question-circle-o" /></Popover>
+              <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Element diagram</p>} content={this.renderContextHelp()}> &nbsp;<Icon style={{ color: '#108ee9', fontSize: 16 }} type="question-circle-o" /></Popover>
             </Col>
           </Row>
         </div>

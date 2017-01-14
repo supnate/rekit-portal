@@ -1,5 +1,6 @@
 import initialState from './initialState';
 import { reducer as testAction } from './testAction';
+import { a1Reducer } from './a1';
 
 const reducers = [
   testAction,

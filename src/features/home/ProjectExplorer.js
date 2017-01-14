@@ -106,30 +106,41 @@ export class ProjectExplorer extends Component {
   }
 
   createCmdContext(evt) {
+    const key = evt.node.props.eventKey;
     const { home } = this.props;
-    const pos = evt.node.props.pos.split('-').map(index => parseInt(index, 10));
+    const ele = home.elementById[key];
 
-    const elementTypes = ['route', 'action', 'component'];
-    const feature = (pos.length > 1 && home.features[pos[1]]) || null;
-    const elementType = elementTypes[pos[2]] || null;
-    let elementName = null;
-    if (pos.length === 4) {
-      switch (elementType) {
-        case 'action':
-          elementName = home.featureById[feature].actions[pos[3]].name;
-          break;
-        case 'component':
-          elementName = home.featureById[feature].components[pos[3]].name;
-          break;
-        default:
-          break;
-      }
+    if (ele) {
+      this.cmdContext = {
+        feature: ele.feature,
+        elementType: ele.type,
+        elementName: ele.name,
+      };
+    } else {
+      const pos = evt.node.props.pos.split('-').map(index => parseInt(index, 10));
+
+      const elementTypes = ['route', 'action', 'component'];
+      const feature = (pos.length > 1 && home.features[pos[1]]) || null;
+      const elementType = elementTypes[pos[2]] || null;
+      // let elementName = null;
+      // if (pos.length === 4) {
+      //   switch (elementType) {
+      //     case 'action':
+      //       elementName = home.featureById[feature].actions[pos[3]].name;
+      //       break;
+      //     case 'component':
+      //       elementName = home.featureById[feature].components[pos[3]].name;
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // }
+      this.cmdContext = {
+        feature,
+        elementType,
+        elementName: null,
+      };
     }
-    this.cmdContext = {
-      feature,
-      elementType,
-      elementName,
-    };
   }
 
   @autobind

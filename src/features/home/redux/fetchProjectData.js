@@ -60,6 +60,7 @@ export function reducer(state, action) {
         }
       };
       action.data.features.forEach((f) => {
+        f.feature = f.key;
         featureById[f.key] = f;
         elementById[f.key] = f;
         [...f.components, ...f.actions, ...f.misc].forEach(setElementById);

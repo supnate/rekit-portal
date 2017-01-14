@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { Button, Col, Dropdown, Icon, Input, Menu, Row } from 'antd';
 import * as actions from './redux/actions';
+import { showCmdDialog } from '../rekit-cmds/redux/actions';
 import { ProjectExplorer } from './';
 
 
@@ -14,19 +15,33 @@ export class SidePanel extends Component {
   };
 
   @autobind
-  handleAddMenuClick() {
+  handleAddMenuClick(evt) {
+    console.log('menu click', evt);
+
+    switch (evt.key) {
+      case 'add-feature':
+      case 'add-component':
+      case 'add-action':
+        this.props.actions.showCmdDialog('cmd', {
+          type: evt.key,
+          ...this.cmdContext,
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   @autobind
   renderAddMenu() {
     return (
       <Menu onClick={this.handleAddMenuClick}>
-        <Menu.Item key="1"><Icon type="book" style={{ color: '#29b6f6' }} /> &nbsp;Add feature</Menu.Item>
-        <Menu.Item key="2"><Icon type="notification" style={{ color: '#ec407a' }} /> &nbsp;Add action</Menu.Item>
-        <Menu.Item key="3"><Icon type="appstore-o" style={{ color: '#F08036' }} /> &nbsp;Add component</Menu.Item>
-        <Menu.Item key="4"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Run tests</Menu.Item>
-        <Menu.Item key="5"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Test coverage</Menu.Item>
-        <Menu.Item key="6"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Build</Menu.Item>
+        <Menu.Item key="add-feature"><Icon type="book" style={{ color: '#29b6f6' }} /> &nbsp;Add feature</Menu.Item>
+        <Menu.Item key="add-action"><Icon type="notification" style={{ color: '#ec407a' }} /> &nbsp;Add action</Menu.Item>
+        <Menu.Item key="add-component"><Icon type="appstore-o" style={{ color: '#F08036' }} /> &nbsp;Add component</Menu.Item>
+        <Menu.Item key="run-tests"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Run tests</Menu.Item>
+        <Menu.Item key="test-coverage"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Test coverage</Menu.Item>
+        <Menu.Item key="build"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Build</Menu.Item>
       </Menu>
     );
   }
@@ -65,7 +80,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions, showCmdDialog }, dispatch)
   };
 }
 
