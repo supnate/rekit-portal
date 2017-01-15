@@ -1,5 +1,4 @@
 import axios from 'axios';
-import httpAdapter from 'axios/lib/adapters/http';
 
 import {
   HOME_FETCH_PROJECT_DATA_BEGIN,
@@ -7,11 +6,6 @@ import {
   HOME_FETCH_PROJECT_DATA_FAILURE,
   HOME_FETCH_PROJECT_DATA_DISMISS_ERROR,
 } from './constants';
-
-if (process.env.NODE_ENV === 'test') {
-  axios.defaults.baseURL = 'http://localhost';
-  axios.defaults.adapter = httpAdapter;
-}
 
 export function fetchProjectData() {
   return (dispatch) => {
