@@ -25,33 +25,30 @@ describe('home/redux/fetchProjectData', () => {
   });
 
   it('dispatches success action when fetchProjectData succeeds', () => {
-    nock('http://localhost:6078/')
+    nock('http://localhost')
       .get('/rekit/api/project-data')
-      .reply(200, { data: { features: [] } });
+      .reply(200, { features: [] });
     const store = mockStore({});
-
-    const expectedActions = [
-      { type: HOME_FETCH_PROJECT_DATA_BEGIN },
-      { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: {} },
-    ];
 
     return store.dispatch(fetchProjectData())
       .then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', HOME_FETCH_PROJECT_DATA_BEGIN);
+        expect(actions[1]).to.have.property('type', HOME_FETCH_PROJECT_DATA_SUCCESS);
       });
   });
 
   it('dispatches failure action when fetchProjectData fails', () => {
+    nock('http://localhost')
+      .get('/rekit/api/project-data')
+      .reply(500, { features: [] });
     const store = mockStore({});
-
-    const expectedActions = [
-      { type: HOME_FETCH_PROJECT_DATA_BEGIN },
-      { type: HOME_FETCH_PROJECT_DATA_FAILURE, data: { error: {} } },
-    ];
 
     return store.dispatch(fetchProjectData({}))
       .catch(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', HOME_FETCH_PROJECT_DATA_BEGIN);
+        expect(actions[1]).to.have.deep.property('data.error');
       });
   });
 
