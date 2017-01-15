@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Alert, Button, Col, Icon, Row } from 'antd';
+import { Button, Col, Icon, Row } from 'antd';
 import Convert from 'ansi-to-html';
 import * as actions from './redux/actions';
 
@@ -40,6 +40,7 @@ export class BuildPage extends Component {
           </Col>
         </Row>
         <hr />
+        {!runBuildRunning && !output.length && <div style={{ marginTop: 20 }}>Click run build button to start the build.</div>}
         {output.length > 0 &&
           <div className="output-container">
             <ul>

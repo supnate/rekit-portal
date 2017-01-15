@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -27,6 +28,9 @@ export class SidePanel extends Component {
           type: evt.key,
           ...this.cmdContext,
         });
+        break;
+      case 'build':
+        browserHistory.push('/tools/build');
         break;
       default:
         break;

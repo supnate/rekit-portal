@@ -48,16 +48,6 @@ wp.on('aggregated', (changes) => {
 
 const rootPath = '/rekit';
 
-function getNavTreeData(req, res) {
-  const features = refactor.getFeatures();
-  const data = features.map(f => (Object.assign({
-    key: f,
-    name: _.flow(_.lowerCase, _.upperFirst)(f),
-  }, refactor.getFeatureStructure(f))));
-  res.write(JSON.stringify({ features: data }));
-  res.end();
-}
-
 function execCmd(req, res) {
   try {
     const args = req.body;
@@ -94,11 +84,11 @@ function rekitMiddleware(server) {
 
     try {
       switch (p) {
-        case '/api/nav-tree-data':
-          getNavTreeData(req, res);
-          break;
         case '/api/project-data':
-          res.write(JSON.stringify(fetchProjectData()));
+
+          res.write(JSON.stringify(Object.assign({
+            bgProcesses,
+          }, fetchProjectData())));
           res.end();
           break;
         case '/api/file-content':
@@ -113,9 +103,20 @@ function rekitMiddleware(server) {
           //   res.write(JSON.stringify(data));
           //   res.end();
           // });
-          runBuild(io);
-          res.write('');
-          res.end();
+          if (bgProcesses.runningBuild) {
+            res.statusCode = 500;
+            res.write(JSON.stringify({ error: 'Build process is running...' }));
+            res.end();
+          } else {
+            bgProcesses.runningBuild = true;
+            runBuild(io).then(() => {
+              bgProcesses.runningBuild = false;
+            }).catch(() => {
+              bgProcesses.runningBuild = false;
+            });
+            res.write('{}');
+            res.end();
+          }
           break;
         default: {
           if (/^\/api\//.test(p)) {
