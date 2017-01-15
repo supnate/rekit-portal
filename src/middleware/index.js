@@ -14,6 +14,8 @@ rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 let io = null;
 
+const bgProcesses = {};
+
 const wp = new Watchpack({
   // options:
   aggregateTimeout: 1000,
@@ -78,7 +80,6 @@ function setupSocketIo(server) {
   io = require('socket.io')(server);
 
   io.on('connection', (client) => {
-    console.log('new connection:');
     client.on('disconnect', () => {
       console.log('socket disconnected');
     });
@@ -108,10 +109,13 @@ function rekitMiddleware(server) {
           execCmd(req, res);
           break;
         case '/api/run-build':
-          runBuild().then((data) => {
-            res.write(JSON.stringify(data));
-            res.end();
-          });
+          // runBuild().then((data) => {
+          //   res.write(JSON.stringify(data));
+          //   res.end();
+          // });
+          runBuild(io);
+          res.write('');
+          res.end();
           break;
         default: {
           if (/^\/api\//.test(p)) {

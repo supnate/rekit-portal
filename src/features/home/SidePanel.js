@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import { Button, Col, Dropdown, Icon, Input, Menu, Row } from 'antd';
+import { Dropdown, Icon, Input, Menu } from 'antd';
 import * as actions from './redux/actions';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
 import { ProjectExplorer } from './';
@@ -47,22 +48,23 @@ export class SidePanel extends Component {
   }
 
   render() {
+    let prjName = this.props.home.projectRoot.split('/').pop();
+    prjName = _.upperFirst(_.lowerCase(prjName));
     return (
       <div className="home-side-panel">
+        <div className="header">
+          <a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
+            <img src={require('../../images/logo_small.png')} alt="Rekit logo" />
+          </a>
+          <h5 title={this.props.home.projectRoot}>{prjName}</h5>
+          <Dropdown overlay={this.renderAddMenu()}>
+            <label style={{ display: 'inline-block', transform: 'translateY(4px)', cursor: 'pointer' }}>
+              <Icon type="ellipsis" style={{ fontSize: '20px', fontWeight: 'bold' }} />
+            </label>
+          </Dropdown>
+        </div>
         <div className="toolbar">
-          <Row>
-            <Col span={18}>
-              <Input.Search />
-            </Col>
-            <Col span={6} style={{ textAlign: 'right' }}>
-              <Dropdown overlay={this.renderAddMenu()}>
-                <label style={{ display: 'inline-block', transform: 'translateY(4px)', cursor: 'pointer' }}>
-                  <Icon type="ellipsis" style={{ fontSize: '20px', fontWeight: 'bold' }} />
-                  
-                </label>
-              </Dropdown>
-            </Col>
-          </Row>
+          <Input.Search />
         </div>
         <ProjectExplorer />
       </div>

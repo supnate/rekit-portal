@@ -23,6 +23,21 @@ socket.on('fileChanged', (data) => {
   });
 });
 
+socket.on('output', (data) => {
+  console.log('on output: ', data);
+  store.dispatch({
+    type: 'REKIT_PORTAL_OUTPUT',
+    data,
+  });
+});
+
+socket.on('build-finished', (data) => {
+  store.dispatch({
+    type: 'REKIT_TOOLS_BUILD_FINISHED',
+    data,
+  });
+});
+
 socket.on('disconnect', () => {
   console.log('[PORTAL] disconnected.');
 });

@@ -1,2 +1,2 @@
 export { default as TestCoveragePage } from './TestCoveragePage';
-export { default as BuildPageJs } from './BuildPageJs';
+export { default as BuildPage } from './BuildPage';

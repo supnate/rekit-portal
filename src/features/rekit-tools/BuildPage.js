@@ -8,8 +8,7 @@ import * as actions from './redux/actions';
 
 const convert = new Convert();
 
-
-export class BuildPageJs extends Component {
+export class BuildPage extends Component {
   static propTypes = {
     rekitTools: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
@@ -27,26 +26,29 @@ export class BuildPageJs extends Component {
 
   render() {
     const output = this.props.rekitTools.runBuildOutput || [];
+    const { runBuildRunning } = this.props.rekitTools;
     return (
-      <div className="rekit-tools-build-page-js">
-        <h2>Build</h2>
-        <Alert type="info" showIcon message="You have not run any build yet." />
+      <div className="rekit-tools-build-page">
         <Row>
           <Col span="16">
-            <Button type="primary" onClick={this.handleBuildButtonClick}>Run build</Button>
+            <Button type="primary" disabled={runBuildRunning} onClick={this.handleBuildButtonClick}>
+              {runBuildRunning ? 'Building...' : 'Run build'}
+            </Button>
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>
-            <Button type="ghost"><Icon type="export" />Access the built application</Button>
+            <Button type="ghost" disabled={runBuildRunning}><Icon type="export" />Access the built application</Button>
           </Col>
         </Row>
         <hr />
-        <div className="output-container">
-          <ul>
-            {output.map((text, i) =>
-              <li key={i} dangerouslySetInnerHTML={{ __html: convert.toHtml(text).replace(/color:#555/g, 'color:#777') }} />
-            )}
-          </ul>
-        </div>
+        {output.length > 0 &&
+          <div className="output-container">
+            <ul>
+              {output.map((text, i) =>
+                text && <li key={i} dangerouslySetInnerHTML={{ __html: convert.toHtml(text).replace(/color:#555/g, 'color:#777') }} />
+              )}
+            </ul>
+          </div>
+        }
       </div>
     );
   }
@@ -69,4 +71,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuildPageJs);
+)(BuildPage);

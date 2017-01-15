@@ -46,6 +46,7 @@ export function reducer(state, action) {
     case REKIT_TOOLS_RUN_BUILD_BEGIN:
       return {
         ...state,
+        runBuildOutput: null,
         runBuildPending: true,
         runBuildError: null,
       };
@@ -53,9 +54,9 @@ export function reducer(state, action) {
     case REKIT_TOOLS_RUN_BUILD_SUCCESS:
       return {
         ...state,
-        runBuildOutput: action.data.output,
         runBuildPending: false,
         runBuildError: null,
+        runBuildRunning: true,
       };
 
     case REKIT_TOOLS_RUN_BUILD_FAILURE:

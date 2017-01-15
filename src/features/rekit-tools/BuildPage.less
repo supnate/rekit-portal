@@ -1,6 +1,6 @@
 @import '../../styles/mixins.less';
 
-.rekit-tools-build-page-js {
+.rekit-tools-build-page {
   .ant-alert {
     margin-top: 15px;
   }
@@ -8,8 +8,10 @@
     margin-top: 15px;
   }
   hr {
+    height: 0px;
+    border: none;
     margin-top: 15px;
-    border-color: #eee;
+    border-top: 1px solid #ddd;
   }
 
   .output-container {
@@ -18,8 +20,15 @@
     padding: 10px;
     background-color: #333;
     color: #fff;
+    overflow: auto;
 
     font-family: 'Andale Mono', Arial;
     font-size: 13px;
+
+    li {
+      line-height: 20px;
+      height: 20px;
+      padding: 0;
+    }
   }
 }

@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { BuildPageJs } from 'src/features/rekit-tools';
+import { BuildPage } from 'src/features/rekit-tools';
 
-describe('rekit-tools/BuildPageJs', () => {
+describe('rekit-tools/BuildPage', () => {
   it('renders node with correct class name', () => {
     const renderedComponent = shallow(
-      <BuildPageJs />
+      <BuildPage />
     );
 
     expect(
-      renderedComponent.find('.rekit-tools-build-page-js').node
+      renderedComponent.find('.rekit-tools-build-page').node
     ).to.exist;
   });
 });
