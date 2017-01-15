@@ -1,13 +1,13 @@
 import {
-  DefaultPage,
   TestCoveragePage,
+  BuildPageJs,
 } from './index';
 
 export default {
-  path: 'rekit-tools',
+  path: 'tools',
   name: 'Rekit tools',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
     { path: 'test-coverage-page', name: 'Test coverage page', component: TestCoveragePage },
+    { path: 'build', name: 'Build page js', component: BuildPageJs },
   ],
 };

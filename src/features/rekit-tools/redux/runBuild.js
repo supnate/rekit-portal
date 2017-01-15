@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import axios from 'axios';
 import {
   REKIT_TOOLS_RUN_BUILD_BEGIN,
   REKIT_TOOLS_RUN_BUILD_SUCCESS,
@@ -5,29 +7,28 @@ import {
   REKIT_TOOLS_RUN_BUILD_DISMISS_ERROR,
 } from './constants';
 
-export function runBuild(args) {
+export function runBuild() {
   return (dispatch) => {
     dispatch({
       type: REKIT_TOOLS_RUN_BUILD_BEGIN,
     });
-    const promise = new Promise((resolve, reject) => {
-      window.setTimeout(() => {
-        if (args && !args.error) { // NOTE: args.error is only used for demo purpose
-          dispatch({
-            type: REKIT_TOOLS_RUN_BUILD_SUCCESS,
-            data: {},
-          });
-          resolve();
-        } else {
-          dispatch({
-            type: REKIT_TOOLS_RUN_BUILD_FAILURE,
-            data: {
-              error: 'some error',
-            },
-          });
-          reject();
-        }
-      }, 50);
+    const promise = new Promise(async (resolve, reject) => {
+      let res = null;
+      try {
+        res = await axios.post('/rekit/api/run-build');
+      } catch (e) {
+        dispatch({
+          type: REKIT_TOOLS_RUN_BUILD_FAILURE,
+          data: { error: _.get(e, 'response.data') || e.message || e },
+        });
+        reject(e);
+        return;
+      }
+      dispatch({
+        type: REKIT_TOOLS_RUN_BUILD_SUCCESS,
+        data: { output: res.data },
+      });
+      resolve(res.data);
     });
 
     return promise;
@@ -52,6 +53,7 @@ export function reducer(state, action) {
     case REKIT_TOOLS_RUN_BUILD_SUCCESS:
       return {
         ...state,
+        runBuildOutput: action.data.output,
         runBuildPending: false,
         runBuildError: null,
       };

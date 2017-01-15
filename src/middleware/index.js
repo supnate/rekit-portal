@@ -6,6 +6,7 @@ const Watchpack = require('watchpack');
 const rekitCore = require('rekit-core');
 const fetchProjectData = require('./api/fetchProjectData');
 const getFileContent = require('./api/getFileContent');
+const runBuild = require('./api/runBuild');
 
 const refactor = rekitCore.refactor;
 
@@ -106,9 +107,22 @@ function rekitMiddleware(server) {
         case '/api/exec-cmd':
           execCmd(req, res);
           break;
-        default:
-          next();
+        case '/api/run-build':
+          runBuild().then((data) => {
+            res.write(JSON.stringify(data));
+            res.end();
+          });
           break;
+        default: {
+          if (/^\/api\//.test(p)) {
+            res.statusCode = 404;
+            res.write(JSON.stringify({ error: `API not found: ${p}` }));
+            res.end();
+          } else {
+            next();
+          }
+          break;
+        }
       }
     } catch (e) {
       res.statusCode = 500;

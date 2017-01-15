@@ -104,6 +104,12 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
+ansi-to-html@^0.5.0:
+  version "0.5.0"
+  resolved "http://registry.npm.taobao.org/ansi-to-html/download/ansi-to-html-0.5.0.tgz#e933ac19b1623b09104899ac0fc838443c3cb511"
+  dependencies:
+    entities "^1.1.1"
+
 antd@^2.6.1:
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/antd/download/antd-2.6.1.tgz#57b269af389d8bd3ac21dee1889ef099ab1c32cf"

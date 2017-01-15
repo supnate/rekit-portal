@@ -8,6 +8,7 @@ const crypto = require('crypto');
 // const utils = require('./lib/utils');
 const webpack = require('webpack');
 const config = require('../webpack-config')('dist');
+
 // const ArgumentParser = require('argparse').ArgumentParser;
 
 // const parser = new ArgumentParser({
