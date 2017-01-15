@@ -32,6 +32,9 @@ export class SidePanel extends Component {
       case 'build':
         browserHistory.push('/tools/build');
         break;
+      case 'tests':
+        browserHistory.push('/tools/tests');
+        break;
       default:
         break;
     }
@@ -44,7 +47,7 @@ export class SidePanel extends Component {
         <Menu.Item key="add-feature"><Icon type="book" style={{ color: '#29b6f6' }} /> &nbsp;Add feature</Menu.Item>
         <Menu.Item key="add-action"><Icon type="notification" style={{ color: '#ec407a' }} /> &nbsp;Add action</Menu.Item>
         <Menu.Item key="add-component"><Icon type="appstore-o" style={{ color: '#F08036' }} /> &nbsp;Add component</Menu.Item>
-        <Menu.Item key="run-tests"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Run tests</Menu.Item>
+        <Menu.Item key="tests"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Run tests</Menu.Item>
         <Menu.Item key="test-coverage"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Test coverage</Menu.Item>
         <Menu.Item key="build"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Build</Menu.Item>
       </Menu>
@@ -62,7 +65,7 @@ export class SidePanel extends Component {
           </a>
           <h5 title={this.props.home.projectRoot}>{prjName}</h5>
           <Dropdown overlay={this.renderAddMenu()}>
-            <label style={{ display: 'inline-block', transform: 'translateY(4px)', cursor: 'pointer' }}>
+            <label>
               <Icon type="ellipsis" style={{ fontSize: '20px', fontWeight: 'bold' }} />
             </label>
           </Dropdown>

@@ -25,6 +25,9 @@ describe('home/redux/fetchProjectData', () => {
   });
 
   it('dispatches success action when fetchProjectData succeeds', () => {
+    nock('http://localhost:6078/')
+      .get('/rekit/api/project-data')
+      .reply(200, { data: { features: [] } });
     const store = mockStore({});
 
     const expectedActions = [
@@ -32,7 +35,7 @@ describe('home/redux/fetchProjectData', () => {
       { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: {} },
     ];
 
-    return store.dispatch(fetchProjectData({ error: false }))
+    return store.dispatch(fetchProjectData())
       .then(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
@@ -43,10 +46,10 @@ describe('home/redux/fetchProjectData', () => {
 
     const expectedActions = [
       { type: HOME_FETCH_PROJECT_DATA_BEGIN },
-      { type: HOME_FETCH_PROJECT_DATA_FAILURE, data: { error: 'some error' } },
+      { type: HOME_FETCH_PROJECT_DATA_FAILURE, data: { error: {} } },
     ];
 
-    return store.dispatch(fetchProjectData({ error: true }))
+    return store.dispatch(fetchProjectData({}))
       .catch(() => {
         expect(store.getActions()).to.deep.equal(expectedActions);
       });
@@ -73,7 +76,7 @@ describe('home/redux/fetchProjectData', () => {
     const prevState = { fetchProjectDataPending: true };
     const state = reducer(
       prevState,
-      { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: {} }
+      { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: { features: [] } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.fetchProjectDataPending).to.be.false;

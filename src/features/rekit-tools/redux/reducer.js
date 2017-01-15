@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import initialState from './initialState';
 import { reducer as runBuildReducer } from './runBuild';
+import { reducer as runTestReducer } from './runTest';
 
 import { HOME_FETCH_PROJECT_DATA_SUCCESS } from '../../home/redux/constants';
 
 const reducers = [
   runBuildReducer,
+  runTestReducer,
 ];
 
 export default function reducer(state = initialState, action) {
@@ -16,6 +18,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         runBuildRunning: !!_.get(action.data, 'bgProcesses.runningBuild'),
+        runTestRunning: !!_.get(action.data, 'bgProcesses.runningTest'),
       };
     case 'REKIT_PORTAL_OUTPUT':
       if (action.data.type === 'build') {
@@ -23,12 +26,22 @@ export default function reducer(state = initialState, action) {
           ...state,
           runBuildOutput: [...state.runBuildOutput || [], ...action.data.output],
         };
+      } else if (action.data.type === 'test') {
+        return {
+          ...state,
+          runTestOutput: [...state.runTestOutput || [], ...action.data.output],
+        };
       }
       break;
     case 'REKIT_TOOLS_BUILD_FINISHED':
       return {
         ...state,
         runBuildRunning: false,
+      };
+    case 'REKIT_TOOLS_TEST_FINISHED':
+      return {
+        ...state,
+        runTestRunning: false,
       };
     default:
       newState = state;

@@ -16,14 +16,14 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       },
       {
@@ -39,7 +39,7 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.(png|jpg)$/,
+        test: /\.(png|jpe?g|gif)$/,
         loader: 'url-loader?limit=8192'
       }
     ]

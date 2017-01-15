@@ -7,8 +7,7 @@ const rekitCore = require('rekit-core');
 const fetchProjectData = require('./api/fetchProjectData');
 const getFileContent = require('./api/getFileContent');
 const runBuild = require('./api/runBuild');
-
-const refactor = rekitCore.refactor;
+const runTest = require('./api/runTest');
 
 rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
@@ -99,10 +98,6 @@ function rekitMiddleware(server) {
           execCmd(req, res);
           break;
         case '/api/run-build':
-          // runBuild().then((data) => {
-          //   res.write(JSON.stringify(data));
-          //   res.end();
-          // });
           if (bgProcesses.runningBuild) {
             res.statusCode = 500;
             res.write(JSON.stringify({ error: 'Build process is running...' }));
@@ -113,6 +108,22 @@ function rekitMiddleware(server) {
               bgProcesses.runningBuild = false;
             }).catch(() => {
               bgProcesses.runningBuild = false;
+            });
+            res.write('{}');
+            res.end();
+          }
+          break;
+        case '/api/run-test':
+          if (bgProcesses.runningTest) {
+            res.statusCode = 500;
+            res.write(JSON.stringify({ error: 'Test process is running...' }));
+            res.end();
+          } else {
+            bgProcesses.runningTest = true;
+            runTest(io, req.query.testFile || '').then(() => {
+              bgProcesses.runningTest = false;
+            }).catch(() => {
+              bgProcesses.runningTest = false;
             });
             res.write('{}');
             res.end();

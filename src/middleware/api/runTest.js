@@ -3,13 +3,13 @@
 const rekitCore = require('rekit-core');
 const spawn = require('child_process').spawn;
 
-function runBuild(io) {
+function runBuild(io, testFile) {
   const prjRoot = rekitCore.utils.getProjectRoot();
   return new Promise((resolve) => {
+    const args = [`${prjRoot}/tools/run_test.js`];
+    if (testFile) args.push(testFile);
     const child = spawn('node',
-      [
-        `${prjRoot}/tools/build.js`
-      ],
+      args,
       {
         stdio: 'pipe',
         cwd: prjRoot
@@ -23,7 +23,7 @@ function runBuild(io) {
       const arr = [];
       text.forEach(t => arr.push(t));
       io.emit('output', {
-        type: 'build',
+        type: 'test',
         output: arr,
       });
     };
@@ -31,7 +31,7 @@ function runBuild(io) {
     child.stderr.on('data', handleOutput);
 
     child.on('close', () => {
-      io.emit('build-finished', {});
+      io.emit('test-finished', {});
       resolve();
     });
   });

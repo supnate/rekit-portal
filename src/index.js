@@ -38,6 +38,13 @@ socket.on('build-finished', (data) => {
   });
 });
 
+socket.on('test-finished', (data) => {
+  store.dispatch({
+    type: 'REKIT_TOOLS_TEST_FINISHED',
+    data,
+  });
+});
+
 socket.on('disconnect', () => {
   console.log('[PORTAL] disconnected.');
 });

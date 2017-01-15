@@ -23,7 +23,7 @@ export function fetchProjectData() {
       } catch (e) {
         dispatch({
           type: HOME_FETCH_PROJECT_DATA_FAILURE,
-          data: { error: e },
+          data: { error: {} },
         });
         reject(e);
       }
