@@ -89,10 +89,10 @@ export class ProjectExplorer extends Component {
           break;
         case 2:
           menus = [
-            menuItems.showStyle,
+            // menuItems.showStyle,
             menuItems.rename,
             menuItems.move,
-            menuItems.showTest,
+            // menuItems.showTest,
             menuItems.runTest,
             menuItems.del,
           ];
@@ -148,7 +148,7 @@ export class ProjectExplorer extends Component {
   handleSelect(selected, evt) {
     const key = evt.node.props.eventKey;
 
-    const hasChildren = !!_.get(evt, 'node.props.children.length');
+    const hasChildren = !!_.get(evt, 'node.props.children');
 
     let expandedKeys = this.state.expandedKeys;
     let selectedKey = this.state.selectedKey;
@@ -162,11 +162,15 @@ export class ProjectExplorer extends Component {
       // key is the full file path
       selectedKey = key;
 
-      const prjRoot = this.props.home.projectRoot;
-      const ele = this.props.home.elementById[key];
-      const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
+      if (evt.node.props.className === 'routes') {
+        // TODO: handle routes click
+      } else {
+        const prjRoot = this.props.home.projectRoot;
+        const ele = this.props.home.elementById[key];
+        const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
 
-      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+        browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+      }
     }
 
     this.setState({
