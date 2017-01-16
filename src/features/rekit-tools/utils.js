@@ -21,7 +21,7 @@ export function getTestFilePattern(testFile) {
     }
   } else {
     // run all tests of the project
-    testFilePattern = '**/*.test.js';
+    testFilePattern = '';
   }
   return testFilePattern;
 }
