@@ -55,6 +55,8 @@ module.exports = (type) => { // eslint-disable-line
           'redux-logger',
           'redux-thunk',
           'antd',
+          'axios',
+          'reselect',
         ],
       },
       dist: {
