@@ -6,6 +6,8 @@ const spawn = require('child_process').spawn;
 function runBuild(io, testFile) {
   const prjRoot = rekitCore.utils.getProjectRoot();
   return new Promise((resolve) => {
+    console.log('test file: ', testFile);
+    if (!testFile) return;
     const args = [`${prjRoot}/tools/run_test.js`];
     if (testFile) args.push(testFile);
     const child = spawn('node',

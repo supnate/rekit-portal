@@ -1,7 +1,9 @@
 'use strict';
 
+const path = require('path');
 const url = require('url');
 const _ = require('lodash');
+const express = require('express');
 const Watchpack = require('watchpack');
 const rekitCore = require('rekit-core');
 const fetchProjectData = require('./api/fetchProjectData');
@@ -9,7 +11,7 @@ const getFileContent = require('./api/getFileContent');
 const runBuild = require('./api/runBuild');
 const runTest = require('./api/runTest');
 
-rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
+rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
 
 let io = null;
 
@@ -74,8 +76,10 @@ function setupSocketIo(server) {
     });
   });
 }
-function rekitMiddleware(server) {
+function rekitMiddleware(server, app) {
   setupSocketIo(server);
+  const prjRoot = rekitCore.utils.getProjectRoot();
+  app.use('/coverage', express.static(path.join(prjRoot, 'coverage'), { fallthrough: false }));
 
   return (req, res, next) => {
     const urlObject = url.parse(req.originalUrl);
@@ -120,7 +124,7 @@ function rekitMiddleware(server) {
             res.end();
           } else {
             bgProcesses.runningTest = true;
-            runTest(io, req.query.testFile || '').then(() => {
+            runTest(io, req.body.testFile || '').then(() => {
               bgProcesses.runningTest = false;
             }).catch(() => {
               bgProcesses.runningTest = false;

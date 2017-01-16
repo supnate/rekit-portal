@@ -1,6 +1,7 @@
 'use strict';
-
+const path = require('path');
 const _ = require('lodash');
+const fs = require('fs');
 const rekitCore = require('rekit-core');
 
 const { refactor, utils } = rekitCore;
@@ -27,9 +28,11 @@ function fetchProjectData() {
     });
   });
 
+  const prjRoot = utils.getProjectRoot();
   return {
     features,
-    projectRoot: utils.getProjectRoot(),
+    testCoverage: fs.existsSync(path.join(prjRoot, 'coverage/lcov-report/index.html')),
+    projectRoot: prjRoot,
     cssExt: utils.getCssExt(),
   };
 }

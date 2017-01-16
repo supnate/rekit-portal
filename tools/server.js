@@ -47,7 +47,7 @@ function startDevServer() {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(rekitMiddleWare(server));
+  app.use(rekitMiddleWare(server, app));
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,

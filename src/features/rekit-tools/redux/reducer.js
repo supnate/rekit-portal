@@ -2,12 +2,15 @@ import _ from 'lodash';
 import initialState from './initialState';
 import { reducer as runBuildReducer } from './runBuild';
 import { reducer as runTestReducer } from './runTest';
-
+import { reducer as clearTestOutputReducer } from './clearTestOutput';
 import { HOME_FETCH_PROJECT_DATA_SUCCESS } from '../../home/redux/constants';
+import { reducer as checkTestCoverageReducer } from './checkTestCoverage';
 
 const reducers = [
   runBuildReducer,
   runTestReducer,
+  clearTestOutputReducer,
+  checkTestCoverageReducer,
 ];
 
 export default function reducer(state = initialState, action) {

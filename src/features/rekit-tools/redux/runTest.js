@@ -7,15 +7,18 @@ import {
   REKIT_TOOLS_RUN_TEST_DISMISS_ERROR,
 } from './constants';
 
+import { getTestFilePattern } from '../utils';
+
 export function runTest(testFile) {
   return (dispatch) => {
     dispatch({
       type: REKIT_TOOLS_RUN_TEST_BEGIN,
+      data: { testFile },
     });
     const promise = new Promise(async (resolve, reject) => {
       let res = null;
       try {
-        res = await axios.post('/rekit/api/run-test', { testFile: testFile || '' });
+        res = await axios.post('/rekit/api/run-test', { testFile: getTestFilePattern(testFile) || '' });
       } catch (e) {
         dispatch({
           type: REKIT_TOOLS_RUN_TEST_FAILURE,
@@ -46,6 +49,7 @@ export function reducer(state, action) {
     case REKIT_TOOLS_RUN_TEST_BEGIN:
       return {
         ...state,
+        currentTestFile: action.data.testFile,
         runTestOutput: null,
         runTestPending: true,
         runTestError: null,

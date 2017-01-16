@@ -1,18 +1,32 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import * as actions from './redux/actions';
+import { Alert, Button } from 'antd';
 
 export class TestCoveragePage extends Component {
   static propTypes = {
-    rekitTools: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
+    home: PropTypes.object.isRequired,
   };
+
+  handleRunTestsClick() {
+    browserHistory.push('/tools/tests');
+  }
 
   render() {
     return (
       <div className="rekit-tools-test-coverage-page">
-        Page Content: rekit-tools/TestCoveragePage
+        <h2>Test coverage report
+          {this.props.home.testCoverage && <Button type="ghost" onClick={this.handleRunTestsClick}>Re-run tests</Button>}
+        </h2>
+        {this.props.home.testCoverage
+          ? <iframe src="/coverage/lcov-report/index.html" />
+          :
+          <div className="no-coverage">
+            <Alert message="No test coverage report found." showIcon type="info" />
+            <p>You need to run all tests for the project to generate test coverage reoport.</p>
+            <p><Button type="primary" onClick={this.handleRunTestsClick}>Run tests</Button></p>
+          </div>
+        }
       </div>
     );
   }
@@ -21,18 +35,10 @@ export class TestCoveragePage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
-    rekitTools: state.rekitTools,
-  };
-}
-
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    home: state.home,
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(TestCoveragePage);

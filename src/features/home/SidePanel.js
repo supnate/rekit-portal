@@ -35,6 +35,9 @@ export class SidePanel extends Component {
       case 'tests':
         browserHistory.push('/tools/tests');
         break;
+      case 'test-coverage':
+        browserHistory.push('/tools/coverage');
+        break;
       default:
         break;
     }

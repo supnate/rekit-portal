@@ -115,11 +115,12 @@ export class ProjectExplorer extends Component {
         feature: ele.feature,
         elementType: ele.type,
         elementName: ele.name,
+        file: key,
       };
     } else {
       const pos = evt.node.props.pos.split('-').map(index => parseInt(index, 10));
 
-      const elementTypes = ['route', 'action', 'component'];
+      const elementTypes = ['routes', 'actions', 'components'];
       const feature = (pos.length > 1 && home.features[pos[1]]) || null;
       const elementType = elementTypes[pos[2]] || null;
       // let elementName = null;
@@ -226,6 +227,7 @@ export class ProjectExplorer extends Component {
   handleMenuClick(evt) {
     console.log('menu click: ', evt);
     const cmdContext = this.cmdContext;
+    const prjRoot = this.props.home.projectRoot;
     switch (evt.key) {
       case 'add-component':
       case 'add-action':
@@ -236,9 +238,18 @@ export class ProjectExplorer extends Component {
           ...this.cmdContext,
         });
         break;
-      // case 'run-test':
-      //   browserHistory.push(`tools/tests/${evt.key}`);
-      //   break;
+      case 'run-test': {
+        const relFile = cmdContext.file.replace(`${prjRoot}/`, '');
+        browserHistory.push(`/tools/tests/${encodeURIComponent(relFile)}`);
+        break;
+      }
+      case 'run-tests':
+        if (!cmdContext.elementName) {
+          browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
+        } else if (cmdContext.elementType === 'feature') {
+          browserHistory.push(`/tools/tests/${cmdContext.feature}`);
+        }
+        break;
       case 'del':
         Modal.confirm({
           title: 'Confirm',
