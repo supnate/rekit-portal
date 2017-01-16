@@ -236,6 +236,9 @@ export class ProjectExplorer extends Component {
           ...this.cmdContext,
         });
         break;
+      // case 'run-test':
+      //   browserHistory.push(`tools/tests/${evt.key}`);
+      //   break;
       case 'del':
         Modal.confirm({
           title: 'Confirm',

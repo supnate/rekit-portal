@@ -6,17 +6,23 @@ import rekitCmdsRoute from '../features/rekit-cmds/route';
 import diagramRoute from '../features/diagram/route';
 import rekitToolsRoute from '../features/rekit-tools/route';
 
-const routes = [{// REKIT_ARCHOR_DO_NOT_CHANGE
+// NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
+// This is used for Rekit cmds to register routes for new features, remove features, etc.
+const childRoutes = [
+  homeRoute,
+  commonRoute,
+  rekitCmdsRoute,
+  diagramRoute,
+  rekitToolsRoute,
+];
+
+const routes = [{
   path: '/',
   component: App,
   childRoutes: [
-    homeRoute,
-    commonRoute,
-    rekitCmdsRoute,
-    diagramRoute,
-    rekitToolsRoute,
+    ...childRoutes,
     { path: '*', name: 'Page not found', component: PageNotFound },
-  ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)), // REKIT_ARCHOR_DO_NOT_CHANGE // If a feature has no router rules, remove it.
+  ].filter(r => r.component || (r.childRoutes && r.childRoutes.length > 0)),
 }];
 
 // Handle isIndex property of route config:
