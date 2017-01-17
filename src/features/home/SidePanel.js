@@ -16,6 +16,10 @@ export class SidePanel extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  state = {
+    searchKey: null,
+  };
+
   @autobind
   handleAddMenuClick(evt) {
     console.log('menu click', evt);
@@ -43,9 +47,21 @@ export class SidePanel extends Component {
     }
   }
 
+  doSearch(key) {
+    console.log('do search: ', key);
+    this.setState({
+      searchKey: key,
+    });
+  }
+
   @autobind
-  handleSearch(evt) {
-    console.log('searching: ', evt);
+  handleSearchInput(evt) {
+    const key = evt.target.value;
+    if (this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.doSearch(key);
+      delete this.searchTimeout;
+    }, 200);
   }
 
   @autobind
@@ -79,9 +95,9 @@ export class SidePanel extends Component {
           </Dropdown>
         </div>
         <div className="toolbar">
-          <Input.Search onSearch={this.handleSearch} />
+          <Input.Search onChange={this.handleSearchInput} />
         </div>
-        <ProjectExplorer />
+        <ProjectExplorer searchKey={this.state.searchKey} />
 
       </div>
     );

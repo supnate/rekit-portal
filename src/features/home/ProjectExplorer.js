@@ -32,10 +32,12 @@ export class ProjectExplorer extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    searchKey: PropTypes.string,
   };
 
   static defaultProps = {
     keys: ['0-0-0', '0-0-1'],
+    searchKey: '',
   };
 
   state = {
@@ -296,10 +298,24 @@ export class ProjectExplorer extends Component {
     return (
       <span>
         {icon && <Icon type={icon} />}
-        <label title={label}>{label}</label>
+        <label>{label}</label>
         {
           marks.filter(m => !!m).map(mark => <span key={mark.char} className="mark" style={{ backgroundColor: mark.color }}>{mark.char}</span>)
         }
+      </span>
+    );
+  }
+
+  highlightSearchKey(label) {
+    const searchKey = this.props.searchKey;
+    if (!searchKey) return label;
+    const i = label.toLowerCase().indexOf(searchKey.toLowerCase());
+    if (i === -1) return label;
+    return (
+      <span>
+        {label.substring(0, i)}
+        <span className="search-highlight">{label.substring(i, i + searchKey.length)}</span>
+        {label.substring(i + searchKey.length, label.length)}
       </span>
     );
   }
@@ -312,7 +328,7 @@ export class ProjectExplorer extends Component {
             miscItem.children ?
               this.renderMiscFolder(miscItem)
             :
-              <TreeNode title={this.renderTreeNodeTitle(miscItem.name, 'file')} key={miscItem.file} />
+              <TreeNode title={this.renderTreeNodeTitle(this.highlightSearchKey(miscItem.name), 'file')} key={miscItem.file} />
           ))
         }
       </TreeNode>
@@ -321,26 +337,37 @@ export class ProjectExplorer extends Component {
 
   renderFeatureNode(key) {
     const feature = this.props.home.featureById[key];
-    return (
-      <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
-        <TreeNode className="routes" title={this.renderTreeNodeTitle(`Routes (${feature.routes.length})`, 'share-alt')} key={`${key}-routes`} />
-        <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${feature.actions.length})`, 'notification')} key={`${key}-actions`}>
-          {
-            feature.actions.map(action => (
-              <TreeNode title={this.renderTreeNodeTitle(action.name, 'notification', action.isAsync && asyncMark)} key={action.file} />
-            ))
-          }
-        </TreeNode>
-        <TreeNode className="components" title={this.renderTreeNodeTitle(`Components (${feature.components.length})`, 'appstore-o')} key={`${key}-components`}>
-          {
-            feature.components.map(comp => (
-              <TreeNode title={this.renderTreeNodeTitle(comp.name, 'appstore-o', comp.connectToStore && connectMark)} key={comp.file} />
-            ))
-          }
-        </TreeNode>
+    let actionsArr = feature.actions;
+    let componentsArr = feature.components;
+    // let miscArr = feature.misc;
+    const sk = this.props.searchKey;
+    if (sk) {
+      actionsArr = actionsArr.filter(action => this.matchedKeyHash[action.file]);
+      componentsArr = componentsArr.filter(comp => this.matchedKeyHash[comp.file]);
+      // miscArr = miscArr.filter(m => this.matchedKeyHash[m.file]);
+    }
+    const treeNodes = _.compact([
+      !sk && <TreeNode className="routes" title={this.renderTreeNodeTitle(`Routes (${feature.routes.length})`, 'share-alt')} key={`${key}-routes`} />,
+      (!sk || actionsArr.length > 0) && <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${actionsArr.length})`, 'notification')} key={`${key}-actions`}>
         {
-          this.renderMiscFolder({ children: feature.misc, name: 'Misc', file: `${key}-misc` })
+          actionsArr.map(action => (
+            <TreeNode title={this.renderTreeNodeTitle(this.highlightSearchKey(action.name), 'notification', action.isAsync && asyncMark)} key={action.file} />
+          ))
         }
+      </TreeNode>,
+      (!sk || componentsArr.length > 0) && <TreeNode className="components" title={this.renderTreeNodeTitle(`Components (${componentsArr.length})`, 'appstore-o')} key={`${key}-components`}>
+        {
+          componentsArr.map(comp => (
+            <TreeNode title={this.renderTreeNodeTitle(this.highlightSearchKey(comp.name), 'appstore-o', comp.connectToStore && connectMark)} key={comp.file} />
+          ))
+        }
+      </TreeNode>,
+      !sk && this.renderMiscFolder({ children: feature.misc, name: 'Misc', file: `${key}-misc` }),
+    ]);
+    console.log('tree nodes length: ', treeNodes.length);
+    return (
+      treeNodes.length > 0 && <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
+        {treeNodes}
       </TreeNode>
     );
   }
@@ -367,26 +394,65 @@ export class ProjectExplorer extends Component {
     );
   }
 
+  createMatchedKeys() {
+    // TODO: optimize it using selectors
+    const key = this.props.searchKey;
+    const arr = [];
+    this.matchedKeyHash = {};
+    this.props.home.features.forEach((f) => {
+      f = this.props.home.featureById[f];
+      [...f.components, ...f.actions, ...f.misc].forEach((ele) => {
+        if (ele.name && ele.file && ele.name.toLowerCase().indexOf(key.toLowerCase()) >= 0) {
+          arr.push(ele.file);
+          this.matchedKeyHash[ele.file] = true;
+        }
+      });
+    });
+    this.matchedKeys = arr;
+    return arr;
+  }
+
+  getExpandedKeys() {
+    if (!this.props.searchKey) return this.state.expandedKeys;
+    const { elementById } = this.props.home;
+    const arr = [];
+    this.matchedKeys.forEach((k) => {
+      const ele = elementById[k];
+      if (ele && ele.feature && ele.type) {
+        const treeNodeKey = `${ele.feature}-${ele.type}${ele.type === 'misc' ? '' : 's'}`;
+        arr.push(treeNodeKey);
+      }
+    });
+    return _.uniq(arr);
+  }
+
   render() {
     const { features } = this.props.home;
 
     if (!features) {
       return this.renderLoading();
     }
+
+    if (this.props.searchKey) {
+      this.createMatchedKeys();
+    }
+    const expandedKeys = this.getExpandedKeys();
+    console.log(expandedKeys);
+
+    const featuresNodes = _.compact(features.map(f => this.renderFeatureNode(f)));
     return (
       <div className="home-project-explorer" ref={(node) => { this.rootNode = node; }}>
-        <Tree
-          autoExpandParent={false}
+        {featuresNodes.length > 0 ? <Tree
+          autoExpandParent={!!this.props.searchKey}
           selectedKeys={[this.state.selectedKey]}
-          expandedKeys={this.state.expandedKeys}
+          expandedKeys={expandedKeys}
           onRightClick={this.handleContextMenu}
           onSelect={this.handleSelect}
           onExpand={this.handleExpand}
         >
-          {
-            features.map(f => this.renderFeatureNode(f))
-          }
+          {featuresNodes}
         </Tree>
+        : <div>No results.</div>}
         <Dropdown overlay={this.renderContextMenu()} trigger={['click']} onVisibleChange={this.handleContextMenuVisibleChange}>
           <span ref={(node) => { this.contextMenuArchor = node; }} className="context-menu-archor">&nbsp;</span>
         </Dropdown>
