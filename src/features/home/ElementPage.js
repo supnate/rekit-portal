@@ -81,11 +81,10 @@ export class ElementPage extends Component {
     return (
       <div className="home-element-page">
         <div className="page-title">
-          <h2 style={{ fontWeight: 'normal' }}>
+          <h2>
             <Icon type={iconTypes[data.type] || 'file'} style={{ color: colors[data.type] }} /> {this.props.params.feature} / {data.name}
           </h2>
         </div>
-        <br />
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           <TabPane tab="Diagram" key="diagram">
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />

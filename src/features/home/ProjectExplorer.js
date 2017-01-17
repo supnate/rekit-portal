@@ -164,6 +164,7 @@ export class ProjectExplorer extends Component {
 
       if (evt.node.props.className === 'routes') {
         // TODO: handle routes click
+        browserHistory.push(`/${key.split('-')[0]}/routes`);
       } else {
         const prjRoot = this.props.home.projectRoot;
         const ele = this.props.home.elementById[key];
@@ -322,7 +323,7 @@ export class ProjectExplorer extends Component {
     const feature = this.props.home.featureById[key];
     return (
       <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
-        <TreeNode className="routes" title={this.renderTreeNodeTitle('Routes', 'share-alt')} key={`${key}-routes`} />
+        <TreeNode className="routes" title={this.renderTreeNodeTitle(`Routes (${feature.routes.length})`, 'share-alt')} key={`${key}-routes`} />
         <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${feature.actions.length})`, 'notification')} key={`${key}-actions`}>
           {
             feature.actions.map(action => (

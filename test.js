@@ -9,13 +9,14 @@ const utils = core.utils;
 const spawn = require('child_process').spawn;
 
 // console.time('Done ');
-// const file = utils.mapFeatureFile('home', 'Navigator.js');
-// // const deps = refactor.getDeps(file);
-// const features = refactor.getFeatures();
-// const data = features.map(f => (Object.assign({
-//   key: f,
-//   name: _.flow(_.lowerCase, _.upperFirst)(f),
-// }, refactor.getFeatureStructure(f))));
+const file = utils.mapFeatureFile('home', 'Navigator.js');
+// const deps = refactor.getDeps(file);
+const features = refactor.getFeatures();
+const data = features.map(f => (Object.assign({
+  key: f,
+  name: _.flow(_.lowerCase, _.upperFirst)(f),
+}, refactor.getFeatureStructure(f))));
+console.log(data.map(d => d.routes));
 
 // data.forEach((f) => {
 //   f.components.forEach((item) => {
@@ -33,39 +34,39 @@ const spawn = require('child_process').spawn;
 // });
 
 
-utils.setProjectRoot('/Users/nate/workspace2/rekit');
+// utils.setProjectRoot('/Users/nate/workspace2/rekit');
 
-function runBuild() {
-  const prjRoot = utils.getProjectRoot();
-  return new Promise((resolve) => {
-    const child = spawn('node',
-      [
-        `${prjRoot}/tools/run_test.js`,
-        '/**/*.test.js',
-      ],
-      {
-        stdio: 'pipe',
-        cwd: prjRoot
-      }
-    );
-    child.stdout.pipe(process.stdout);
-    // const arr = [];
-    const handleOutput = (data) => {
-      // collect the data
-      // const text = data.toString('utf8');
-      // console.log(text);
-      // text.forEach(t => arr.push(t));
-    };
-    child.stdout.on('data', handleOutput);
-    child.stderr.on('data', handleOutput);
+// function runBuild() {
+//   const prjRoot = utils.getProjectRoot();
+//   return new Promise((resolve) => {
+//     const child = spawn('node',
+//       [
+//         `${prjRoot}/tools/run_test.js`,
+//         '/**/*.test.js',
+//       ],
+//       {
+//         stdio: 'pipe',
+//         cwd: prjRoot
+//       }
+//     );
+//     child.stdout.pipe(process.stdout);
+//     // const arr = [];
+//     const handleOutput = (data) => {
+//       // collect the data
+//       // const text = data.toString('utf8');
+//       // console.log(text);
+//       // text.forEach(t => arr.push(t));
+//     };
+//     child.stdout.on('data', handleOutput);
+//     child.stderr.on('data', handleOutput);
 
-    child.on('close', () => {
-      resolve();
-    });
-  });
-}
+//     child.on('close', () => {
+//       resolve();
+//     });
+//   });
+// }
 
-runBuild();
+// runBuild();
 
 
 // console.timeEnd('Done ');
