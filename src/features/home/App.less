@@ -2,7 +2,6 @@
 
 .home-app {
   height: 100%;
-  padding-left: 320px;
   &.ant-layout {
     flex-wrap: nowrap;
   }
@@ -35,6 +34,12 @@
   }
 
   .page-container {
+    position: fixed;
+    overflow: auto;
+    left: 320px;
+    top: 0;
+    right: 0;
+    bottom: 0;
     padding: 40px;
     background-color: #fff;
   }

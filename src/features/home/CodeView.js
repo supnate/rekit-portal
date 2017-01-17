@@ -59,7 +59,7 @@ export class CodeView extends PureComponent {
     const content = this.getFileContent();
     return (
       <div className="home-code-view">
-        <pre><code className="jsx" style={{ height: 600 }} ref={(node) => { this.codeNode = node; }}>
+        <pre><code className="jsx" ref={(node) => { this.codeNode = node; }}>
           {typeof content === 'string' ? content : '// Loading...'}
         </code></pre>
       </div>

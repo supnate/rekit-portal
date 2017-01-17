@@ -33,16 +33,17 @@ export class RoutesPage extends Component {
 
   render() {
     const fid = this.props.params.feature;
-    const tabKey = this.props.params.type;
+    let tabKey = this.props.params.type;
+    if (tabKey !== 'code') tabKey = 'rules';
     const feature = this.props.home.featureById[fid];
     const codeFile = `${this.props.home.projectRoot}/src/features/${fid}/route.js`;
     return (
       <div className="home-routes-page">
         <h2><Icon type="share-alt" /> &nbsp;{fid} / routes</h2>
-        <Tabs tabKey={tabKey} animated={false} onChange={this.handleTabChange}>
+        <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           <TabPane tab="Rules" key="rules">
             <p>This is a rough overview of routing config defined in a feature. </p>
-            <p>For detailed information, please look at <span className="highlight-label">src/common/routeConfig.js</span> and <span className="highlight-label">src/features/{fid}/route.js</span>.</p>
+            <p>For detailed information, please look at <span className="highlight-label">src/features/{fid}/route.js</span>.</p>
             {feature.routes.length === 0
               ? <Alert type="info" message="No routing rules defined." showIcon />
               :
