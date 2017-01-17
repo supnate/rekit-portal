@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -63,10 +63,10 @@ export class SidePanel extends Component {
     return (
       <div className="home-side-panel">
         <div className="header">
-          <a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
-            <img src={require('../../images/logo_small.png')} alt="Rekit logo" />
-          </a>
-          <h5 title={this.props.home.projectRoot}>{prjName}</h5>
+          <Link className="home-link" to="/" title={this.props.home.projectRoot}>
+            <Icon type="home" />
+            <h5>{prjName}</h5>
+          </Link>
           <Dropdown overlay={this.renderAddMenu()}>
             <label>
               <Icon type="ellipsis" style={{ fontSize: '20px', fontWeight: 'bold' }} />
@@ -77,6 +77,7 @@ export class SidePanel extends Component {
           <Input.Search />
         </div>
         <ProjectExplorer />
+
       </div>
     );
   }
@@ -88,6 +89,10 @@ function mapStateToProps(state) {
     home: state.home,
   };
 }
+
+//<a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
+//          <img src={require('../../images/logo_small.png')} alt="Rekit logo" />
+//        </a>
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
