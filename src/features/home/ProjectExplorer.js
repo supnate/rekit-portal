@@ -452,7 +452,7 @@ export class ProjectExplorer extends Component {
         >
           {featuresNodes}
         </Tree>
-        : <div>No results.</div>}
+        : <div className="no-results">No results.</div>}
         <Dropdown overlay={this.renderContextMenu()} trigger={['click']} onVisibleChange={this.handleContextMenuVisibleChange}>
           <span ref={(node) => { this.contextMenuArchor = node; }} className="context-menu-archor">&nbsp;</span>
         </Dropdown>
