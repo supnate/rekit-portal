@@ -44,6 +44,11 @@ export class SidePanel extends Component {
   }
 
   @autobind
+  handleSearch(evt) {
+    console.log('searching: ', evt);
+  }
+
+  @autobind
   renderAddMenu() {
     return (
       <Menu onClick={this.handleAddMenuClick}>
@@ -74,7 +79,7 @@ export class SidePanel extends Component {
           </Dropdown>
         </div>
         <div className="toolbar">
-          <Input.Search />
+          <Input.Search onSearch={this.handleSearch} />
         </div>
         <ProjectExplorer />
 

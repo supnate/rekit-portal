@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Col, Icon, Row } from 'antd';
+import { Button, Col, Icon, Progress, Row } from 'antd';
 import Convert from 'ansi-to-html';
 import * as actions from './redux/actions';
 
@@ -13,10 +14,7 @@ export class BuildPage extends Component {
     rekitTools: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
-// <Alert type="info" showIcon message="You have not run build yet." />
-//         <Alert type="error" showIcon message="Last build: failed, 2017.1.2 15:59:29" />
-        
-        //<Alert type="success" showIcon message="Last build: success, 2017.1.2 15:59:29" />
+
   @autobind
   handleBuildButtonClick() {
     this.props.actions.runBuild().catch((e) => {
@@ -25,8 +23,15 @@ export class BuildPage extends Component {
   }
 
   render() {
-    const output = this.props.rekitTools.runBuildOutput || [];
+    let output = this.props.rekitTools.runBuildOutput || [];
     const { runBuildRunning } = this.props.rekitTools;
+    let percent = 0;
+    output = _.uniq(output.map((t) => {
+      const p = parseFloat(t.split('%'));
+      if (p) percent = p;
+      return t.replace(/.+%/, '>');
+    }));
+
     return (
       <div className="rekit-tools-build-page">
         <Row>
@@ -36,10 +41,11 @@ export class BuildPage extends Component {
             </Button>
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>
-            <Button type="ghost" disabled={runBuildRunning}><Icon type="export" />Access the built application</Button>
+            <Button type="ghost" disabled={runBuildRunning}><Icon type="export" />Go to the deployable application</Button>
           </Col>
         </Row>
         <hr />
+        { (runBuildRunning || percent === 100) && <Progress percent={percent} />}
         {!runBuildRunning && !output.length && <div style={{ marginTop: 20 }}>Click run build button to start the build.</div>}
         {output.length > 0 &&
           <div className="output-container">
