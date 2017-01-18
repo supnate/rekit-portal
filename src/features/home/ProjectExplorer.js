@@ -12,10 +12,6 @@ import { getExplorerTreeData } from './selectors/getExplorerTreeData';
 
 const TreeNode = Tree.TreeNode;
 
-const connectMark = { char: 'C', color: '#2175bc', title: 'Connect' };
-const routeMark = { char: 'R', color: '#f90', title: 'Route' };
-const asyncMark = { char: 'A', color: '#259b24', title: 'Async' };
-
 const menuItems = {
   addAction: { name: 'Add action', key: 'add-action' },
   addComponent: { name: 'Add component', key: 'add-component' },
@@ -37,7 +33,6 @@ export class ProjectExplorer extends Component {
   };
 
   static defaultProps = {
-    keys: ['0-0-0', '0-0-1'],
     searchKey: '',
   };
 
@@ -50,8 +45,14 @@ export class ProjectExplorer extends Component {
   getMenuItems(treeNode) {
     const evtKey = treeNode.props.eventKey;
     const { home } = this.props;
-    const ele = home.elementById[evtKey] || home.featureById[evtKey] || this.treeNodeData[evtKey];
-console.log(ele);
+    let ele = home.elementById[evtKey] || home.featureById[evtKey];
+    if (!ele) {
+      const key = treeNode.props.eventKey;
+      const i = key.lastIndexOf('-');
+      ele = {
+        type: key.substring(i + 1),
+      };
+    }
     switch (ele.type) {
       case 'feature':
         return [
@@ -111,71 +112,6 @@ console.log(ele);
     return _.uniq(arr);
   }
 
-  getTreeData() {
-    const { features, featureById, elementById } = this.props.home;
-    const nodes = features.map((fid) => {
-      const feature = featureById[fid];
-      return {
-        children: [
-          { label: 'Routes', icon: '', count: feature.routes.length },
-          { label: 'Actions', icon: 'notification', count: 1 },
-          { label: 'Components', icon: '', count: 2 },
-          { label: 'Misc', icon: '' },
-        ],
-      };
-    });
-
-    return _.compact(nodes);
-  }
-
-  getComponentsTreeData(fid) {
-    const { featureById } = this.props.home;
-    const feature = featureById[fid];
-    const components = feature.components;
-
-    return {
-      key: `${fid}-components`,
-      className: 'components',
-      label: 'Components',
-      icon: 'appstore-o',
-      count: components.length,
-      children: components.map(comp => ({
-        key: comp.file,
-        className: 'component',
-        label: comp.name,
-        icon: 'appstore-o',
-        marks: [],
-      })),
-    };
-  }
-  getActionsTreeData(fid) {
-    const { featureById } = this.props.home;
-    const feature = featureById[fid];
-    const fActions = feature.actions;
-
-    return {
-      key: `${fid}-actions`,
-      className: 'actions',
-      label: 'Actions',
-      icon: 'appstore-o',
-      count: fActions.length,
-      children: fActions.map(action => ({
-        key: action.file,
-        className: 'action',
-        label: action.name,
-        icon: 'notification',
-        marks: [],
-      })),
-    };
-  }
-  getMiscTreeData() {
-
-  }
-
-  getFilteredTreeData() {
-
-  }
-
   @autobind
   filterMiscFolder(folder, sk) {
     console.log('filtering folder: ', folder.file);
@@ -194,14 +130,24 @@ console.log(ele);
   createCmdContext(evt) {
     const key = evt.node.props.eventKey;
     const { home } = this.props;
-    const ele = home.elementById[key] || home.featureById[key] || this.treeNodeData[key];
+    const ele = home.elementById[key] || home.featureById[key];
 
-    this.cmdContext = {
-      feature: ele.feature,
-      elementType: ele.type,
-      elementName: ele.name,
-      file: key,
-    };
+    if (ele) {
+      this.cmdContext = {
+        feature: ele.feature,
+        elementType: ele.type,
+        elementName: ele.name,
+        file: key,
+      };
+    } else {
+      // for <feature>.routes, .actions, .components, .misc
+      const i = key.lastIndexOf('-');
+      this.cmdContext = {
+        feature: key.substring(0, i),
+        elementType: key.substring(i + 1),
+        elementName: null,
+      };
+    }
   }
 
   createMatchedKeys() {
@@ -397,69 +343,69 @@ console.log(ele);
   //   );
   // }
 
-  renderMiscFolder(folder, feature) {
-    this.treeNodeData[folder.file] = { type: 'misc', feature, name: folder.file.split('/').pop() };
-    const sk = this.props.searchKey;
-    const miscArr = folder.children || [];
+  // renderMiscFolder(folder, feature) {
+  //   this.treeNodeData[folder.file] = { type: 'misc', feature, name: folder.file.split('/').pop() };
+  //   const sk = this.props.searchKey;
+  //   const miscArr = folder.children || [];
 
-    return (
-      (!sk || miscArr.length > 0) && <TreeNode className="misc" title={this.renderTreeNodeTitle(folder.name, 'folder')} key={folder.file}>
-        {
-          miscArr.map(miscItem => (
-            miscItem.children ?
-              this.renderMiscFolder(miscItem, feature)
-            :
-              <TreeNode className="misc-file" title={this.renderTreeNodeTitle(this.highlightSearchKey(miscItem.name), 'file')} key={miscItem.file} />
-          ))
-        }
-      </TreeNode>
-    );
-  }
+  //   return (
+  //     (!sk || miscArr.length > 0) && <TreeNode className="misc" title={this.renderTreeNodeTitle(folder.name, 'folder')} key={folder.file}>
+  //       {
+  //         miscArr.map(miscItem => (
+  //           miscItem.children ?
+  //             this.renderMiscFolder(miscItem, feature)
+  //           :
+  //             <TreeNode className="misc-file" title={this.renderTreeNodeTitle(this.highlightSearchKey(miscItem.name), 'file')} key={miscItem.file} />
+  //         ))
+  //       }
+  //     </TreeNode>
+  //   );
+  // }
 
-  renderFeatureNode(key) {
-    const feature = this.props.home.featureById[key];
-    let actionsArr = feature.actions;
-    let componentsArr = feature.components;
-    // let miscArr = feature.misc;
-    const sk = this.props.searchKey;
-    if (sk) {
-      actionsArr = actionsArr.filter(action => this.matchedKeyHash[action.file]);
-      componentsArr = componentsArr.filter(comp => this.matchedKeyHash[comp.file]);
-      // miscArr = miscArr.filter(m => this.matchedKeyHash[m.file]);
-    }
-    this.treeNodeData = {
-      ...this.treeNodeData,
-      [`${key}-routes`]: { feature: key, type: 'routes', name: 'Routes' },
-      [`${key}-actions`]: { feature: key, type: 'actions', name: 'Actions' },
-      [`${key}-components`]: { feature: key, type: 'components', name: 'Components' },
-    };
+  // renderFeatureNode(key) {
+  //   const feature = this.props.home.featureById[key];
+  //   let actionsArr = feature.actions;
+  //   let componentsArr = feature.components;
+  //   // let miscArr = feature.misc;
+  //   const sk = this.props.searchKey;
+  //   if (sk) {
+  //     actionsArr = actionsArr.filter(action => this.matchedKeyHash[action.file]);
+  //     componentsArr = componentsArr.filter(comp => this.matchedKeyHash[comp.file]);
+  //     // miscArr = miscArr.filter(m => this.matchedKeyHash[m.file]);
+  //   }
+  //   this.treeNodeData = {
+  //     ...this.treeNodeData,
+  //     [`${key}-routes`]: { feature: key, type: 'routes', name: 'Routes' },
+  //     [`${key}-actions`]: { feature: key, type: 'actions', name: 'Actions' },
+  //     [`${key}-components`]: { feature: key, type: 'components', name: 'Components' },
+  //   };
 
-    const miscFolder = { children: feature.misc, name: 'Misc', file: `${key}-misc` };
-    // NOTE! do not change tree node class name.
-    const treeNodes = _.compact([
-      !sk && <TreeNode className="routes" title={this.renderTreeNodeTitle(`Routes (${feature.routes.length})`, 'share-alt')} key={`${key}-routes`} />,
-      (!sk || actionsArr.length > 0) && <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${actionsArr.length})`, 'notification')} key={`${key}-actions`}>
-        {
-          actionsArr.map(action => (
-            <TreeNode type="action" className="action" title={this.renderTreeNodeTitle(this.highlightSearchKey(action.name), 'notification', action.isAsync && asyncMark)} key={action.file} />
-          ))
-        }
-      </TreeNode>,
-      (!sk || componentsArr.length > 0) && <TreeNode className="components" title={this.renderTreeNodeTitle(`Components (${componentsArr.length})`, 'appstore-o')} key={`${key}-components`}>
-        {
-          componentsArr.map(comp => (
-            <TreeNode type="component" className="component" title={this.renderTreeNodeTitle(this.highlightSearchKey(comp.name), 'appstore-o', comp.connectToStore && connectMark)} key={comp.file} />
-          ))
-        }
-      </TreeNode>,
-      this.renderMiscFolder(sk ? this.filterMiscFolder(miscFolder, sk) : miscFolder, key),
-    ]);
-    return (
-      treeNodes.length > 0 && <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
-        {treeNodes}
-      </TreeNode>
-    );
-  }
+  //   const miscFolder = { children: feature.misc, name: 'Misc', file: `${key}-misc` };
+  //   // NOTE! do not change tree node class name.
+  //   const treeNodes = _.compact([
+  //     !sk && <TreeNode className="routes" title={this.renderTreeNodeTitle(`Routes (${feature.routes.length})`, 'share-alt')} key={`${key}-routes`} />,
+  //     (!sk || actionsArr.length > 0) && <TreeNode className="actions" title={this.renderTreeNodeTitle(`Actions (${actionsArr.length})`, 'notification')} key={`${key}-actions`}>
+  //       {
+  //         actionsArr.map(action => (
+  //           <TreeNode type="action" className="action" title={this.renderTreeNodeTitle(this.highlightSearchKey(action.name), 'notification', action.isAsync && asyncMark)} key={action.file} />
+  //         ))
+  //       }
+  //     </TreeNode>,
+  //     (!sk || componentsArr.length > 0) && <TreeNode className="components" title={this.renderTreeNodeTitle(`Components (${componentsArr.length})`, 'appstore-o')} key={`${key}-components`}>
+  //       {
+  //         componentsArr.map(comp => (
+  //           <TreeNode type="component" className="component" title={this.renderTreeNodeTitle(this.highlightSearchKey(comp.name), 'appstore-o', comp.connectToStore && connectMark)} key={comp.file} />
+  //         ))
+  //       }
+  //     </TreeNode>,
+  //     this.renderMiscFolder(sk ? this.filterMiscFolder(miscFolder, sk) : miscFolder, key),
+  //   ]);
+  //   return (
+  //     treeNodes.length > 0 && <TreeNode className="feature" title={this.renderTreeNodeTitle(feature.name, 'book')} key={key}>
+  //       {treeNodes}
+  //     </TreeNode>
+  //   );
+  // }
 
   renderLoading() {
     return (
@@ -482,14 +428,6 @@ console.log(ele);
       </Menu>
     );
   }
-
-  // renderTreeNodes(nodesData) {
-  //   console.log('render tree nodes: ', nodesData);
-
-  //   return [
-  //     <TreeNode title="abc" />
-  //   ];
-  // }
 
   renderTreeNodeTitle(nodeData) {
     const markDescription = {
