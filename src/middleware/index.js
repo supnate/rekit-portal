@@ -11,7 +11,7 @@ const getFileContent = require('./api/getFileContent');
 const runBuild = require('./api/runBuild');
 const runTest = require('./api/runTest');
 
-rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit');
+rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 let io = null;
 
