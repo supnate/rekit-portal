@@ -6,13 +6,13 @@ import { Checkbox, Col, Icon, Popover, Row } from 'antd';
 import { getElementDiagramData } from './selectors/getElementDiagramData';
 import { colors } from '../common';
 
-const chartWidth = 600;
-const chartHeight = 500;
+let chartWidth = 600;
+let chartHeight = 500;
 
 export default class ElementDiagram extends PureComponent {
   static propTypes = {
     homeStore: PropTypes.object.isRequired,
-    elementId: PropTypes.string.isRequired,
+    elementId: PropTypes.string.isRequired, // eslint-disable-line
   };
 
   state = {
@@ -20,45 +20,18 @@ export default class ElementDiagram extends PureComponent {
   };
 
   componentDidMount() {
-    this.svg = d3
-      .select(this.d3Node)
-      .append('svg')
-      .attr('width', '100%')
-      .attr('height', chartHeight)
-    ;
-
-    // TODO: Why not equal to r?
-    const refXMap = {
-      'dep-on': 26,
-      'dep-by': 76,
-    };
-    this.svg.append('svg:defs').selectAll('marker')
-      .data(['dep-on', 'dep-by'])
-      .enter()
-      .append('svg:marker')
-      .attr('id', String)
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', d => refXMap[d])
-      .attr('refY', 0)
-      .attr('markerWidth', 6)
-      .attr('markerHeight', 6)
-      .attr('class', d => `triangle-marker ${d}`)
-      .attr('orient', 'auto')
-      .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5')
-    ;
-
-    // this.link = this.svg.append('g');
-    // this.node = this.svg.append('g');
-    // this.featureNodeInner = this.svg.append('g');
-    // this.nodeText = this.svg.append('g');
-
+    const pageContainer = document.querySelector('.page-container');
+    chartHeight = pageContainer.offsetHeight - 240; // 240 is header height and paddings
+    chartWidth = pageContainer.offsetWidth - 80; // 80 is paddings
+    if (chartHeight < 400) chartHeight = 400;
+    if (chartWidth < 400) chartWidth = 400;
     this.refresh(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     console.log('receive props.');
     this.refresh(nextProps);
+    // window.refresh= () => this.refresh(nextProps);
   }
 
   @autobind
@@ -83,10 +56,44 @@ export default class ElementDiagram extends PureComponent {
 
   refresh(props) {
     const data = getElementDiagramData(props.homeStore, props.elementId);// this.props.diagramData;
-    console.log('refresh data: ', data);
 
-    this.svg.selectAll('g').remove();
+    if (this.lastData !== data) {
+      this.lastData = data;
+    } else {
+      return;
+    }
 
+    if (this.svg) this.svg.remove();
+
+    this.svg = d3
+      .select(this.d3Node)
+      .append('svg')
+      .attr('width', chartWidth)
+      .attr('height', chartHeight)
+    ;
+
+    this.svgDefs = this.svg.append('svg:defs');
+
+    // TODO: Why not equal to r?
+    const refXMap = {
+      'dep-on': 26,
+      'dep-by': 76,
+    };
+    this.svg.append('svg:defs').selectAll('marker')
+      .data(['dep-on', 'dep-by'])
+      .enter()
+      .append('svg:marker')
+      .attr('id', String)
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', d => refXMap[d])
+      .attr('refY', 0)
+      .attr('markerWidth', 6)
+      .attr('markerHeight', 6)
+      .attr('class', d => `triangle-marker ${d}`)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+    ;
     this.sim = d3
       .forceSimulation()
       .force('link', d3.forceLink().id(d => d.id))
