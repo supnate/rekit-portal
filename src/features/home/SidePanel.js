@@ -9,7 +9,6 @@ import * as actions from './redux/actions';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
 import { ProjectExplorer } from './';
 
-
 export class SidePanel extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,

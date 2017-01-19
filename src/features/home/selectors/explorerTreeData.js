@@ -4,8 +4,6 @@ import { createSelector } from 'reselect';
 const featuresSelector = state => state.features;
 const featureByIdSelector = state => state.featureById;
 const keywordSelector = (state, keyword) => keyword;
-// const elementByIdSelector = state => state.elementById;
-// const elementIdSelector = (state, elementId) => elementId;
 
 function getMarks(feature, ele) {
   const marks = [];
@@ -55,6 +53,7 @@ function getActionsTreeData(feature) {
       className: 'action',
       label: action.name,
       icon: 'notification',
+      searchable: true,
       marks: getMarks(feature, action),
     })),
   };
@@ -66,6 +65,7 @@ function getChildData(child) {
     className: child.children ? 'misc-folder' : 'misc-file',
     label: child.name,
     icon: child.children ? 'folder' : 'file',
+    searchable: !child.children,
     children: child.children ? child.children.map(getChildData) : null,
   };
 }
@@ -94,7 +94,7 @@ export const getExplorerTreeData = createSelector(
         label: feature.name,
         icon: 'book',
         children: [
-          { label: 'Routes', key: `${fid}-routes`, className: 'routes', icon: 'share-alt', count: feature.routes.length },
+          { label: 'Routes', key: `${fid}-routes`, searchable: false, className: 'routes', icon: 'share-alt', count: feature.routes.length },
           getActionsTreeData(feature),
           getComponentsTreeData(feature),
           getMiscTreeData(feature),
@@ -102,15 +102,48 @@ export const getExplorerTreeData = createSelector(
       };
     });
 
-    return _.compact(nodes);
+    return { root: true, children: _.compact(nodes) };
   }
 );
+
+function filterTreeNode(node, keyword) {
+  const reg = new RegExp(_.escapeRegExp(keyword), 'i');
+  return {
+    ...node,
+    children: _.compact(node.children.map((child) => {
+      if (child.searchable && reg.test(child.label)) return child;
+      if (child.children) {
+        const c = filterTreeNode(child, keyword);
+        return c.children.length > 0 ? c : null;
+      }
+      return null;
+    })),
+  };
+}
 
 export const getFilteredExplorerTreeData = createSelector(
   getExplorerTreeData,
   keywordSelector,
   (treeData, keyword) => {
     console.log('RE-COMPUTING filtered tree data.');
-    
+    if (!keyword) return treeData;
+    return filterTreeNode(treeData, keyword);
+  }
+);
+
+// when searching the tree, all nodes should be expanded, the tree component needs expandedKeys property.
+export const getExpandedKeys = createSelector(
+  getFilteredExplorerTreeData,
+  (treeData) => {
+    const keys = [];
+    let arr = [...treeData.children];
+    while (arr.length) {
+      const pop = arr.pop();
+      if (pop.children) {
+        keys.push(pop.key);
+        arr = [...arr, ...pop.children];
+      }
+    }
+    return keys;
   }
 );
