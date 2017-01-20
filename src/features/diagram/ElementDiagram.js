@@ -152,7 +152,7 @@ export default class ElementDiagram extends PureComponent {
       .attr('cursor', 'pointer')
       .attr('stroke-width', 1)
       .attr('stroke', '#555')
-      .attr('fill', '#00C0FF')
+      .attr('fill', colors.featureInner)
       .on('click', this.handleNodeClick)
     ;
     featureNodeInner

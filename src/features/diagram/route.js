@@ -1,13 +1,11 @@
 import {
-  DefaultPage,
   DetailedDiagram,
-} from './index';
+} from './';
 
 export default {
   path: 'diagram',
   name: 'Diagram',
-  childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+  childRoutes: [,
     { path: 'detailed', name: 'Detailed diagram', component: DetailedDiagram },
   ],
 };

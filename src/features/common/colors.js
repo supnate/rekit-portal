@@ -4,4 +4,5 @@ export default {
   component: '#FF9900',
   misc: '#8D6E63',
   feature: '#FFFFFF',
+  featureInner: '#00C0FF',
 };

@@ -1,1 +1,0 @@
-export { sampleAction } from './sampleAction';

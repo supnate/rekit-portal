@@ -7,3 +7,4 @@ export { default as CodeView } from './CodeView';
 export { default as ElementPage } from './ElementPage';
 export { default as App } from './App';
 export { default as RoutesPage } from './RoutesPage';
+export { default as HomePage } from './HomePage';
