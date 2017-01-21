@@ -47,7 +47,7 @@ export class HomePage extends Component {
         <Row>
           <Col span="16" className="diagram-container">
             <h3>Overview diagram</h3>
-            <OverviewChordDiagram homeStore={this.props.home} />
+            <OverviewChordDiagram size={500} />
           </Col>
           <Col span="8" className="test-coverage-container">
             <h3>Test coverage</h3>

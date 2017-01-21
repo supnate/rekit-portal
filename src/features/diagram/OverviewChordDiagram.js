@@ -1,84 +1,95 @@
 import React, { PureComponent, PropTypes } from 'react';
-import _ from 'lodash';
-import { colors } from '../common';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import * as d3 from 'd3';
+import { colors } from '../common';
+import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
 
-export default class OverviewChordDiagram extends PureComponent {
+class OverviewChordDiagram extends PureComponent {
   static propTypes = {
-    homeStore: PropTypes.object.required,
+    diagramData: PropTypes.object.isRequired,
+    size: PropTypes.number.isRequired, // eslint-disable-line
+  };
+
+  static defaultProps = {
+    size: 500,
   };
 
   componentDidMount() {
-    const svg = d3
+    console.log(this.props.diagramData);
+    const { diagramData } = this.props;
+    this.svg = d3
       .select(this.d3Node)
       .append('svg')
-      .attr('width', 500)
-      .attr('height', 500)
+      .attr('width', this.props.size)
+      .attr('height', this.props.size)
     ;
+    this.drawGroups(diagramData.outerGroups);
+    this.drawGroups(diagramData.innerGroups);
 
-    const gapAngle = Math.PI / 90;
-
-    const data = this.props.homeStore.features;
-    svg
-      .append('svg:g')
-      .selectAll('path')
-      .data(data)
-      .enter()
-      .append('svg:path')
-      .attr('id', d => `feature-arc-${d}`)
-      .attr('stroke-width', 15)
-      .attr('stroke', colors.featureInner)
-      // .attr('opacity', '0.5')
-      .attr('fill', 'transparent')
-      .attr('d', (d, i) => {
-        const featureAngle = Math.PI * 2 / data.length - gapAngle;
-
-        const d3Path = d3.path();
-        const startAngle = i * Math.PI * 2 / data.length;
-        const endAngle = startAngle + featureAngle;
-        d3Path.arc(250, 250, 200, startAngle, endAngle);
-        return d3Path;
-      })
-    ;
-
-    svg
+    this.svg
       .append('svg:g')
       .selectAll('text')
-      .data(data)
+      .data(diagramData.outerGroups)
       .enter()
       .append('svg:text')
       .style('font-size', 12)
       .style('fill', '#777')
+      .style('overflow', 'hidden')
+      .style('text-overflow', 'ellipsis')
+      .style('cursor', 'default')
       .attr('dy', -12)
       .append('textPath')
-      .attr('xlink:href', d => `#feature-arc-${d}`)
-      // .style('text-anchor', 'middle')
-      // .attr('startOffset', '50%')
+      .attr('xlink:href', d => `#group-${d.type}-${d.id}`)
       .style('text-anchor', 'start')
       .attr('startOffset', '0%')
-      .text(d => this.props.homeStore.featureById[d].name)
+      .text(d => d.name)
+      // .append('svg:title')
+      // .text(d => d.name)
     ;
 
-    data.forEach((f, i) => {
-      const featureAngle = Math.PI * 2 / data.length - gapAngle;
-      const subAngle = (featureAngle - gapAngle * 2) / 3;
-      svg.append('svg:g').selectAll('path')
-        .data(['action', 'component', 'misc'])
-        .enter()
-        .append('svg:path')
-        .attr('stroke-width', 15)
-        .attr('stroke', d => colors[d])
-        // .attr('opacity', '0.6')
-        .attr('fill', 'transparent')
-        .attr('d', (d, j) => {
-          const startAngle = (i * Math.PI * 2 / data.length) + j * (subAngle + gapAngle);
-          const endAngle = startAngle + subAngle;
-          const d3Path = d3.path();
-          d3Path.arc(250, 250, 180, startAngle, endAngle);
-          return d3Path;
-        })
-      ;
-    });
+    this.svg
+      .append('svg:g')
+      .selectAll('path')
+      .data(diagramData.links)
+      .enter()
+      .append('svg:path')
+      .attr('stroke-width', 1)
+      .attr('stroke', colors.featureInner)
+      .attr('fill', 'transparent')
+      .attr('d', (d) => {
+        // const featureAngle = Math.PI * 2 / data.length - gapAngle;
+
+        // const curve = this.getCurveData(d);
+        const d3Path = d3.path();
+        d3Path.moveTo(d.x1, d.y1);
+        d3Path.quadraticCurveTo(d.cpx, d.cpy, d.x2, d.y2);
+        return d3Path;
+      })
+      // .append('svg:title')
+      // .text(l => `${l.source.file} -> ${l.target.file}`)
+    ;
+  }
+
+  drawGroups(groups) {
+    this.svg
+      .append('svg:g')
+      .selectAll('path')
+      .data(groups)
+      .enter()
+      .append('svg:path')
+      .attr('id', d => `group-${d.type}-${d.id}`)
+      .attr('stroke-width', d => d.strokeWidth)
+      .attr('class', d => `${d.type}-group`)
+      .attr('fill', 'transparent')
+      .attr('d', (d) => {
+        // const featureAngle = Math.PI * 2 / groups.length - gapAngle;
+
+        const d3Path = d3.path();
+        d3Path.arc(d.x, d.y, d.radius, d.startAngle, d.endAngle);
+        return d3Path;
+      })
+    ;
   }
 
   render() {
@@ -89,3 +100,22 @@ export default class OverviewChordDiagram extends PureComponent {
     );
   }
 }
+
+/* istanbul ignore next */
+function mapStateToProps(state, props) {
+  return {
+    diagramData: getOverviewChordDiagramData(state.home, props.size),
+  };
+}
+
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({}, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverviewChordDiagram);

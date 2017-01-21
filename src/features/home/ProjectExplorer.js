@@ -364,6 +364,7 @@ export class ProjectExplorer extends Component {
     return (
       <div className="home-project-explorer" ref={(node) => { this.rootNode = node; }}>
         {treeNodes.length > 0 ? <Tree
+          autoExpandParent={false}
           selectedKeys={[this.state.selectedKey]}
           expandedKeys={expandedKeys}
           onRightClick={this.handleContextMenu}
