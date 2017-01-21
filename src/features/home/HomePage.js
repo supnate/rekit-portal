@@ -44,7 +44,7 @@ export class HomePage extends Component {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ minWidth: 1000 }}>
           <Col span="16" className="diagram-container">
             <h3>Overview diagram</h3>
             <OverviewChordDiagram size={500} />

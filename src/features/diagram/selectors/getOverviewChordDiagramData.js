@@ -122,13 +122,16 @@ export const getOverviewChordDiagramData = createSelector(
 
       allElements.forEach((ele) => {
         if (!ele.deps) return;
-        connectedFiles[ele.file] = ele;
 
         const allDeps = [
           ...ele.deps.actions,
           ...ele.deps.components,
           ...ele.deps.misc,
         ];
+
+        if (!allDeps.length) return;
+
+        connectedFiles[ele.file] = ele;
         allDeps.forEach((dep) => {
           connectedFiles[dep.file] = dep;
 
@@ -142,7 +145,9 @@ export const getOverviewChordDiagramData = createSelector(
 
     innerGroups.forEach((innerGroup) => {
       const f = featureById[innerGroup.feature];
-      const eles = f[innerGroup.type].filter(e => !!connectedFiles[e.file]); // all connected elements of the group
+      let allEles = f[innerGroup.type];
+      if (innerGroup.type === 'misc') allEles = flattenMiscFiles(allEles);
+      const eles = allEles.filter(e => !!connectedFiles[e.file]); // all connected elements of the group
       const stepAngle = (innerGroup.endAngle - innerGroup.startAngle) / (eles.length + 1);
       const radius = innerRadius - innerStrokeWidth / 2;
       eles.forEach((e, i) => {
@@ -157,22 +162,15 @@ export const getOverviewChordDiagramData = createSelector(
         };
       });
     });
-
-    links.forEach((link) => {
-      if (!filesPos[link.source.file]) console.log('cant find pos for: ', `${link.source.feature}/${link.source.name}`);
-      if (!filesPos[link.target.file]) console.log('cant find pos for: ', `${link.target.feature}/${link.target.name}`);
-    });
+    // links.forEach((link) => {
+    //   if (!filesPos[link.source.file]) console.log('cant find pos for: ', `${link.source.feature}/${link.source.name}`);
+    //   if (!filesPos[link.target.file]) console.log('cant find pos for: ', `${link.target.feature}/${link.target.name}`);
+    // });
 
     // Convert links elements to coordinates
     links = links.filter(link => filesPos[link.source.file] && filesPos[link.target.file]).map((link) => {
-      const c = Object.assign({}, link);
       const source = filesPos[link.source.file];
       const target = filesPos[link.target.file];
-      // link.pos = -1;
-      if (!source || !target) {
-        console.log('cant find pos: ', c.source, c.target);
-        return false;
-      }
 
       const x1 = source.x;
       const y1 = source.y;
@@ -193,18 +191,30 @@ export const getOverviewChordDiagramData = createSelector(
       const costheta = asign * Math.cos(theta);
       const sintheta = asign * Math.sin(theta);
 
-      const d = 40;
+      const radius = innerRadius - innerStrokeWidth / 2;
+      let ang = Math.abs(source.angle - target.angle);
+      if (ang > Math.PI) ang -= Math.PI;
+      const d1 = radius * Math.cos(ang);
+      const d2 = radius - d1;
+      const d3 = radius * Math.sin(ang);
+
+      let d = d1;
+      // if (d1 >= d2) d = d1;
+      if (d > d3) d = d3;
+      // const d = 40;
+      d = 40;
+      // if (ang > Math.PI / 1.5) d = 40;
       const m = source.angle < target.angle ? d : -d;
       // Find c and d
-      const c1 = m * sintheta;
-      const d1 = m * costheta;
+      const m1 = m * sintheta;
+      const m2 = m * costheta;
 
       // Use c and d to find Kx and Ky
-      const cpx = jx - c1;
-      const cpy = jy + d1;
+      const cpx = jx - m1;
+      const cpy = jy + m2;
 
       // return { x2, x2, y1, y2, mx, my };
-      return { x1, y1, x2, y2, cpx, cpy, source: link.sourceElement, target: link.target.element };
+      return { x1, y1, x2, y2, cpx, cpy, source: link.source, target: link.target };
       // return true;
     });
 

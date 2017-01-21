@@ -9,9 +9,11 @@ class OverviewChordDiagram extends PureComponent {
   static propTypes = {
     diagramData: PropTypes.object.isRequired,
     size: PropTypes.number.isRequired, // eslint-disable-line
+    sameFeatureDepVisible: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
+    sameFeatureDepVisible: false,
     size: 500,
   };
 
@@ -57,6 +59,7 @@ class OverviewChordDiagram extends PureComponent {
       .attr('stroke-width', 1)
       .attr('stroke', colors.featureInner)
       .attr('fill', 'transparent')
+      .attr('class', d => d.source.feature === d.target.feature ? 'same-feature-dep' : '')
       .attr('d', (d) => {
         // const featureAngle = Math.PI * 2 / data.length - gapAngle;
 
