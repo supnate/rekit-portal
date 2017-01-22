@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import enUS from 'antd/lib/locale-provider/en_US';
-import { LocaleProvider, message, Modal, Spin } from 'antd';
+import { LocaleProvider, message, Spin } from 'antd';
 import { SidePanel } from './';
 import DialogPlace from '../rekit-cmds/DialogPlace';
 import { fetchProjectData } from './redux/actions';
@@ -31,10 +31,7 @@ export class App extends Component {
       .then(hide)
       .catch((e) => {
         console.log('failed to fetch project data: ', e);
-        Modal.error({
-          title: 'Failed to refresh project data',
-          content: 'Please try to refresh the whole page.',
-        });
+        message.error('Failed to refresh project data');
       });
     }
   }

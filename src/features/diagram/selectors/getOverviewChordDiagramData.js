@@ -4,10 +4,11 @@ import { createSelector } from 'reselect';
 const featuresSelector = state => state.features;
 const featureByIdSelector = state => state.featureById;
 const sizeSelector = (state, size) => size;
+const selectedFeaturesSelector = (state, size, selectedFeatures) => selectedFeatures;
 
 // constants
-const outerStrokeWidth = 16;
-const innerStrokeWidth = 16;
+const outerStrokeWidth = 12;
+const innerStrokeWidth = 12;
 const outerGapAngle = Math.PI / 60;
 const innerGapAngle = Math.PI / 360;
 
@@ -20,7 +21,7 @@ function flattenMiscFiles(arr) {
 
 function getMiscWeight(misc) {
   // misc files weight should exclude 4 entry files: actions.js, index.js, reducer.js, constants.js
-  let weight = misc.filter(f => /\.js$/.test(f.file)).length - 4;
+  let weight = misc.filter(f => /\.js$/.test(f.file)).length - 6;
   if (weight <= 0) weight = 1;
   return weight;
 }
@@ -45,12 +46,12 @@ function scaleAngleByWeight(groups, gapAngle, sumAngle) {
     nextStartAngle = group.endAngle + gapAngle;
   });
 }
-
 export const getOverviewChordDiagramData = createSelector(
   featuresSelector,
   featureByIdSelector,
   sizeSelector,
-  (features, featureById, size) => {
+  selectedFeaturesSelector,
+  (features, featureById, size, selectedFeatures) => {
     const circleRadius = size / 2 - textSpace;
     const outerRadius = circleRadius - outerStrokeWidth / 2;
     const innerRadius = circleRadius - outerStrokeWidth - circleGap - innerStrokeWidth / 2;
@@ -59,7 +60,13 @@ export const getOverviewChordDiagramData = createSelector(
     const x = size / 2;
     const y = size / 2;
 
-    const outerGroups = features.map((fid, i) => {
+    const hash = _.keyBy(selectedFeatures);
+    selectedFeatures = features.filter(fid => hash[fid]); // sort selected features using the original order
+
+    // const t = selectedFeatures.shift();
+    // selectedFeatures.push(t);
+
+    const outerGroups = selectedFeatures.map((fid, i) => {
       const feature = featureById[fid];
       const miscFiles = flattenMiscFiles(feature.misc);
       const startAngle = i * Math.PI * 2 / outerCount;
@@ -116,7 +123,7 @@ export const getOverviewChordDiagramData = createSelector(
     let links = [];
     const connectedFiles = {}; // all files that need to be connected
     const filesPos = {};
-    features.forEach((fid) => {
+    selectedFeatures.forEach((fid) => {
       const f = featureById[fid];
       const allElements = [...f.components, ...f.actions, ...flattenMiscFiles(f.misc).filter(ele => /\.js$/.test(ele.file))];
 
@@ -127,7 +134,7 @@ export const getOverviewChordDiagramData = createSelector(
           ...ele.deps.actions,
           ...ele.deps.components,
           ...ele.deps.misc,
-        ];
+        ].filter(e => selectedFeatures.includes(e.feature)); // the dependencies should also in selected features
 
         if (!allDeps.length) return;
 
@@ -184,7 +191,7 @@ export const getOverviewChordDiagramData = createSelector(
       const a = x2 - x1;
       const asign = (a < 0 ? -1 : 1);
       const b = y2 - y1;
-      // const bsign = (b < 0 ? -1 : 1);
+
       const theta = Math.atan(b / a);
 
       // Find the point that's perpendicular to J on side
@@ -193,31 +200,39 @@ export const getOverviewChordDiagramData = createSelector(
 
       const radius = innerRadius - innerStrokeWidth / 2;
       let ang = Math.abs(source.angle - target.angle);
-      if (ang > Math.PI) ang -= Math.PI;
-      const d1 = radius * Math.cos(ang);
-      const d2 = radius - d1;
-      const d3 = radius * Math.sin(ang);
+      if (ang > Math.PI) ang = 2 * Math.PI - ang;
+      ang /= 2;
+      const d1 = Math.abs(radius * Math.cos(ang));
+      // const d2 = radius - d1;
+      const d2 = radius * Math.sin(ang);
 
       let d = d1;
-      // if (d1 >= d2) d = d1;
-      if (d > d3) d = d3;
-      // const d = 40;
-      d = 40;
-      // if (ang > Math.PI / 1.5) d = 40;
-      const m = source.angle < target.angle ? d : -d;
-      // Find c and d
+      if (d > d2 * 2) d = d2 * 2;
+      let s = source.angle;
+      let t = target.angle;
+      if (Math.abs(s - t) > Math.PI) {
+        if (s < t) s += 2 * Math.PI;
+        else t += 2 * Math.PI;
+      }
+      const m = (s < t) ? d : -d;
+      // if (source.angle - target.angle > Math.PI) d = -d;
+
       const m1 = m * sintheta;
       const m2 = m * costheta;
 
-      // Use c and d to find Kx and Ky
+      // Use c and d to find cpx and cpy
       const cpx = jx - m1;
       const cpy = jy + m2;
 
-      // return { x2, x2, y1, y2, mx, my };
       return { x1, y1, x2, y2, cpx, cpy, source: link.source, target: link.target };
-      // return true;
     });
 
-    return { innerGroups, outerGroups, links };
-  },
+    // create fileNodes
+    // each file has a link should display a node for user interaction
+    const fileGroups = [];
+    
+
+
+    return { innerGroups, outerGroups, links, fileGroups };
+  }
 );

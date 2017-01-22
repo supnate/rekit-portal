@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Col, Icon, Row } from 'antd';
+import { Col, Icon, Popover, Row } from 'antd';
 import { OverviewChordDiagram } from '../diagram';
+import { getOverviewStat } from './selectors/getOverviewStat';
 import * as actions from './redux/actions';
 
 export class HomePage extends Component {
@@ -11,43 +12,52 @@ export class HomePage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+
+  renderOverviewDiagramHelp() {
+
+  }
   render() {
+    const { features, featureById } = this.props.home;
+    const overviewStat = getOverviewStat({features, featureById});
     return (
       <div className="home-home-page">
         <Row className="top-badges">
           <Col span="6">
             <div className="top-badge feature">
               <Icon type="book" />
-              <label className="count">6</label>
+              <label className="count">{overviewStat.features}</label>
               <label className="type">features</label>
             </div>
           </Col>
           <Col span="6">
             <div className="top-badge action">
               <Icon type="notification" />
-              <label className="count">32</label>
+              <label className="count">{overviewStat.actions}</label>
               <label className="type">actions</label>
             </div>
           </Col>
           <Col span="6">
             <div className="top-badge component">
               <Icon type="appstore-o" />
-              <label className="count">162</label>
+              <label className="count">{overviewStat.components}</label>
               <label className="type">components</label>
             </div>
           </Col>
           <Col span="6">
             <div className="top-badge misc">
               <Icon type="file" />
-              <label className="count">89</label>
+              <label className="count">{overviewStat.misc}</label>
               <label className="type">misc files</label>
             </div>
           </Col>
         </Row>
-        <Row style={{ minWidth: 1000 }}>
+        <Row style={{ minWidth: 800 }}>
           <Col span="16" className="diagram-container">
+            <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Overview diagram</p>} content={this.renderOverviewDiagramHelp()}>
+              <Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" />
+            </Popover>
             <h3>Overview diagram</h3>
-            <OverviewChordDiagram size={500} />
+            <OverviewChordDiagram size={460} />
           </Col>
           <Col span="8" className="test-coverage-container">
             <h3>Test coverage</h3>

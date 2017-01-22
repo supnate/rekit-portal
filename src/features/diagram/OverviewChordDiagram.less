@@ -1,18 +1,56 @@
 @import '../../styles/mixins.less';
 
+@link-line-color: #bbb;
+
 .diagram-overview-chord-diagram {
-  // svg { background-color: #eee; }
-  .feature-group {
-    stroke: @feature-color;
+  svg { background-color: #f7f7f7; }
+  .group-feature { stroke: @feature-color; }
+  .group-actions { stroke: @action-color; }
+  .group-components { stroke: @component-color; }
+  .group-misc { stroke: @misc-color; }
+
+  .svg-container {
+    text-align: center;
+    margin-top: 15px;
   }
-  .actions-group { stroke: @action-color; }
-  .components-group { stroke: @component-color; }
-  .misc-group { stroke: @misc-color; }
 
   svg {
-    transform: rotate(-180deg);
+    // transform: rotate(-180deg);
     .same-feature-dep {
       display: none;
     }
+
+    .triangle-marker {
+      fill: @link-line-color;
+    }
+    .link-line {
+      stroke: @link-line-color;
+      stroke-width: 1px;
+      // opacity: 0.1;
+      fill: transparent;
+    }
+  }
+
+  // svg.highlight {
+  //   .link-line, .group-node {
+  //     opacity: 0.2;
+  //   }
+
+  //   .group-node:hover {
+  //     opacity: 1;
+  //   }
+  // }
+
+  .same-feature-deps-visible svg {
+    .same-feature-dep {
+      display: block;
+    }
+  }
+}
+
+.diagram-overview-chord-diagram-feature-select {
+  li {
+    padding: 5px 0;
+    max-width: 300px;
   }
 }
