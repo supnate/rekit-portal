@@ -278,6 +278,9 @@ export const getOverviewChordDiagramData = createSelector(
       outerGroups,
       fileGroups: _.values(fileGroups),
       links,
+      x,
+      y,
+      radius: outerRadius + outerStrokeWidth / 2,
     };
   }
 );

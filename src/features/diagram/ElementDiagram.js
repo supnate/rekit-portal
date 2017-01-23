@@ -259,7 +259,7 @@ export default class ElementDiagram extends PureComponent {
           This diagram provides a focused view of the relationship between the selected element and others.
         </p>
         <p>
-          It helps to understand a module quickly, and helps to find out those over-complicated modules.
+          It helps to understand a module quickly, and helps to find out over-complicated modules.
         </p>
       </div>
     );

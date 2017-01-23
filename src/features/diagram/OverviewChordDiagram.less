@@ -1,6 +1,6 @@
 @import '../../styles/mixins.less';
 
-@link-line-color: #bbb;
+@link-line-color: #ccc;
 
 .diagram-overview-chord-diagram {
   // svg { background-color: #f7f7f7; }
@@ -15,9 +15,9 @@
     // }
   }
 
-  .file-of-type-actions { stroke: lighten(@action-color, 10%); }
-  .file-of-type-components { stroke: lighten(@component-color, 10%); }
-  .file-of-type-misc { stroke: lighten(@misc-color, 10%); }
+  .file-of-type-actions { stroke: lighten(@action-color, 0%); }
+  .file-of-type-components { stroke: lighten(@component-color, 0%); }
+  .file-of-type-misc { stroke: lighten(@misc-color, 0%); }
 
   .group-node { fill: none;}
 
@@ -27,13 +27,7 @@
   }
 
   svg {
-    // transform: rotate(-180deg);
-
-    .main-circle {
-      stroke: red;
-      stroke-width: 0px;
-      fill: rgba(255, 255, 255, 0);
-    }
+    // transform: rotate(-90deg);
     .same-feature-dep {
       display: none;
       // stroke-dasharray: 1, 1;

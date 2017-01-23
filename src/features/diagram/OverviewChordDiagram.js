@@ -5,7 +5,7 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
-import { Checkbox, Col, Icon, Popover, Row } from 'antd';
+import { Checkbox, Col, Icon, Popover, Row, Tooltip } from 'antd';
 import { colors } from '../common';
 import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
 
@@ -65,13 +65,25 @@ export class OverviewChordDiagram extends PureComponent {
     if (this.svg) {
       this.svg.remove();
     }
+    const self = this;
     this.svg = d3
       .select(this.d3Node)
       .append('svg')
       .attr('width', this.props.size)
       .attr('height', this.props.size)
-      .on('mousemove', this.handleSvgMousemove)
+      .on('mousemove', function() { // eslint-disable-line
+        const [x, y] = d3.mouse(this);
+        const d = Math.sqrt((x - diagramData.x) ** 2 + (y - diagramData.y) ** 2);
+
+        if (d >= diagramData.radius + 5) {
+          self.setState({
+            highlightedGroup: null,
+          });
+        }
+      })
     ;
+
+    // this.d3Node.firstChild.onmouseover = this.handleSvgMouseover;
 
     this.svg.append('svg:defs').selectAll('marker')
       .data(['marker'])
@@ -149,22 +161,6 @@ export class OverviewChordDiagram extends PureComponent {
       })
     ;
 
-    this.svg.selectAll('circle')
-      .data([diagramData.mainCircle])
-      .enter()
-      .append('circle')
-      .attr('class', 'main-circle')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('r', d => d.radius + 2)
-      .on('mouseout', () => {
-        console.log('circle mouse out');
-        this.setState({
-          highlightedGroup: null,
-        });
-      })
-    ;
-
     this.drawGroups(diagramData.outerGroups);
     this.drawGroups(diagramData.innerGroups);
     this.drawGroups(diagramData.fileGroups);
@@ -237,6 +233,7 @@ export class OverviewChordDiagram extends PureComponent {
     if (this.state.highlightedGroup) {
       const d = this.state.highlightedGroup;
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 0.15);
+      this.svg.selectAll('.link-line').style('stroke-dasharray', '');
       const highlighted = [];
       const dashed = [];
       if (d.type === 'feature') {
@@ -278,15 +275,13 @@ export class OverviewChordDiagram extends PureComponent {
       if (dashed.length) this.svg.selectAll(dashed.join(',')).style('stroke-dasharray', '3, 3');
     } else {
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
-      // this.svg.selectAll('.group-node.group-file').style('opacity', 0.2);
       this.svg.selectAll('.link-line').style('stroke-dasharray', '');
-      // this.svg.select(`#group-file-${uid(d.id)}`).style('stroke', colors[ele.type]).style('opacity', 0.2);
     }
   }
 
   @autobind
-  handleSvgMousemove(evt) {
-    console.log('svg mousemove: ', evt);
+  handleSvgMouseover(evt) {
+    console.log('svg mousemove: ', arguments);
   }
 
   @autobind
@@ -315,12 +310,9 @@ export class OverviewChordDiagram extends PureComponent {
 
   @autobind
   handleSelectFeature(fid, selected) {
-    console.log('select feature: ', fid, selected);
     const newSelected = [...this.state.selectedFeatures];
-    console.log(this.state.selectedFeatures);
     if (!selected) _.pull(newSelected, fid);
     else newSelected.push(fid);
-    console.log(newSelected);
     this.setState({
       selectedFeatures: newSelected,
     });
@@ -353,14 +345,19 @@ export class OverviewChordDiagram extends PureComponent {
     if (this.state.selectedFeatures.length === 1) {
       featureSelectLabel = this.props.home.featureById[this.state.selectedFeatures[0]].name;
     } else if (this.state.selectedFeatures.length < this.props.home.features.length) {
-      featureSelectLabel = `${this.state.selectedFeatures.length} features`;
+      featureSelectLabel = `${this.state.selectedFeatures.length}/${this.props.home.features.length} features`;
     }
     return (
       <div className="diagram-overview-chord-diagram">
         <Row>
           <Col span="12">
             <Checkbox checked={this.state.sameFeatureDepsVisible} onChange={this.handleToggleSameFeatureDepsVisible}>
-              <span title="Whether to show internal dependencies links inside a feature.">Show internal deps</span>
+              <span>
+                Show internal deps
+                <Tooltip title="Whether to show internal dependencies inside a feature.">
+                  &nbsp; <Icon style={{ color: '#108ee9', fontSize: 12 }} type="question-circle-o" />
+                </Tooltip>
+              </span>
             </Checkbox>
           </Col>
           <Col span="12" style={{ textAlign: 'right' }}>
@@ -379,10 +376,9 @@ export class OverviewChordDiagram extends PureComponent {
 }
 
 /* istanbul ignore next */
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
     home: state.home,
-    // diagramData: getOverviewChordDiagramData(state.home, props.size),
   };
 }
 
