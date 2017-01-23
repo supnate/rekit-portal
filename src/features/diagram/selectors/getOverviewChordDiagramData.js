@@ -9,7 +9,7 @@ const selectedFeaturesSelector = (state, size, selectedFeatures) => selectedFeat
 // constants
 const outerStrokeWidth = 12;
 const innerStrokeWidth = 12;
-const outerGapAngle = Math.PI / 60;
+const outerGapAngle = Math.PI / 40;
 const innerGapAngle = Math.PI / 360;
 const fileAngle = Math.PI / 120;
 

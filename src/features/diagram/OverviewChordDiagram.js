@@ -70,6 +70,7 @@ export class OverviewChordDiagram extends PureComponent {
       .append('svg')
       .attr('width', this.props.size)
       .attr('height', this.props.size)
+      .on('mousemove', this.handleSvgMousemove)
     ;
 
     this.svg.append('svg:defs').selectAll('marker')
@@ -86,6 +87,21 @@ export class OverviewChordDiagram extends PureComponent {
       .attr('orient', 'auto')
       .append('svg:path')
       .attr('d', 'M0,-5L10,0L0,5')
+    ;
+
+    this.svg
+      .append('svg:g')
+      .selectAll('path')
+      .data(diagramData.outerGroups)
+      .enter()
+      .append('svg:path')
+      .style('stroke-width', d => d.radius)
+      .attr('class', 'pie-bg')
+      .attr('d', (d) => {
+        const d3Path = d3.path();
+        d3Path.arc(d.x, d.y, d.radius / 2, d.startAngle, d.endAngle);
+        return d3Path;
+      })
     ;
 
     function getLinkCssClass(d) {
@@ -209,7 +225,7 @@ export class OverviewChordDiagram extends PureComponent {
       .text((d) => {
         if (d.type === 'file') {
           const ele = this.props.home.elementById[d.id];
-          return `${ele.feature}/${ele.name}`;
+          return ele.name;
         }
         return '';
       })
@@ -266,6 +282,11 @@ export class OverviewChordDiagram extends PureComponent {
       this.svg.selectAll('.link-line').style('stroke-dasharray', '');
       // this.svg.select(`#group-file-${uid(d.id)}`).style('stroke', colors[ele.type]).style('opacity', 0.2);
     }
+  }
+
+  @autobind
+  handleSvgMousemove(evt) {
+    console.log('svg mousemove: ', evt);
   }
 
   @autobind
