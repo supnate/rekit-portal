@@ -3,11 +3,23 @@
 @link-line-color: #bbb;
 
 .diagram-overview-chord-diagram {
-  svg { background-color: #f7f7f7; }
+  // svg { background-color: #f7f7f7; }
   .group-feature { stroke: @feature-color; }
   .group-actions { stroke: @action-color; }
   .group-components { stroke: @component-color; }
   .group-misc { stroke: @misc-color; }
+  .group-file {
+    stroke: #fff; cursor: pointer;
+    // &:hover {
+    //   opacity: 1!important;
+    // }
+  }
+
+  .file-of-type-actions { stroke: lighten(@action-color, 10%); }
+  .file-of-type-components { stroke: lighten(@component-color, 10%); }
+  .file-of-type-misc { stroke: lighten(@misc-color, 10%); }
+
+  .group-node { fill: none;}
 
   .svg-container {
     text-align: center;
@@ -16,8 +28,15 @@
 
   svg {
     // transform: rotate(-180deg);
+
+    .main-circle {
+      stroke: red;
+      stroke-width: 0px;
+      fill: rgba(255, 255, 255, 0);
+    }
     .same-feature-dep {
       display: none;
+      // stroke-dasharray: 1, 1;
     }
 
     .triangle-marker {
@@ -27,7 +46,7 @@
       stroke: @link-line-color;
       stroke-width: 1px;
       // opacity: 0.1;
-      fill: transparent;
+      fill: none;
     }
   }
 

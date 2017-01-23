@@ -11,6 +11,7 @@ const outerStrokeWidth = 12;
 const innerStrokeWidth = 12;
 const outerGapAngle = Math.PI / 60;
 const innerGapAngle = Math.PI / 360;
+const fileAngle = Math.PI / 120;
 
 const circleGap = 2;
 const textSpace = 20;
@@ -166,6 +167,7 @@ export const getOverviewChordDiagramData = createSelector(
           y: fy,
           file: e.file,
           angle: a,
+          feature: f.key,
         };
       });
     });
@@ -229,10 +231,53 @@ export const getOverviewChordDiagramData = createSelector(
 
     // create fileNodes
     // each file has a link should display a node for user interaction
-    const fileGroups = [];
-    
+    const fileGroups = {};
+
+    _.keys(connectedFiles).forEach((file) => {
+      if (fileGroups[file]) return;
+      const pos = filesPos[file];
+      fileGroups[file] = {
+        id: file,
+        type: 'file',
+        feature: pos.feature,
+        x,
+        y,
+        radius: innerRadius,
+        startAngle: pos.angle - fileAngle / 2,
+        endAngle: pos.angle + fileAngle / 2,
+        strokeWidth: innerStrokeWidth,
+      };
+
+      // featureInnerGroups.push({
+      //     id: `${outerGroup.id}-${type.name}`,
+      //     feature: outerGroup.id,
+      //     type: type.name,
+      //     x,
+      //     y,
+      //     startAngle,
+      //     endAngle,
+      //     strokeWidth: innerStrokeWidth,
+      //     radius: innerRadius,
+      //     weight: type.weight,
+      //   });
+    });
+
+    // links.forEach((link) => {
+    //   const sf = link.source.file;
+    //   const tf = link.target.file;
+
+    //   if (!fileGroups
+    //   console.log(link.source.file);
+    //   console.log(link.target.file);
+    // });
 
 
-    return { innerGroups, outerGroups, links, fileGroups };
+    return {
+      mainCircle: { x, y, radius: outerRadius + outerStrokeWidth / 2 },
+      innerGroups,
+      outerGroups,
+      fileGroups: _.values(fileGroups),
+      links,
+    };
   }
 );

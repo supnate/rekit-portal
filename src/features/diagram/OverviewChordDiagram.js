@@ -1,11 +1,24 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import { Checkbox, Col, Icon, Popover, Row } from 'antd';
+import { colors } from '../common';
 import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
+
+let uidSeed = 0;
+const uidHash = {};
+function uid(key) {
+  // map node key (usually file path) to a short uniq id
+  if (!uidHash[key]) {
+    uidHash[key] = `id${uidSeed}`;
+    uidSeed += 1;
+  }
+  return uidHash[key];
+}
 
 export class OverviewChordDiagram extends PureComponent {
   static propTypes = {
@@ -25,6 +38,7 @@ export class OverviewChordDiagram extends PureComponent {
   state = {
     sameFeatureDepsVisible: false,
     selectedFeatures: [],
+    highlightedGroup: null,
   };
 
   componentDidMount() {
@@ -38,15 +52,16 @@ export class OverviewChordDiagram extends PureComponent {
     if (prevProps.home !== props.home || prevProps.size !== props.size || prevState.selectedFeatures !== state.selectedFeatures) {
       this.refreshDiagram();
     }
+
+    if (prevState.highlightedGroup !== state.highlightedGroup) {
+      this.highlightGroup();
+    }
   }
 
-
   refreshDiagram() {
-    console.log(this.props.diagramData);
-    // const { diagramData } = this.props;
     const { home, size } = this.props;
-
     const diagramData = getOverviewChordDiagramData(home, size, this.state.selectedFeatures);
+    console.log('refresh overview diagram: ', diagramData);
     if (this.svg) {
       this.svg.remove();
     }
@@ -67,46 +82,22 @@ export class OverviewChordDiagram extends PureComponent {
       .attr('refY', 0)
       .attr('markerWidth', 6)
       .attr('markerHeight', 6)
-      // .style('fill', '#bbb')
       .attr('class', d => `triangle-marker ${d}`)
       .attr('orient', 'auto')
       .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5');
-
-    this.drawGroups(diagramData.outerGroups);
-    this.drawGroups(diagramData.innerGroups);
-
-    this.svg
-      .append('svg:g')
-      .selectAll('text')
-      .data(diagramData.outerGroups)
-      .enter()
-      .append('svg:text')
-      .style('font-size', 12)
-      .style('fill', '#777')
-      .style('overflow', 'hidden')
-      .style('text-overflow', 'ellipsis')
-      .style('cursor', 'default')
-      .attr('dy', -12)
-      .attr('class', d => `text-node feature-${d.id}`)
-      .append('textPath')
-      .attr('xlink:href', d => `#group-${d.type}-${d.id}`)
-      .style('text-anchor', 'start')
-      .attr('startOffset', '0%')
-      .text(d => d.name)
-
-      // .append('svg:title')
-      // .text(d => d.name)
+      .attr('d', 'M0,-5L10,0L0,5')
     ;
 
     function getLinkCssClass(d) {
+      // here source or target is the rekit element, type property doesn't have 's'.
       const source = d.source;
       const target = d.target;
       const sf = source.feature;
       const tf = target.feature;
       let st = source.type;
       let tt = target.type;
-      // here source or target is the rekit element, type property doesn't have 's'.
+      const sid = uid(source.file);
+      const tid = uid(target.file);
       if (st === 'component' || st === 'action') st += 's';
       if (tt === 'component' || tt === 'action') tt += 's';
       const cssClass = [
@@ -114,6 +105,8 @@ export class OverviewChordDiagram extends PureComponent {
         `from-feature-type-${st}`,
         `to-feature-${tf}`,
         `to-feature-type-${tt}`,
+        `from-file-${sid}`,
+        `to-file-${tid}`,
       ];
 
       if (source.feature === target.feature) {
@@ -133,90 +126,163 @@ export class OverviewChordDiagram extends PureComponent {
       .attr('marker-end', 'url(#marker)') // eslint-disable-line
       .attr('class', getLinkCssClass)
       .attr('d', (d) => {
-        // const featureAngle = Math.PI * 2 / data.length - gapAngle;
-
-        // const curve = this.getCurveData(d);
         const d3Path = d3.path();
         d3Path.moveTo(d.x1, d.y1);
         d3Path.quadraticCurveTo(d.cpx, d.cpy, d.x2, d.y2);
         return d3Path;
       })
-      // .append('svg:title')
-      // .text(l => `${l.source.file} -> ${l.target.file}`)
+    ;
+
+    this.svg.selectAll('circle')
+      .data([diagramData.mainCircle])
+      .enter()
+      .append('circle')
+      .attr('class', 'main-circle')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.radius + 2)
+      .on('mouseout', () => {
+        console.log('circle mouse out');
+        this.setState({
+          highlightedGroup: null,
+        });
+      })
+    ;
+
+    this.drawGroups(diagramData.outerGroups);
+    this.drawGroups(diagramData.innerGroups);
+    this.drawGroups(diagramData.fileGroups);
+
+    this.svg
+      .append('svg:g')
+      .selectAll('text')
+      .data(diagramData.outerGroups)
+      .enter()
+      .append('svg:text')
+      .style('font-size', 12)
+      .style('fill', '#777')
+      .style('overflow', 'hidden')
+      .style('text-overflow', 'ellipsis')
+      .style('cursor', 'default')
+      .attr('dy', -12)
+      .attr('class', d => `text-node feature-${d.id}`)
+      .append('textPath')
+      .attr('xlink:href', d => `#group-${d.type}-${uid(d.id)}`)
+      .style('text-anchor', 'start')
+      .attr('startOffset', '0%')
+      .text(d => d.name)
     ;
   }
 
-  @autobind
-  handleGroupMouseover(d) {
-    console.log('mouseover: ', d);
-
-    this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 0.15);
-    const highlighted = [];
-    // const halfHighlighted = [];
-    const dashed = [];
-    if (d.type === 'feature') {
-      highlighted.push(`.group-node.feature-${d.id}`);
-      highlighted.push(`.group-node.actions-of-${d.id}`);
-      highlighted.push(`.group-node.components-of-${d.id}`);
-      highlighted.push(`.group-node.misc-of-${d.id}`);
-
-      highlighted.push(`.link-line.from-feature-${d.id}`);
-      highlighted.push(`.link-line.to-feature-${d.id}`);
-      highlighted.push(`.text-node.feature-${d.id}`);
-
-      dashed.push(`.link-line.to-feature-${d.id}`);
-    } else {
-      highlighted.push(`.group-node.feature-${d.feature}`);
-      highlighted.push(`.group-node.${d.type}-of-${d.feature}`);
-
-      highlighted.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);
-      highlighted.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
-
-      highlighted.push(`.text-node.feature-${d.feature}`);
-
-      dashed.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
-    }
-
-    if (highlighted.length) this.svg.selectAll(highlighted.join(',')).style('opacity', 1);
-    // if (halfHighlighted.length) this.svg.selectAll(halfHighlighted.join(',')).style('opacity', 0.5);
-    if (dashed.length) this.svg.selectAll(dashed.join(',')).style('stroke-dasharray', '3, 3');
-  }
-
-  @autobind
-  handleGroupMouseout(d) {
-    console.log('mouseout: ', d);
-    this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
-    this.svg.selectAll('.link-line').style('stroke-dasharray', '');
-  }
-
   drawGroups(groups) {
-    function getCssClass(d) {
+    const getCssClass = (d) => {
       let cssClass = `group-${d.type}`;
       if (d.type === 'feature') cssClass += ` feature-${d.id}`;
       else cssClass += ` ${d.type}-of-${d.feature}`;
+
+      if (d.type === 'file') {
+        const ele = this.props.home.elementById[d.id];
+        const types = (ele.type === 'component' || ele.type === 'action') ? `${ele.type}s` : ele.type;
+        cssClass += ` file-of-type-${types}`;
+      }
       cssClass += ' group-node';
       return cssClass;
-    }
+    };
     this.svg
       .append('svg:g')
       .selectAll('path')
       .data(groups)
       .enter()
       .append('svg:path')
-      .attr('id', d => `group-${d.type}-${d.id}`)
+      .attr('id', d => `group-${d.type}-${uid(d.id)}`)
       .attr('stroke-width', d => d.strokeWidth)
       .attr('class', getCssClass)
       .attr('fill', 'transparent')
       .attr('d', (d) => {
-        // const featureAngle = Math.PI * 2 / groups.length - gapAngle;
-
         const d3Path = d3.path();
         d3Path.arc(d.x, d.y, d.radius, d.startAngle, d.endAngle);
         return d3Path;
       })
       .on('mouseover', this.handleGroupMouseover)
-      .on('mouseout', this.handleGroupMouseout)
+      .on('click', this.handleGroupClick)
+      .append('svg:title')
+      .text((d) => {
+        if (d.type === 'file') {
+          const ele = this.props.home.elementById[d.id];
+          return `${ele.feature}/${ele.name}`;
+        }
+        return '';
+      })
     ;
+  }
+
+  highlightGroup() {
+    const { elementById } = this.props.home;
+    if (this.state.highlightedGroup) {
+      const d = this.state.highlightedGroup;
+      this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 0.15);
+      const highlighted = [];
+      const dashed = [];
+      if (d.type === 'feature') {
+        highlighted.push(`.group-node.feature-${d.id}`);
+        highlighted.push(`.group-node.actions-of-${d.id}`);
+        highlighted.push(`.group-node.components-of-${d.id}`);
+        highlighted.push(`.group-node.misc-of-${d.id}`);
+        highlighted.push(`.group-node.file-of-${d.id}`);
+
+        highlighted.push(`.link-line.from-feature-${d.id}`);
+        highlighted.push(`.link-line.to-feature-${d.id}`);
+        highlighted.push(`.text-node.feature-${d.id}`);
+
+        dashed.push(`.link-line.to-feature-${d.id}`);
+      } else if (d.type !== 'file') {
+        highlighted.push(`.group-node.feature-${d.feature}`);
+        highlighted.push(`.group-node.${d.type}-of-${d.feature}`);
+        highlighted.push(`.group-node.file-of-${d.feature}.file-of-type-${d.type}`);
+
+        highlighted.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);
+        highlighted.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
+
+        highlighted.push(`.text-node.feature-${d.feature}`);
+
+        dashed.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
+      } else {
+        const ele = elementById[d.id];
+        highlighted.push(`.group-node.feature-${ele.feature}`);
+        highlighted.push(`.link-line.to-file-${uid(ele.file)}`);
+        highlighted.push(`.link-line.to-file-${uid(ele.file)}`);
+        highlighted.push(`.link-line.from-file-${uid(ele.file)}`);
+        highlighted.push(`.text-node.feature-${ele.feature}`);
+        highlighted.push(`#group-file-${uid(d.id)}`);
+
+        dashed.push(`.link-line.to-file-${uid(d.id)}`);
+      }
+
+      if (highlighted.length) this.svg.selectAll(highlighted.join(',')).style('opacity', 1);
+      if (dashed.length) this.svg.selectAll(dashed.join(',')).style('stroke-dasharray', '3, 3');
+    } else {
+      this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
+      // this.svg.selectAll('.group-node.group-file').style('opacity', 0.2);
+      this.svg.selectAll('.link-line').style('stroke-dasharray', '');
+      // this.svg.select(`#group-file-${uid(d.id)}`).style('stroke', colors[ele.type]).style('opacity', 0.2);
+    }
+  }
+
+  @autobind
+  handleGroupMouseover(d) {
+    this.setState({
+      highlightedGroup: d,
+    });
+  }
+
+  @autobind
+  handleGroupClick(d) {
+    if (d.type === 'file') {
+      const { elementById, projectRoot } = this.props.home;
+      const ele = elementById[d.id];
+      const file = ele.file.replace(`${projectRoot}/src/features/${ele.feature}/`, '');
+      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+    }
   }
 
   @autobind
@@ -243,8 +309,7 @@ export class OverviewChordDiagram extends PureComponent {
     const { features, featureById } = this.props.home;
     return (
       <ul className="diagram-overview-chord-diagram-feature-select">
-      {
-        features.map((fid) => {
+        {features.map((fid) => {
           const selected = this.state.selectedFeatures;
           const checked = !selected.length || selected.includes(fid);
           const disabled = checked && selected.length === 1;
@@ -257,8 +322,7 @@ export class OverviewChordDiagram extends PureComponent {
               >{featureById[fid].name}</Checkbox>
             </li>
           );
-        })
-      }
+        })}
       </ul>
     );
   }
@@ -284,7 +348,10 @@ export class OverviewChordDiagram extends PureComponent {
             </Popover>
           </Col>
         </Row>
-        <div className={`svg-container ${this.state.sameFeatureDepsVisible ? 'same-feature-deps-visible' : ''}`} ref={(node) => { this.d3Node = node; }} />
+        <div
+          className={`svg-container ${this.state.sameFeatureDepsVisible ? 'same-feature-deps-visible' : ''}`}
+          ref={(node) => { this.d3Node = node; }}
+        />
       </div>
     );
   }
