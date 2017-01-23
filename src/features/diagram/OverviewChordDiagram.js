@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import { Checkbox, Col, Icon, Popover, Row, Tooltip } from 'antd';
-import { colors } from '../common';
 import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
 
 let uidSeed = 0;
@@ -277,11 +276,6 @@ export class OverviewChordDiagram extends PureComponent {
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
       this.svg.selectAll('.link-line').style('stroke-dasharray', '');
     }
-  }
-
-  @autobind
-  handleSvgMouseover(evt) {
-    console.log('svg mousemove: ', arguments);
   }
 
   @autobind
