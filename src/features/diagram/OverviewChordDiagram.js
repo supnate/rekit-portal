@@ -232,8 +232,9 @@ export class OverviewChordDiagram extends PureComponent {
     if (this.state.highlightedGroup) {
       const d = this.state.highlightedGroup;
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 0.15);
-      this.svg.selectAll('.link-line').style('stroke-dasharray', '');
+      this.svg.selectAll('.link-line').style('stroke-dasharray', '').style('stroke', '#ccc');
       const highlighted = [];
+      const lighlightedLines = [];
       const dashed = [];
       if (d.type === 'feature') {
         highlighted.push(`.group-node.feature-${d.id}`);
@@ -244,6 +245,9 @@ export class OverviewChordDiagram extends PureComponent {
 
         highlighted.push(`.link-line.from-feature-${d.id}`);
         highlighted.push(`.link-line.to-feature-${d.id}`);
+        lighlightedLines.push(`.link-line.from-feature-${d.id}`);
+        lighlightedLines.push(`.link-line.to-feature-${d.id}`);
+
         highlighted.push(`.text-node.feature-${d.id}`);
 
         dashed.push(`.link-line.to-feature-${d.id}`);
@@ -254,6 +258,8 @@ export class OverviewChordDiagram extends PureComponent {
 
         highlighted.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);
         highlighted.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
+        lighlightedLines.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);
+        lighlightedLines.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);
 
         highlighted.push(`.text-node.feature-${d.feature}`);
 
@@ -262,8 +268,9 @@ export class OverviewChordDiagram extends PureComponent {
         const ele = elementById[d.id];
         highlighted.push(`.group-node.feature-${ele.feature}`);
         highlighted.push(`.link-line.to-file-${uid(ele.file)}`);
-        highlighted.push(`.link-line.to-file-${uid(ele.file)}`);
         highlighted.push(`.link-line.from-file-${uid(ele.file)}`);
+        lighlightedLines.push(`.link-line.to-file-${uid(ele.file)}`);
+        lighlightedLines.push(`.link-line.from-file-${uid(ele.file)}`);
         highlighted.push(`.text-node.feature-${ele.feature}`);
         highlighted.push(`#group-file-${uid(d.id)}`);
 
@@ -271,10 +278,11 @@ export class OverviewChordDiagram extends PureComponent {
       }
 
       if (highlighted.length) this.svg.selectAll(highlighted.join(',')).style('opacity', 1);
+      if (lighlightedLines.length) this.svg.selectAll(lighlightedLines.join(',')).style('stroke', '#aaa');
       if (dashed.length) this.svg.selectAll(dashed.join(',')).style('stroke-dasharray', '3, 3');
     } else {
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
-      this.svg.selectAll('.link-line').style('stroke-dasharray', '');
+      this.svg.selectAll('.link-line').style('stroke-dasharray', '').style('stroke', '#ccc');
     }
   }
 

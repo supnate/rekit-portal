@@ -5,8 +5,6 @@ import commonRoute from '../features/common/route';
 import rekitCmdsRoute from '../features/rekit-cmds/route';
 import diagramRoute from '../features/diagram/route';
 import rekitToolsRoute from '../features/rekit-tools/route';
-import thisIsALongFeatureNameRoute from '../features/this-is-a-long-feature-name/route';
-import f1Route from '../features/f-1/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes for new features, remove features, etc.
@@ -16,8 +14,6 @@ const childRoutes = [
   rekitCmdsRoute,
   diagramRoute,
   rekitToolsRoute,
-  thisIsALongFeatureNameRoute,
-  f1Route,
 ];
 
 const routes = [{

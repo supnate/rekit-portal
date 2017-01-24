@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Col, Icon, Popover, Row } from 'antd';
 import { OverviewChordDiagram } from '../diagram';
+import { TestCoverageSummary } from '../rekit-tools';
 import { getOverviewStat } from './selectors/getOverviewStat';
 import * as actions from './redux/actions';
 
@@ -44,10 +45,10 @@ export class HomePage extends Component {
             </div>
           </Col>
           <Col span="6">
-            <div className="top-badge misc">
-              <Icon type="file" />
-              <label className="count">{overviewStat.misc}</label>
-              <label className="type">misc files</label>
+            <div className="top-badge route">
+              <Icon type="share-alt" />
+              <label className="count">{overviewStat.routes}</label>
+              <label className="type">routes</label>
             </div>
           </Col>
         </Row>
@@ -61,7 +62,7 @@ export class HomePage extends Component {
           </Col>
           <Col span="8" className="test-coverage-container">
             <h3>Test coverage</h3>
-            <div>No coverage data found. You need to run tests first.</div>
+            <TestCoverageSummary />
           </Col>
         </Row>
       </div>

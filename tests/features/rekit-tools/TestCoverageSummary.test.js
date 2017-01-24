@@ -1,16 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DefaultPage } from 'src/features/f-1';
+import { TestCoverageSummary } from 'src/features/rekit-tools';
 
-describe('f-1/DefaultPage', () => {
+describe('rekit-tools/TestCoverageSummary', () => {
   it('renders node with correct class name', () => {
     const renderedComponent = shallow(
-      <DefaultPage />
+      <TestCoverageSummary />
     );
 
     expect(
-      renderedComponent.find('.f-1-default-page').node
+      renderedComponent.find('.rekit-tools-test-coverage-summary').node
     ).to.exist;
   });
 });

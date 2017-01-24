@@ -1,1 +1,0 @@
-export const F_1_SAMPLE_ACTION = 'F_1_SAMPLE_ACTION';
