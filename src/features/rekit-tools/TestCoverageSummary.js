@@ -1,4 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { Button, Alert } from 'antd';
 
 export default class TestCoverageSummary extends PureComponent {
   static propTypes = {
@@ -8,7 +9,8 @@ export default class TestCoverageSummary extends PureComponent {
   render() {
     return (
       <div className="rekit-tools-test-coverage-summary">
-        <div>No coverage data found. Need to run tests first.</div>
+        <Alert message="No coverage data found. Need to run tests first." type="info" showIcon />
+        <Button type="primary">Run tests</Button>
       </div>
     );
   }

@@ -31,6 +31,13 @@ export class HomePage extends Component {
             </div>
           </Col>
           <Col span="6">
+            <div className="top-badge route">
+              <Icon type="share-alt" />
+              <label className="count">{overviewStat.routes}</label>
+              <label className="type">routes</label>
+            </div>
+          </Col>
+          <Col span="6">
             <div className="top-badge action">
               <Icon type="notification" />
               <label className="count">{overviewStat.actions}</label>
@@ -42,13 +49,6 @@ export class HomePage extends Component {
               <Icon type="appstore-o" />
               <label className="count">{overviewStat.components}</label>
               <label className="type">components</label>
-            </div>
-          </Col>
-          <Col span="6">
-            <div className="top-badge route">
-              <Icon type="share-alt" />
-              <label className="count">{overviewStat.routes}</label>
-              <label className="type">routes</label>
             </div>
           </Col>
         </Row>
