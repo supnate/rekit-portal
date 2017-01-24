@@ -58,9 +58,12 @@ export class HomePage extends Component {
               <Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" />
             </Popover>
             <h3>Overview diagram</h3>
-            <OverviewChordDiagram size={460} />
+            <OverviewChordDiagram size={420} />
           </Col>
           <Col span="8" className="test-coverage-container">
+            <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Test coverage</p>} content={this.renderOverviewDiagramHelp()}>
+              <Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" />
+            </Popover>
             <h3>Test coverage</h3>
             <TestCoverageSummary />
           </Col>

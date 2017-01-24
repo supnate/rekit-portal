@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -43,7 +43,7 @@ export class RoutesPage extends Component {
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           <TabPane tab="Rules" key="rules">
             <p>This is a rough overview of routing config defined in a feature. </p>
-            <p>For detailed information, please look at <span className="highlight-label">src/features/{fid}/route.js</span>.</p>
+            <p>For more detailed information, please look into the <Link to={`/${fid}/routes/code`}>code</Link>.</p>
             {feature.routes.length === 0
               ? <Alert type="info" message="No routing rules defined." showIcon />
               :
