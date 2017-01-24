@@ -25,6 +25,7 @@ export default class ElementDiagram extends PureComponent {
     chartWidth = pageContainer.offsetWidth - 80; // 80 is paddings
     if (chartHeight < 400) chartHeight = 400;
     if (chartWidth < 400) chartWidth = 400;
+
     this.refresh(this.props);
   }
 
@@ -99,7 +100,7 @@ export default class ElementDiagram extends PureComponent {
       .force('link', d3.forceLink().id(d => d.id))
       .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
       .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(chartWidth / 2, chartHeight / 2))
+      .force('center', d3.forceCenter(300, 250))
     ;
 
     const link = this.svg.append('g')

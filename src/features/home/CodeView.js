@@ -4,7 +4,6 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { message } from 'antd';
-import hljs from 'highlight.js';
 import { fetchFileContent } from './redux/actions';
 
 export class CodeView extends PureComponent {
@@ -34,7 +33,8 @@ export class CodeView extends PureComponent {
   highlightCode() {
     const code = this.getFileContent();
     if (this.codeNode && code !== this.lastCode) {
-      hljs.highlightBlock(this.codeNode);
+      // hljs.highlightBlock(this.codeNode);
+      Prism.highlightElement(this.codeNode);
       this.lastCode = code;
     }
   }
@@ -57,9 +57,13 @@ export class CodeView extends PureComponent {
 
   render() {
     const content = this.getFileContent();
+    const ext = this.props.file.split('.').pop();
+    const lang = { js: 'jsx', md: 'markdown' }[ext] || ext;
+    console.log('lang: ', lang);
     return (
       <div className="home-code-view">
-        <pre><code className="jsx" ref={(node) => { this.codeNode = node; }}>
+        <div className="file-path">{this.props.file}</div>
+        <pre><code className={`language-${lang} line-numbers`} ref={(node) => { this.codeNode = node; }}>
           {typeof content === 'string' ? content : '// Loading...'}
         </code></pre>
       </div>

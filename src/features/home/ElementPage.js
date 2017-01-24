@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Icon, Tabs } from 'antd';
+import { Button, Icon, Tabs } from 'antd';
 import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
 import { colors } from '../common';
@@ -91,7 +91,11 @@ export class ElementPage extends Component {
           </TabPane>
           <TabPane tab="Code" key="code" />
           {data.type === 'component' && <TabPane tab="Style" key="style" />}
-          <TabPane tab="Test" key="test" />
+          <TabPane tab="Test" key="test">
+            <Button type="primary" style={{ marginBottom: 10 }}>
+              <Icon type="play-circle-o" /> Run test
+            </Button>
+          </TabPane>
         </Tabs>
         {tabKey !== 'diagram' && <CodeView file={codeFile} />}
 

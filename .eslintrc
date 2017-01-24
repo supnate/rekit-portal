@@ -3,6 +3,7 @@
   'parser': 'babel-eslint',
   'globals': {
     'document': true,
+    'Prism': true,
     'window': true
   },
   'settings': {
