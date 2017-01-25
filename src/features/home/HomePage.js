@@ -42,7 +42,7 @@ export class HomePage extends Component {
     // 40: diagram container Col right-padding
     // 60: diagram margins
     const minWidth = 800 * 2 / 3 - 40 - 60;
-    let size = Math.min(height - 280, (width - 320 - 80) * 2 / 3 - 40 - 60);
+    let size = Math.min(height - 310, (width - 320 - 80) * 2 / 3 - 40 - 60);
     if (size < minWidth) size = minWidth;
     this.setState({
       svgSize: size,
