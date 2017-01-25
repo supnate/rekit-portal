@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Col, Icon, Popover, Row } from 'antd';
@@ -13,13 +14,37 @@ export class HomePage extends Component {
     actions: PropTypes.object.isRequired,
   };
 
+  state = {
+    svgSize: 460,
+  };
+
+  componentWillMount() {
+    this.handleWindowResize();
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize, false);
+  }
+
+  @autobind
+  handleWindowResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    let size = Math.min(height - 280, (width - 320) * 2 / 3);
+    if (size < 320) size = 320;
+    this.setState({
+      svgSize: size,
+    });
+  }
 
   renderOverviewDiagramHelp() {
 
   }
+
   render() {
     const { features, featureById } = this.props.home;
-    const overviewStat = getOverviewStat({features, featureById});
+    const overviewStat = getOverviewStat({ features, featureById });
     return (
       <div className="home-home-page">
         <Row className="top-badges">
@@ -58,7 +83,7 @@ export class HomePage extends Component {
               <Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" />
             </Popover>
             <h3>Overview diagram</h3>
-            <OverviewChordDiagram size={420} />
+            <OverviewChordDiagram size={this.state.svgSize} />
           </Col>
           <Col span="8" className="test-coverage-container">
             <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Test coverage</p>} content={this.renderOverviewDiagramHelp()}>
