@@ -23,12 +23,10 @@ export class HomePage extends Component {
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
   }
-
-  componentDidMount() {
-    this.handleWindowResize();
-  }
-
   componentWillUnmount() {
+    // NOTE: with RHL, it may not be executed when hot replacement happens,
+    // and then causes errors about setState on unmounted component.
+    // Just ignore it for now.
     window.removeEventListener('resize', this.handleWindowResize, false);
   }
 
@@ -36,9 +34,16 @@ export class HomePage extends Component {
   handleWindowResize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    let size = Math.min(height - 280, (width - 320) * 2 / 3 - 80); // TODO: fix magic numbers for the diagram.
-    // if (size < 460) size = 460; // minimal size of 320
-    if (size < 320) size = 320; // minimal size of 320
+    // TODO: fix magic numbers for the diagram.
+    // 800: min-width of the antd Row
+    // 320: side panel width
+    // 80: page container paddings
+    // 2/3: antd col/row
+    // 40: diagram container Col right-padding
+    // 60: diagram margins
+    const minWidth = 800 * 2 / 3 - 40 - 60;
+    let size = Math.min(height - 280, (width - 320 - 80) * 2 / 3 - 40 - 60);
+    if (size < minWidth) size = minWidth;
     this.setState({
       svgSize: size,
     });
