@@ -63,7 +63,7 @@ export default class TestCoverageSummary extends PureComponent {
 
         <li><h4>Features coverage:</h4></li>
         {arr.map(p => (
-          <li className="feature-coverage">
+          <li key={p} className="feature-coverage">
             <label>Percentage: {p}%</label>
             <div className="coverage-percent">
               <div

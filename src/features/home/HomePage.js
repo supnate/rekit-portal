@@ -19,8 +19,13 @@ export class HomePage extends Component {
   };
 
   componentWillMount() {
+    console.log('will mount');
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
+  }
+
+  componentDidMount() {
+    this.handleWindowResize();
   }
 
   componentWillUnmount() {
@@ -31,8 +36,9 @@ export class HomePage extends Component {
   handleWindowResize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    let size = Math.min(height - 280, (width - 320) * 2 / 3);
-    if (size < 320) size = 320;
+    let size = Math.min(height - 280, (width - 320) * 2 / 3 - 80); // TODO: fix magic numbers for the diagram.
+    // if (size < 460) size = 460; // minimal size of 320
+    if (size < 320) size = 320; // minimal size of 320
     this.setState({
       svgSize: size,
     });

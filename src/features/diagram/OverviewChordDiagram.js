@@ -19,6 +19,80 @@ function uid(key) {
   return uidHash[key];
 }
 
+function drawPieBg(d3Selection) {
+  d3Selection
+    .attr('class', 'pie-bg')
+    .style('stroke-width', d => d.radius)
+    // .transition() // start a transition to bring the new value into view
+    // .duration(300)
+    // .ease(d3.easeLinear)
+    .attr('d', (d) => {
+      const d3Path = d3.path();
+      d3Path.arc(d.x, d.y, d.radius / 2, d.startAngle, d.endAngle);
+      return d3Path;
+    })
+  ;
+}
+
+function getLinkCssClass(d) {
+  // here source or target is the rekit element, type property doesn't have 's'.
+  const source = d.source;
+  const target = d.target;
+  const sf = source.feature;
+  const tf = target.feature;
+  let st = source.type;
+  let tt = target.type;
+  const sid = uid(source.file);
+  const tid = uid(target.file);
+  if (st === 'component' || st === 'action') st += 's';
+  if (tt === 'component' || tt === 'action') tt += 's';
+  const cssClass = [
+    `from-feature-${sf}`,
+    `from-feature-type-${st}`,
+    `to-feature-${tf}`,
+    `to-feature-type-${tt}`,
+    `from-file-${sid}`,
+    `to-file-${tid}`,
+  ];
+
+  if (source.feature === target.feature) {
+    cssClass.push('same-feature-dep');
+  }
+
+  cssClass.push('link-line');
+  return cssClass.join(' ');
+}
+
+function drawLink(d3Selection) {
+  d3Selection
+    .attr('marker-end', 'url(#marker)') // eslint-disable-line
+    .attr('class', getLinkCssClass)
+    .attr('d', (d) => {
+      const d3Path = d3.path();
+      d3Path.moveTo(d.x1, d.y1);
+      d3Path.quadraticCurveTo(d.cpx, d.cpy, d.x2, d.y2);
+      return d3Path;
+    })
+  ;
+}
+
+function drawFeatureNameText(d3Selection) {
+  d3Selection
+    .style('font-size', 12)
+    .style('fill', '#777')
+    .style('overflow', 'hidden')
+    .style('text-overflow', 'ellipsis')
+    .style('cursor', 'default')
+    .attr('dy', -12)
+    .attr('class', d => `text-node feature-${d.id}`)
+    .append('textPath')
+    .attr('xlink:href', d => `#group-${d.type}-${uid(d.id)}`)
+    .style('text-anchor', 'start')
+    .attr('startOffset', '0%')
+    .text(d => d.name)
+  ;
+}
+
 export class OverviewChordDiagram extends PureComponent {
   static propTypes = {
     home: PropTypes.object.isRequired,
@@ -41,48 +115,11 @@ export class OverviewChordDiagram extends PureComponent {
   };
 
   componentDidMount() {
-    this.refreshDiagram();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('component did update.');
-    const props = this.props;
-    const state = this.state;
-    if (prevProps.home !== props.home || prevProps.size !== props.size || prevState.selectedFeatures !== state.selectedFeatures) {
-      this.refreshDiagram();
-    }
-
-    if (prevState.highlightedGroup !== state.highlightedGroup) {
-      this.highlightGroup();
-    }
-  }
-
-  refreshDiagram() {
-    const { home, size } = this.props;
-    const diagramData = getOverviewChordDiagramData(home, size, this.state.selectedFeatures);
-    console.log('refresh overview diagram: ', diagramData);
-    if (this.svg) {
-      this.svg.remove();
-    }
-    const self = this;
     this.svg = d3
       .select(this.d3Node)
       .append('svg')
-      .attr('width', this.props.size)
-      .attr('height', this.props.size)
-      .on('mousemove', function() { // eslint-disable-line
-        const [x, y] = d3.mouse(this);
-        const d = Math.sqrt((x - diagramData.x) ** 2 + (y - diagramData.y) ** 2);
-
-        if (d >= diagramData.radius + 5) {
-          self.setState({
-            highlightedGroup: null,
-          });
-        }
-      })
+      .on('mousemove', this.handleSvgMousemove)
     ;
-
-    // this.d3Node.firstChild.onmouseover = this.handleSvgMouseover;
 
     this.svg.append('svg:defs').selectAll('marker')
       .data(['marker'])
@@ -100,92 +137,61 @@ export class OverviewChordDiagram extends PureComponent {
       .attr('d', 'M0,-5L10,0L0,5')
     ;
 
-    this.svg
-      .append('svg:g')
-      .selectAll('path')
-      .data(diagramData.outerGroups)
-      .enter()
-      .append('svg:path')
-      .style('stroke-width', d => d.radius)
-      .attr('class', 'pie-bg')
-      .attr('d', (d) => {
-        const d3Path = d3.path();
-        d3Path.arc(d.x, d.y, d.radius / 2, d.startAngle, d.endAngle);
-        return d3Path;
-      })
-    ;
+    this.pieBgGroup = this.svg.append('svg:g');
+    this.linksGroup = this.svg.append('svg:g');
+    this.featureNamesTextGroup = this.svg.append('svg:g');
+    this.featureNodesGroup = this.svg.append('svg:g');
+    this.elementNodesGroup = this.svg.append('svg:g');
+    this.fileNodesGroup = this.svg.append('svg:g');
 
-    function getLinkCssClass(d) {
-      // here source or target is the rekit element, type property doesn't have 's'.
-      const source = d.source;
-      const target = d.target;
-      const sf = source.feature;
-      const tf = target.feature;
-      let st = source.type;
-      let tt = target.type;
-      const sid = uid(source.file);
-      const tid = uid(target.file);
-      if (st === 'component' || st === 'action') st += 's';
-      if (tt === 'component' || tt === 'action') tt += 's';
-      const cssClass = [
-        `from-feature-${sf}`,
-        `from-feature-type-${st}`,
-        `to-feature-${tf}`,
-        `to-feature-type-${tt}`,
-        `from-file-${sid}`,
-        `to-file-${tid}`,
-      ];
-
-      if (source.feature === target.feature) {
-        cssClass.push('same-feature-dep');
-      }
-
-      cssClass.push('link-line');
-      return cssClass.join(' ');
-    }
-
-    this.svg
-      .append('svg:g')
-      .selectAll('path')
-      .data(diagramData.links)
-      .enter()
-      .append('svg:path')
-      .attr('marker-end', 'url(#marker)') // eslint-disable-line
-      .attr('class', getLinkCssClass)
-      .attr('d', (d) => {
-        const d3Path = d3.path();
-        d3Path.moveTo(d.x1, d.y1);
-        d3Path.quadraticCurveTo(d.cpx, d.cpy, d.x2, d.y2);
-        return d3Path;
-      })
-    ;
-
-    this.drawGroups(diagramData.outerGroups);
-    this.drawGroups(diagramData.innerGroups);
-    this.drawGroups(diagramData.fileGroups);
-
-    this.svg
-      .append('svg:g')
-      .selectAll('text')
-      .data(diagramData.outerGroups)
-      .enter()
-      .append('svg:text')
-      .style('font-size', 12)
-      .style('fill', '#777')
-      .style('overflow', 'hidden')
-      .style('text-overflow', 'ellipsis')
-      .style('cursor', 'default')
-      .attr('dy', -12)
-      .attr('class', d => `text-node feature-${d.id}`)
-      .append('textPath')
-      .attr('xlink:href', d => `#group-${d.type}-${uid(d.id)}`)
-      .style('text-anchor', 'start')
-      .attr('startOffset', '0%')
-      .text(d => d.name)
-    ;
+    this.updateDiagram();
   }
 
-  drawGroups(groups) {
+  componentDidUpdate(prevProps, prevState) {
+    const props = this.props;
+    const state = this.state;
+    if (prevProps.home !== props.home || prevProps.size !== props.size || prevState.selectedFeatures !== state.selectedFeatures) {
+      this.updateDiagram();
+    }
+
+    if (prevState.highlightedGroup !== state.highlightedGroup) {
+      this.highlightGroup();
+    }
+  }
+
+  updateDiagram() {
+    const { home, size } = this.props;
+    const diagramData = getOverviewChordDiagramData(home, size, this.state.selectedFeatures);
+    console.log('refresh overview diagram: ', diagramData);
+    this.svg
+      // .transition() // start a transition to bring the new value into view
+      // .duration(300)
+      // .ease(d3.easeLinear)
+      .attr('width', this.props.size)
+      .attr('height', this.props.size)
+    ;
+
+    const pieBg = this.pieBgGroup.selectAll('path').data(diagramData.outerGroups);
+    pieBg.exit().remove();
+    drawPieBg(pieBg.enter().append('svg:path'));
+    drawPieBg(pieBg);
+
+    const links = this.linksGroup.selectAll('path').data(diagramData.links);
+    links.exit().remove();
+    drawLink(links.enter().append('svg:path'));
+    drawLink(links);
+
+    this.drawGroups(diagramData.outerGroups, this.featureNodesGroup);
+    this.drawGroups(diagramData.innerGroups, this.elementNodesGroup);
+    this.drawGroups(diagramData.fileGroups, this.fileNodesGroup);
+
+    const featureNamesText = this.featureNamesTextGroup.selectAll('text').data(diagramData.outerGroups);
+    featureNamesText.exit().remove();
+    drawFeatureNameText(featureNamesText.enter().append('svg:text'));
+    drawFeatureNameText(featureNamesText);
+  }
+
+  drawGroups(groups, container) {
     const getCssClass = (d) => {
       let cssClass = `group-${d.type}`;
       if (d.type === 'feature') cssClass += ` feature-${d.id}`;
@@ -199,32 +205,41 @@ export class OverviewChordDiagram extends PureComponent {
       cssClass += ' group-node';
       return cssClass;
     };
-    this.svg
-      .append('svg:g')
-      .selectAll('path')
-      .data(groups)
-      .enter()
-      .append('svg:path')
-      .attr('id', d => `group-${d.type}-${uid(d.id)}`)
-      .attr('stroke-width', d => d.strokeWidth)
-      .attr('class', getCssClass)
-      .attr('fill', 'transparent')
-      .attr('d', (d) => {
-        const d3Path = d3.path();
-        d3Path.arc(d.x, d.y, d.radius, d.startAngle, d.endAngle);
-        return d3Path;
-      })
-      .on('mouseover', this.handleGroupMouseover)
-      .on('click', this.handleGroupClick)
-      .append('svg:title')
-      .text((d) => {
-        if (d.type === 'file') {
-          const ele = this.props.home.elementById[d.id];
-          return ele.name;
-        }
-        return '';
-      })
-    ;
+
+    const drawNode = (d3Selection) => {
+      const nodes = d3Selection
+        .attr('id', d => `group-${d.type}-${uid(d.id)}`)
+        .attr('stroke-width', d => d.strokeWidth)
+        .attr('class', getCssClass)
+        .attr('fill', 'transparent')
+        // .transition() // start a transition to bring the new value into view
+        // .duration(300)
+        // .ease(d3.easeLinear)
+        .attr('d', (d) => {
+          const d3Path = d3.path();
+          d3Path.arc(d.x, d.y, d.radius, d.startAngle, d.endAngle);
+          return d3Path;
+        })
+        .on('mouseover', this.handleGroupMouseover)
+        .on('click', this.handleGroupClick)
+      ;
+      // update tooltip
+      nodes.selectAll('title').remove();
+      nodes.append('svg:title')
+        .text((d) => {
+          if (d.type === 'file') {
+            const ele = this.props.home.elementById[d.id];
+            return ele.name;
+          }
+          return '';
+        })
+      ;
+    };
+
+    const nodes = container.selectAll('path').data(groups);
+    nodes.exit().remove();
+    drawNode(nodes.enter().append('svg:path'));
+    drawNode(nodes);
   }
 
   highlightGroup() {
@@ -283,6 +298,20 @@ export class OverviewChordDiagram extends PureComponent {
     } else {
       this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);
       this.svg.selectAll('.link-line').style('stroke-dasharray', '').style('stroke', '#ccc');
+    }
+  }
+
+  @autobind
+  handleSvgMousemove(_1, _2, targets) {
+    const { home, size } = this.props;
+    const diagramData = getOverviewChordDiagramData(home, size, this.state.selectedFeatures);
+    const [x, y] = d3.mouse(targets[0]);
+    const d = Math.sqrt((x - diagramData.x) ** 2 + (y - diagramData.y) ** 2);
+
+    if (d >= diagramData.radius + 5) {
+      this.setState({
+        highlightedGroup: null,
+      });
     }
   }
 
