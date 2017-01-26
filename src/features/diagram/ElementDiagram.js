@@ -26,13 +26,57 @@ export default class ElementDiagram extends PureComponent {
     if (chartHeight < 400) chartHeight = 400;
     if (chartWidth < 400) chartWidth = 400;
 
-    this.refresh(this.props);
+    this.svg = d3
+      .select(this.d3Node)
+      .append('svg')
+      .attr('width', chartWidth)
+      .attr('height', chartHeight)
+    ;
+
+    // TODO: Why not equal to r?
+    const refXMap = {
+      'dep-on': 26,
+      'dep-by': 76,
+    };
+    this.svg.append('svg:defs').selectAll('marker')
+      .data(['dep-on', 'dep-by'])
+      .enter()
+      .append('svg:marker')
+      .attr('id', String)
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', d => refXMap[d])
+      .attr('refY', 0)
+      .attr('markerWidth', 6)
+      .attr('markerHeight', 6)
+      .attr('class', d => `triangle-marker ${d}`)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+    ;
+
+    this.sim = d3
+      .forceSimulation()
+      .force('link', d3.forceLink().id(d => d.id))
+      .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
+      .force('charge', d3.forceManyBody())
+      .force('center', d3.forceCenter(300, 250))
+      .alphaTarget(1)
+      .on('tick', this.handleOnTick)
+    ;
+
+    this.linksGroup = this.svg.append('g');
+    this.bgNodesGroup = this.svg.append('g');
+    this.nodesGroup = this.svg.append('g');
+    this.nodeLabelsGroup = this.svg.append('g');
+
+    this.updateDiagram();
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('receive props.');
-    this.refresh(nextProps);
-    // window.refresh= () => this.refresh(nextProps);
+  componentDidUpdate(prevProps) {
+    const props = this.props;
+    if (prevProps.homeStore !== props.homeStore || prevProps.elementId !== props.elementId) {
+      this.updateDiagram();
+    }
   }
 
   @autobind
@@ -55,130 +99,65 @@ export default class ElementDiagram extends PureComponent {
     d.fy = null;
   }
 
-  refresh(props) {
-    const data = getElementDiagramData(props.homeStore, props.elementId);// this.props.diagramData;
+  updateDiagram() {
+    const { homeStore, elementId } = this.props;
+    const diagramData = getElementDiagramData(homeStore, elementId);// this.props.diagramData;
+    console.log('update diagram: ', diagramData);
 
-    if (this.lastData !== data) {
-      this.lastData = data;
-    } else {
-      return;
-    }
-
-    if (this.svg) this.svg.remove();
-
-    this.svg = d3
-      .select(this.d3Node)
-      .append('svg')
-      .attr('width', chartWidth)
-      .attr('height', chartHeight)
-    ;
-
-    this.svgDefs = this.svg.append('svg:defs');
-
-    // TODO: Why not equal to r?
-    const refXMap = {
-      'dep-on': 26,
-      'dep-by': 76,
-    };
-    this.svg.append('svg:defs').selectAll('marker')
-      .data(['dep-on', 'dep-by'])
-      .enter()
-      .append('svg:marker')
-      .attr('id', String)
-      .attr('viewBox', '0 -5 10 10')
-      .attr('refX', d => refXMap[d])
-      .attr('refY', 0)
-      .attr('markerWidth', 6)
-      .attr('markerHeight', 6)
-      .attr('class', d => `triangle-marker ${d}`)
-      .attr('orient', 'auto')
-      .append('svg:path')
-      .attr('d', 'M0,-5L10,0L0,5')
-    ;
-    this.sim = d3
-      .forceSimulation()
-      .force('link', d3.forceLink().id(d => d.id))
-      .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
-      .force('charge', d3.forceManyBody())
-      .force('center', d3.forceCenter(300, 250))
-    ;
-
-    const link = this.svg.append('g')
-      .selectAll('line')
-      .attr('class', 'line')
-      .data(data.links.filter(l => l.type !== 'no-line'))
-      .enter()
-      .append('line')
+    const drawBgNode = d3Selection => d3Selection
+      .attr('r', d => d.r + 3)
+      .attr('stroke-width', 1)
       .attr('stroke', '#555')
-      .attr('stroke-dasharray', d => (d.target === props.elementId ? '3, 3' : ''))
-      .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === props.elementId ? 'dep-on' : 'dep-by'})` : ''))
+      .attr('cursor', 'pointer')
+      .attr('fill', '#fff')
+      .on('click', this.handleNodeClick)
+      .call(d3.drag()
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended)
+      )
     ;
+    const bgNodes = this.bgNodesGroup.selectAll('circle').data(diagramData.nodes.filter(n => n.type === 'feature'));
+    bgNodes.exit().remove();
+    this.bgNodes = drawBgNode(bgNodes);
+    this.bgNodes = drawBgNode(bgNodes.enter().append('circle')).merge(this.bgNodes);
 
-    // const nodeColorMap = {
-    //   action: '#FF81C3',
-    //   component: '#FF9900',
-    //   misc: '#8D6E63',
-    //   // feature: '#00C0FF',
-    //   feature: '#FFFFFF',
-    // };
-
-    const node = this.svg.append('g')
-      .selectAll('circle')
-      .attr('class', 'element-node')
-      .data(data.nodes)
-      .enter()
-      .append('circle')
+    const drawNode = d3Selection => d3Selection
       .attr('r', d => d.r)
       .attr('stroke-width', d => (d.type === 'feature' ? 1 : 0))
       .attr('stroke', '#555')
       .attr('cursor', 'pointer')
       .attr('fill', d => colors[d.type])
       .on('click', this.handleNodeClick)
-    ;
-    node
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
         .on('end', this.dragended)
       )
     ;
+    const nodes = this.nodesGroup.selectAll('circle').data(diagramData.nodes);
+    nodes.exit().remove();
+    this.nodes = drawNode(nodes);
+    this.nodes = drawNode(nodes.enter().append('circle')).merge(this.nodes);
 
-    const featureNodeInner = this.svg.append('g')
-      .selectAll('circle')
-      .attr('class', 'element-node-inner')
-      .data(data.nodes.filter(n => n.type === 'feature'))
-      .enter()
-      .append('circle')
-      .attr('r', d => d.r - 2)
-      .attr('cursor', 'pointer')
-      .attr('stroke-width', 1)
+    const drawLink = d3Selection => d3Selection
+      .attr('class', 'line')
       .attr('stroke', '#555')
-      .attr('fill', colors.featureInner)
-      .on('click', this.handleNodeClick)
+      .attr('stroke-dasharray', d => (d.target === elementId ? '3, 3' : ''))
+      .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
-    featureNodeInner
-      .call(d3.drag()
-        .on('start', this.dragstarted)
-        .on('drag', this.dragged)
-        .on('end', this.dragended)
-      )
-    ;
+    const links = this.linksGroup.selectAll('line').data(diagramData.links.filter(l => l.type !== 'no-line'));
+    links.exit().remove();
+    this.links = drawLink(links);
+    this.links = drawLink(links.enter().append('line')).merge(this.links);
 
-    const nodeText = this.svg.append('g')
-      .selectAll('.node-text')
-      // .data(data.nodes.filter(n => n.id === this.props.elementId))
-      .data(data.nodes)
-      .enter()
-      .append('g')
-      .append('svg:text')
-      .attr('class', d => `element-node-text ${d.id !== props.elementId && d.type !== 'feature' ? 'dep-node' : ''}`)
+    const drawNodeLabel = d3Selection => d3Selection
+      .attr('class', d => `element-node-text ${d.id !== elementId && d.type !== 'feature' ? 'dep-node' : ''}`)
       .attr('transform', 'translate(0, 2)')
       .attr('text-anchor', 'middle')
       .attr('cursor', 'pointer')
-      .text(d => d.name)
       .on('click', this.handleNodeClick)
-    ;
-    nodeText
+      .text(d => d.name)
       .call(d3.drag()
         .on('start', this.dragstarted)
         .on('drag', this.dragged)
@@ -186,30 +165,10 @@ export default class ElementDiagram extends PureComponent {
       )
     ;
 
-    const _this = this; // eslint-disable-line
-    function ticked() {
-      link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y)
-      ;
-
-      node
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-      ;
-
-      featureNodeInner
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-      ;
-
-      nodeText
-        .attr('x', d => d.x)
-        .attr('y', d => d.y)
-      ;
-    }
+    const nodeLabels = this.nodeLabelsGroup.selectAll('text').data(diagramData.nodes);
+    nodeLabels.exit().remove();
+    this.nodeLabels = drawNodeLabel(nodeLabels);
+    this.nodeLabels = drawNodeLabel(nodeLabels.enter().append('text')).merge(this.nodeLabels);
 
     const distanceMap = {
       child: 100,
@@ -217,15 +176,37 @@ export default class ElementDiagram extends PureComponent {
       'no-line': 260,
     };
 
-    this.sim
-      .nodes(data.nodes)
-      .on('tick', ticked);
-
+    this.sim.nodes(diagramData.nodes);
     this.sim
       .force('link')
-      .links(data.links)
+      .links(diagramData.links)
       .distance(d => distanceMap[d.type] || 50)
-      // .iterations(16)
+    ;
+    this.sim.alpha(1).restart();
+  }
+
+  @autobind
+  handleOnTick() {
+    this.nodes
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+    ;
+
+    this.bgNodes
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+    ;
+
+    this.links
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y)
+    ;
+
+    this.nodeLabels
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
     ;
   }
 
@@ -237,7 +218,6 @@ export default class ElementDiagram extends PureComponent {
       const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
       browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
     }
-    console.log('node click: ', ele);
   }
 
   @autobind
