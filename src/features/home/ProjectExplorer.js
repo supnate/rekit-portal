@@ -354,7 +354,7 @@ export class ProjectExplorer extends Component {
     if (!home.features) {
       return this.renderLoading();
     }
-
+console.log('tree data: ', treeData);
     const treeNodes = treeData.children.map(this.renderTreeNode);
     let expandedKeys = this.state.expandedKeys;
     if (searchKey) {

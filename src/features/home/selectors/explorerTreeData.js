@@ -35,6 +35,7 @@ function getComponentsTreeData(feature) {
       className: 'component',
       label: comp.name,
       icon: 'appstore-o',
+      searchable: true,
       marks: getMarks(feature, comp),
     })),
   };
