@@ -46,6 +46,35 @@ export class ElementPage extends Component {
     );
   }
 
+  renderMarks() {
+    const data = this.getElementData();
+    const featureById = this.props.home.featureById;
+    const markDescription = {
+      a: 'Async action',
+      c: 'Connected to Redux store',
+      r: 'Mapped to an URL path',
+    };
+    const marks = [];
+    switch (data.type) {
+      case 'component':
+        if (data.connectToStore) marks.push('C');
+        if (_.find(featureById[data.feature].routes, { component: data.name })) marks.push('R');
+        break;
+      case 'action':
+        if (data.isAsync) marks.push('A');
+        break;
+      default:
+        break;
+    }
+    return marks.map(mark => (
+      <span
+        key={mark}
+        title={markDescription[mark.toLowerCase()]}
+        className={`mark mark-${mark.toLowerCase()}`}
+      >{mark}</span>
+    ));
+  }
+
   render() {
     const data = this.getElementData();
     if (!data) {
@@ -83,6 +112,7 @@ export class ElementPage extends Component {
         <div className="page-title">
           <h2>
             <Icon type={iconTypes[data.type] || 'file'} style={{ color: colors[data.type] }} /> {this.props.params.feature} / {data.name}
+            {this.renderMarks()}
           </h2>
         </div>
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
