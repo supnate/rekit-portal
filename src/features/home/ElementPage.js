@@ -28,8 +28,23 @@ export class ElementPage extends Component {
     const { feature, file } = this.props.params;
     const fullPath = `${projectRoot}/src/features/${feature}/${file}`;
 
-    return elementById[fullPath];
+    const arr = fullPath.split('.');
+    const ext = arr.length > 1 ? arr.pop() : null;
+    const ele = elementById[fullPath];
+
+    return {
+      ...ele,
+      hasDiagram: /^js|jsx$/.test(ext),
+      hasTest: /^js|jsx$/.test(ext),
+      hasCode: /^js|jsx|html|css|less|scss|txt|json|sass|log|pl|py|sh|cmd$/.test(ext),
+      isPic: /^jpe?g|png|gif|bmp|$/.test(ext),
+      unknownFileType: !/js|jsx|json|less|css|scss|html?|txt|log|py|pl|sh/.test(ext),
+    };
     // return _.find(featureById[feature].components, { name: ele.name });
+  }
+
+  componentDidMount() {
+    const data = this.getElementData();
   }
 
   @autobind
@@ -116,18 +131,18 @@ export class ElementPage extends Component {
           </h2>
         </div>
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
-          <TabPane tab="Diagram" key="diagram">
+          {data.hasDiagram && <TabPane tab="Diagram" key="diagram">
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />
-          </TabPane>
-          <TabPane tab="Code" key="code" />
+          </TabPane>}
+          {data.hasCode && <TabPane tab="Code" key="code" />}
           {data.type === 'component' && <TabPane tab="Style" key="style" />}
-          <TabPane tab="Test" key="test">
+          {data.hasTest && <TabPane tab="Test" key="test">
             <Button type="primary" style={{ marginBottom: 10 }}>
               <Icon type="play-circle-o" /> Run test
             </Button>
-          </TabPane>
+          </TabPane>}
         </Tabs>
-        {tabKey !== 'diagram' && <CodeView file={codeFile} />}
+        {tabKey !== 'diagram' && data.hasCode && <CodeView file={codeFile} />}
 
       </div>
     );
