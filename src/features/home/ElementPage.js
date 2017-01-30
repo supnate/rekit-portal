@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Icon, Tabs } from 'antd';
+import { Alert, Button, Icon, Tabs } from 'antd';
 import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
 import { colors } from '../common';
@@ -34,10 +34,10 @@ export class ElementPage extends Component {
 
     return {
       ...ele,
-      hasDiagram: /^js|jsx$/.test(ext),
-      hasTest: /^js|jsx$/.test(ext),
-      hasCode: /^js|jsx|html|css|less|scss|txt|json|sass|md|log|pl|py|sh|cmd$/.test(ext),
-      isPic: /^jpe?g|png|gif|bmp$/.test(ext),
+      hasDiagram: /^(js|jsx)$/.test(ext),
+      hasTest: /^(js|jsx)$/.test(ext),
+      hasCode: /^(js|jsx|html|css|less|scss|txt|json|sass|md|log|pl|py|sh|cmd)$/.test(ext),
+      isPic: /^(jpe?g|png|gif|bmp)$/.test(ext),
     };
     // return _.find(featureById[feature].components, { name: ele.name });
   }
@@ -118,6 +118,9 @@ export class ElementPage extends Component {
       misc: 'file',
     };
 
+    const arr = data.file.split('.');
+    const ext = arr.length > 1 ? arr.pop() : null;
+
     return (
       <div className="home-element-page">
         <div className="page-title">
@@ -131,7 +134,7 @@ export class ElementPage extends Component {
             <img src={codeFile.replace(home.projectRoot, '')} alt={codeFile} />
           </div>
         }
-        {!onlyCode && !data.isPic && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
+        {!onlyCode && data.hasCode && !data.isPic && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           {data.hasDiagram && <TabPane tab="Diagram" key="diagram">
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />
           </TabPane>}
@@ -144,7 +147,7 @@ export class ElementPage extends Component {
           </TabPane>}
         </Tabs>}
         {tabKey !== 'diagram' && data.hasCode && <CodeView file={codeFile} />}
-
+        {!data.hasCode && !data.isPic && <Alert type="info" showIcon message={`".${ext}" is not supported to be displayed.`} />}
       </div>
     );
   }

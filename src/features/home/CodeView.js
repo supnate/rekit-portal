@@ -19,7 +19,9 @@ export class CodeView extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchFileContent(nextProps);
+    if (this.props.file !== nextProps.file) {
+      this.fetchFileContent(nextProps);
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -51,7 +53,7 @@ export class CodeView extends PureComponent {
       (force || !_.has(home.fileContentById, props.file))
       && !home.fetchFileContentPending
     ) {
-      this.props.actions.fetchFileContent(this.props.file).catch((e) => {
+      this.props.actions.fetchFileContent(props.file).catch((e) => {
         message.error(`Failed to load file: ${e.toString()}`);
       });
     }
