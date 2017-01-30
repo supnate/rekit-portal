@@ -36,9 +36,8 @@ export class ElementPage extends Component {
       ...ele,
       hasDiagram: /^js|jsx$/.test(ext),
       hasTest: /^js|jsx$/.test(ext),
-      hasCode: /^js|jsx|html|css|less|scss|txt|json|sass|log|pl|py|sh|cmd$/.test(ext),
-      isPic: /^jpe?g|png|gif|bmp|$/.test(ext),
-      unknownFileType: !/js|jsx|json|less|css|scss|html?|txt|log|py|pl|sh/.test(ext),
+      hasCode: /^js|jsx|html|css|less|scss|txt|json|sass|md|log|pl|py|sh|cmd$/.test(ext),
+      isPic: /^jpe?g|png|gif|bmp$/.test(ext),
     };
     // return _.find(featureById[feature].components, { name: ele.name });
   }
@@ -119,7 +118,6 @@ export class ElementPage extends Component {
       misc: 'file',
     };
 
-
     return (
       <div className="home-element-page">
         <div className="page-title">
@@ -128,7 +126,12 @@ export class ElementPage extends Component {
             {this.renderMarks()}
           </h2>
         </div>
-        {!onlyCode && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
+        {data.isPic &&
+          <div className="pic-wrapper">
+            <img src={codeFile.replace(home.projectRoot, '')} alt={codeFile} />
+          </div>
+        }
+        {!onlyCode && !data.isPic && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           {data.hasDiagram && <TabPane tab="Diagram" key="diagram">
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />
           </TabPane>}
