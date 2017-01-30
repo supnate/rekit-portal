@@ -11,6 +11,7 @@ export class CodeView extends PureComponent {
     home: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     file: PropTypes.string.isRequired,
+    onError: PropTypes.func,
   };
 
   componentDidMount() {
@@ -19,6 +20,12 @@ export class CodeView extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     this.fetchFileContent(nextProps);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const props = this.props;
+    return props.file !== nextProps.file
+      || props.home.fileContentById[props.file] !== nextProps.home.fileContentById[nextProps.file];
   }
 
   componentDidUpdate() {
@@ -33,7 +40,6 @@ export class CodeView extends PureComponent {
   highlightCode() {
     const code = this.getFileContent();
     if (this.codeNode && code !== this.lastCode) {
-      // hljs.highlightBlock(this.codeNode);
       Prism.highlightElement(this.codeNode);
       this.lastCode = code;
     }
@@ -45,11 +51,8 @@ export class CodeView extends PureComponent {
       (force || !_.has(home.fileContentById, props.file))
       && !home.fetchFileContentPending
     ) {
-      return this.props.actions.fetchFileContent(this.props.file).catch((e) => {
-        message.error({
-          title: 'Failed to load file',
-          content: e.toString(),
-        });
+      this.props.actions.fetchFileContent(this.props.file).catch((e) => {
+        message.error(`Failed to load file: ${e.toString()}`);
       });
     }
     return Promise.resolve();
@@ -59,7 +62,7 @@ export class CodeView extends PureComponent {
     const content = this.getFileContent();
     const ext = this.props.file.split('.').pop();
     const lang = { js: 'jsx', md: 'markdown' }[ext] || ext;
-    console.log('lang: ', lang);
+
     return (
       <div className="home-code-view">
         <div className="file-path">{this.props.file}</div>
