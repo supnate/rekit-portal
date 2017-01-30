@@ -43,10 +43,6 @@ export class ElementPage extends Component {
     // return _.find(featureById[feature].components, { name: ele.name });
   }
 
-  componentDidMount() {
-    const data = this.getElementData();
-  }
-
   @autobind
   handleTabChange(tabKey) {
     const data = this.getElementData();
@@ -97,9 +93,10 @@ export class ElementPage extends Component {
     }
 
     const { home } = this.props;
+    const onlyCode = data.hasCode && !data.hasDiagram && !data.hasTest;
 
     let codeFile;
-    const tabKey = this.props.params.type || 'diagram';
+    const tabKey = this.props.params.type || (onlyCode ? 'code' : 'diagram');
 
     switch (tabKey) {
       case 'code':
@@ -122,6 +119,7 @@ export class ElementPage extends Component {
       misc: 'file',
     };
 
+
     return (
       <div className="home-element-page">
         <div className="page-title">
@@ -130,7 +128,7 @@ export class ElementPage extends Component {
             {this.renderMarks()}
           </h2>
         </div>
-        <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
+        {!onlyCode && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           {data.hasDiagram && <TabPane tab="Diagram" key="diagram">
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />
           </TabPane>}
@@ -141,7 +139,7 @@ export class ElementPage extends Component {
               <Icon type="play-circle-o" /> Run test
             </Button>
           </TabPane>}
-        </Tabs>
+        </Tabs>}
         {tabKey !== 'diagram' && data.hasCode && <CodeView file={codeFile} />}
 
       </div>
