@@ -2,12 +2,13 @@ import React, { PureComponent, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import { Alert, Button, Icon, Tooltip } from 'antd';
 
-export default class TestCoverageSummary extends PureComponent {
+export class TestCoverageSummary extends PureComponent {
   static propTypes = {
-
+    home: PropTypes.object.isRequired,
   };
 
   state = {
@@ -50,8 +51,13 @@ export default class TestCoverageSummary extends PureComponent {
       .range(['#ef5350', '#81C784'])
     ;
     let arr = [];
-    for (let i = 5; i < 100; i+=20)arr.push(i);
+    for (let i = 5; i < 100; i += 20)arr.push(i);
     arr = _.shuffle(arr);
+    const { features, featureById } = this.props.home;
+
+    // const trs = /<tr>.+<\/tr>/mig.exec(this.state.reportData.replace(/\r|\n/g, ''));
+    // const trs = this.state.reportData.replace(/\r|\n/g, '').match(/<tr>.+<\/tr>/ig);
+    // console.log(trs);
     return (
       <ul>
         <li>
@@ -62,13 +68,13 @@ export default class TestCoverageSummary extends PureComponent {
         </li>
 
         <li><h4>Features coverage:</h4></li>
-        {arr.map(p => (
-          <li key={p} className="feature-coverage">
-            <label>Percentage: {p}%</label>
+        {features.map(fid => (
+          <li key={fid} className="feature-coverage">
+            <label>{featureById[fid].name}: {9}%</label>
             <div className="coverage-percent">
               <div
                 className="percent-inner"
-                style={{ width: `${p}%`, backgroundColor: color(p) }}
+                style={{ width: `${9}%`, backgroundColor: color(9) }}
               />
             </div>
           </li>
@@ -110,3 +116,14 @@ export default class TestCoverageSummary extends PureComponent {
     );
   }
 }
+
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    home: state.home,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+)(TestCoverageSummary);

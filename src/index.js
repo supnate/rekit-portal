@@ -11,43 +11,45 @@ import configStore from './common/configStore';
 const store = configStore();
 const history = syncHistoryWithStore(browserHistory, store);
 
-const socket = io();
-socket.on('connect', () => {
-  console.log('[PORTAL] connected.');
-});
-
-socket.on('fileChanged', (data) => {
-  store.dispatch({
-    type: 'PROJECT_FILE_CHANGED',
-    data,
+if (process.env.NODE_ENV !== 'test') {
+  const socket = io();
+  socket.on('connect', () => {
+    console.log('[PORTAL] connected.');
   });
-});
 
-socket.on('output', (data) => {
-  console.log('on output: ', data);
-  store.dispatch({
-    type: 'REKIT_PORTAL_OUTPUT',
-    data,
+  socket.on('fileChanged', (data) => {
+    store.dispatch({
+      type: 'PROJECT_FILE_CHANGED',
+      data,
+    });
   });
-});
 
-socket.on('build-finished', (data) => {
-  store.dispatch({
-    type: 'REKIT_TOOLS_BUILD_FINISHED',
-    data,
+  socket.on('output', (data) => {
+    console.log('on output: ', data);
+    store.dispatch({
+      type: 'REKIT_PORTAL_OUTPUT',
+      data,
+    });
   });
-});
 
-socket.on('test-finished', (data) => {
-  store.dispatch({
-    type: 'REKIT_TOOLS_TEST_FINISHED',
-    data,
+  socket.on('build-finished', (data) => {
+    store.dispatch({
+      type: 'REKIT_TOOLS_BUILD_FINISHED',
+      data,
+    });
   });
-});
 
-socket.on('disconnect', () => {
-  console.log('[PORTAL] disconnected.');
-});
+  socket.on('test-finished', (data) => {
+    store.dispatch({
+      type: 'REKIT_TOOLS_TEST_FINISHED',
+      data,
+    });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('[PORTAL] disconnected.');
+  });
+}
 
 let root = document.getElementById('react-root');
 if (!root) {

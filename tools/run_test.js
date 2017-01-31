@@ -42,7 +42,7 @@ const params = [
   `"${testFile || path.join(prjRoot, 'tests/**/*.test.js')}"`,
 ];
 
-if (needReport) {
+if (needReport || 1) {
   params.splice(0, 0,
     'nyc',
     '--report-dir=coverage'
