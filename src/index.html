@@ -32,7 +32,53 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        text-align: center;
         font-size: 12px;
+      }
+
+      #loading-node img {
+        width: 32px;
+        position: absolute;
+        left: 134px;
+        top: -80px;
+
+        -webkit-animation-name: spin;
+        -webkit-animation-duration: 1500ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        -moz-animation-name: spin;
+        -moz-animation-duration: 1500ms;
+        -moz-animation-iteration-count: infinite;
+        -moz-animation-timing-function: linear;
+        -ms-animation-name: spin;
+        -ms-animation-duration: 1500ms;
+        -ms-animation-iteration-count: infinite;
+        -ms-animation-timing-function: linear;
+        
+        animation-name: spin;
+        animation-duration: 1500ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+      @-ms-keyframes spin {
+        from { -ms-transform: rotate(0deg); }
+        to { -ms-transform: rotate(360deg); }
+      }
+      @-moz-keyframes spin {
+        from { -moz-transform: rotate(0deg); }
+        to { -moz-transform: rotate(360deg); }
+      }
+      @-webkit-keyframes spin {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(360deg); }
+      }
+      @keyframes spin {
+        from {
+          transform:rotate(0deg);
+        }
+        to {
+          transform:rotate(360deg);
+        }
       }
 
       #loading-node div {
@@ -60,7 +106,7 @@
   </head>
   <body>
     <div id="loading-wrapper">
-      <div id="loading-node"><label>Loading...0%</label><div></div></div>
+      <div id="loading-node"><label>Loading...0%</label><div></div><img src="/src/images/logo_small.png" /></div>
     </div>
     <div id="react-root" />
     <script src="/src/libs/prism.js"></script>
@@ -100,7 +146,8 @@
 
       // Call this function when the initialization finishes
       function ON_REKIT_PORTAL_LOAD() {
-        document.getElementById('loading-wrapper').style.display = 'none';
+        var node = document.getElementById('loading-wrapper');
+        node.parentNode.removeChild(node);
       }
     </script>
   </body>
