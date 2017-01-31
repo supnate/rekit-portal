@@ -21,7 +21,7 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.props.actions.fetchProjectData();
+    this.props.actions.fetchProjectData().then(ON_REKIT_PORTAL_LOAD); // eslint-disable-line
   }
 
   componentWillReceiveProps(nextProps) {
