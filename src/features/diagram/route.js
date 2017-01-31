@@ -5,7 +5,7 @@ import {
 export default {
   path: 'diagram',
   name: 'Diagram',
-  childRoutes: [,
+  childRoutes: [
     { path: 'detailed', name: 'Detailed diagram', component: DetailedDiagram },
   ],
 };
