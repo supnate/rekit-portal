@@ -19,15 +19,10 @@ export class CodeView extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.file !== nextProps.file) {
+    const props = this.props;
+    if (this.props.file !== nextProps.file || props.home.fileContentById[props.file] !== nextProps.home.fileContentById[nextProps.file]) {
       this.fetchFileContent(nextProps);
     }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const props = this.props;
-    return props.file !== nextProps.file
-      || props.home.fileContentById[props.file] !== nextProps.home.fileContentById[nextProps.file];
   }
 
   componentDidUpdate() {

@@ -84,8 +84,7 @@ export class SidePanel extends Component {
       <div className="home-side-panel">
         <div className="header">
           <Link className="home-link" to="/" title={this.props.home.projectRoot}>
-            <Icon type="home" />
-            <h5>{prjName}</h5>
+            <h5><Icon type="home" /> {prjName}</h5>
           </Link>
           <Dropdown overlay={this.renderAddMenu()}>
             <label>
@@ -110,7 +109,7 @@ function mapStateToProps(state) {
   };
 }
 
-//<a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
+// <a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
 //          <img src={require('../../images/logo_small.png')} alt="Rekit logo" />
 //        </a>
 

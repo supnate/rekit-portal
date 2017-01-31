@@ -48,6 +48,12 @@ export class ElementPage extends Component {
     browserHistory.push(`/element/${data.feature}/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
   }
 
+  @autobind
+  handleRunTest() {
+    const { feature, file } = this.props.params;
+    browserHistory.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
+  }
+
   renderNotFound() {
     return (
       <div className="home-element-page">
@@ -141,7 +147,7 @@ export class ElementPage extends Component {
           {data.hasCode && <TabPane tab="Code" key="code" />}
           {data.type === 'component' && <TabPane tab="Style" key="style" />}
           {data.hasTest && <TabPane tab="Test" key="test">
-            <Button type="primary" style={{ marginBottom: 10 }}>
+            <Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}>
               <Icon type="play-circle-o" /> Run test
             </Button>
           </TabPane>}

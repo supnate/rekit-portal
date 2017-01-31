@@ -210,7 +210,6 @@ export class ProjectExplorer extends Component {
 
   @autobind
   handleMenuClick(evt) {
-    console.log('menu click: ', evt);
     const cmdContext = this.cmdContext;
     const prjRoot = this.props.home.projectRoot;
     switch (evt.key) {

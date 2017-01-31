@@ -36,6 +36,7 @@ module.exports = (type) => { // eslint-disable-line
           'react-hot-loader/patch',
           `webpack-hot-middleware/client?http://0.0.0.0:${pkgJson.rekit.devPort}`,
           './styles/index.less',
+          'antd/dist/antd.less',
           './index',
         ],
       },
@@ -82,7 +83,7 @@ module.exports = (type) => { // eslint-disable-line
 
     plugins: _.compact([
       isDev && new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
       isDist && new LodashModuleReplacementPlugin(),
       isDist && new webpack.optimize.DedupePlugin(),
       isDist && new webpack.optimize.UglifyJsPlugin(),
@@ -101,8 +102,8 @@ module.exports = (type) => { // eslint-disable-line
           exclude: /node_modules|build/,
           loader: 'babel-loader?cacheDirectory=true'
         }, {
-          test: /\.(ttf|eot|svg|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader'
+          test: /\.(ttf|eot|svg|woff)$/,
+          loader: 'url-loader?limit=1000000' // TODO: it seems only inline base64 font works.
         }, {
           test: /\.less$/,
           loader: isDev ? `style-loader!css-loader?sourceMap!less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(pkgJson.theme)}}`
