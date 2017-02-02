@@ -58,6 +58,7 @@ module.exports = (type) => { // eslint-disable-line
           'antd',
           'axios',
           'reselect',
+          'prismjs',
         ],
       },
       dist: {

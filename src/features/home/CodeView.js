@@ -4,6 +4,27 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { message } from 'antd';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-markdown';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-less';
+import 'prismjs/components/prism-sass';
+import 'prismjs/components/prism-scss';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-diff';
+import 'prismjs/components/prism-git';
+import 'prismjs/components/prism-jade';
+import 'prismjs/components/prism-makefile';
+import 'prismjs/components/prism-perl';
+import 'prismjs/components/prism-php';
+// import 'prismjs/components/prism-scala';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-basic';
+import 'prismjs/components/prism-clike';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+
 import { fetchFileContent } from './redux/actions';
 
 export class CodeView extends PureComponent {
