@@ -7,24 +7,25 @@ const baseMeta = {
   textbox: { type: 'string', widget: 'textbox' },
 };
 
+// NOTE: autoFocus only supports textbox now
 export function getMeta(cmdType, cmdArgs) {
   const meta = {};
   const fields = [];
   switch (cmdType) {
     case 'add-feature':
-      fields.push(baseMeta.name);
+      fields.push({ ...baseMeta.name, autoFocus: true });
       break;
     case 'add-action':
       fields.push(
         { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
-        { ...baseMeta.name },
+        { ...baseMeta.name, autoFocus: true },
         { ...baseMeta.checkbox, label: 'Async', key: 'async', tooltip: 'Whether the action is async using redux-middleware-thunk.' },
       );
       break;
     case 'add-component':
       fields.push(
         { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
-        { ...baseMeta.name },
+        { ...baseMeta.name, autoFocus: true },
         { ...baseMeta.checkbox, label: 'Connect store', key: 'connect', tooltip: 'Whether to connect to Redux store using react-redux' },
         { ...baseMeta.textbox, label: 'Url path', key: 'urlPath', tooltip: 'If provided, will create a route rule in React Router config.' },
       );
@@ -33,7 +34,7 @@ export function getMeta(cmdType, cmdArgs) {
     case 'move':
       fields.push(
         cmdArgs.elementType !== 'feature' && { ...baseMeta.feature, initialValue: cmdArgs.feature, key: 'targetFeature', label: 'Target feature' },
-        { ...baseMeta.name, initialValue: cmdArgs.elementName, key: 'newName', label: 'New name' },
+        { ...baseMeta.name, autoFocus: true, initialValue: cmdArgs.elementName, key: 'newName', label: 'New name' },
       );
       break;
     default:

@@ -4,6 +4,7 @@
 */
 
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -27,6 +28,13 @@ export class CmdForm extends Component {
     onDone() {},
     onCancel() {},
   };
+
+  componentDidMount() {
+    // auto focus the first text input
+    if (_.get(this.autoFocusNode, 'refs.input')) {
+      window.setTimeout(() => this.autoFocusNode.refs.input.select(), 50);
+    }
+  }
 
   @autobind
   handleSubmit(evt) {
@@ -55,19 +63,23 @@ export class CmdForm extends Component {
   renderWidget(meta) {
     const { home, rekitCmds } = this.props;
     const disabled = rekitCmds.execCmdPending || meta.disabled;
+    const commonProps = {};
+    if (meta.autoFocus) {
+      commonProps.ref = (node) => { this.autoFocusNode = node; };
+    }
     switch (meta.widget) {
       case 'feature':
         return (
-          <Select disabled={disabled}>
+          <Select disabled={disabled} {...commonProps}>
             {home.features.map(f => (
               <Option key={home.featureById[f].key}>{home.featureById[f].name}</Option>
             ))}
           </Select>
         );
       case 'textbox':
-        return <Input disabled={disabled} />;
+        return <Input disabled={disabled} {...commonProps} />;
       case 'checkbox':
-        return <Checkbox disabled={disabled} />;
+        return <Checkbox disabled={disabled} {...commonProps} />;
       default:
         return <span style={{ color: 'red' }}>Unknown widget: {meta.widget}</span>;
     }
