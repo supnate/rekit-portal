@@ -60,7 +60,7 @@ export default class ElementDiagram extends PureComponent {
       .force('collide', d3.forceCollide(d => d.r + 15).strength(1).iterations(16))
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(300, 250))
-      .alphaTarget(1)
+      // .alphaTarget(1)
       .on('tick', this.handleOnTick)
     ;
 
