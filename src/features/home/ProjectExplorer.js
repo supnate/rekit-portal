@@ -150,7 +150,11 @@ export class ProjectExplorer extends Component {
         const ele = this.props.home.elementById[key];
         const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
 
-        browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}`);
+        let tab = '';
+        if (/element\/[^/]+\/[^/]+\/(code|diagram|style|test)$/.test(document.location.pathname)) {
+          tab = `/${RegExp.$1}`;
+        }
+        browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}${tab}`);
       }
     }
 

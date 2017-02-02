@@ -101,8 +101,11 @@ export class ElementPage extends Component {
     const onlyCode = data.hasCode && !data.hasDiagram && !data.hasTest;
 
     let codeFile;
-    const tabKey = this.props.params.type || (onlyCode ? 'code' : 'diagram');
+    let tabKey = this.props.params.type || (onlyCode ? 'code' : 'diagram');
 
+    if (!data.hasCode) tabKey = 'diagram';
+    if (onlyCode) tabKey = 'code';
+    if (tabKey === 'style' && data.type !== 'component') tabKey = 'diagram';
     switch (tabKey) {
       case 'code':
         codeFile = data.file;
