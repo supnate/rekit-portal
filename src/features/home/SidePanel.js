@@ -4,8 +4,9 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import { Dropdown, Icon, Input, Menu } from 'antd';
+import { Dropdown, Icon, Menu } from 'antd';
 import * as actions from './redux/actions';
+import { SearchInput } from '../common';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
 import { ProjectExplorer } from './';
 
@@ -46,21 +47,12 @@ export class SidePanel extends Component {
     }
   }
 
-  doSearch(key) {
+  @autobind
+  handleSearch(key) {
     console.log('do search: ', key);
     this.setState({
       searchKey: key,
     });
-  }
-
-  @autobind
-  handleSearchInput(evt) {
-    const key = evt.target.value;
-    if (this.searchTimeout) clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(() => {
-      this.doSearch(key);
-      delete this.searchTimeout;
-    }, 200);
   }
 
   @autobind
@@ -93,7 +85,7 @@ export class SidePanel extends Component {
           </Dropdown>
         </div>
         <div className="toolbar">
-          <Input.Search onChange={this.handleSearchInput} />
+          <SearchInput onSearch={this.handleSearch} />
         </div>
         <ProjectExplorer searchKey={this.state.searchKey} />
 
