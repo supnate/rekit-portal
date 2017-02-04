@@ -29,10 +29,12 @@ function fetchProjectData() {
   });
 
   const prjRoot = utils.getProjectRoot();
+  const prjPkgJson = require(path.join(prjRoot, 'package.json'));
   return {
     features,
     testCoverage: fs.existsSync(path.join(prjRoot, 'coverage/lcov-report/index.html')),
     projectRoot: prjRoot,
+    rekit: prjPkgJson.rekit,
     cssExt: utils.getCssExt(),
   };
 }

@@ -83,6 +83,10 @@ module.exports = (type) => { // eslint-disable-line
       publicPath: '/static/'
     },
 
+    stats: {
+      error: true,
+    },
+
     plugins: _.compact([
       isDist && new webpack.LoaderOptionsPlugin({
         minimize: true,
@@ -94,7 +98,6 @@ module.exports = (type) => { // eslint-disable-line
       //   path: true,
       //   flattening: true,
       // }),
-      isDist && new webpack.optimize.DedupePlugin(),
       isDist && new webpack.optimize.UglifyJsPlugin(),
       isDist && new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.DefinePlugin({
