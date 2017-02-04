@@ -4,6 +4,7 @@ const path = require('path');
 const url = require('url');
 const _ = require('lodash');
 const express = require('express');
+const bodyParser = require('body-parser');
 const Watchpack = require('watchpack');
 const rekitCore = require('rekit-core');
 const fetchProjectData = require('./api/fetchProjectData');
@@ -80,6 +81,8 @@ function rekitMiddleware(server, app) {
   setupSocketIo(server);
   const prjRoot = rekitCore.utils.getProjectRoot();
   app.use('/coverage', express.static(path.join(prjRoot, 'coverage'), { fallthrough: false }));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   return (req, res, next) => {
     const urlObject = url.parse(req.originalUrl);

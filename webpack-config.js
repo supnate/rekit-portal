@@ -21,7 +21,7 @@ module.exports = (type) => { // eslint-disable-line
       dev: 'eval',
       dll: false,
       test: false,
-      dist: false,
+      dist: 'source-map',
     }[type],
     cache: true,
     context: path.join(__dirname, 'src'),
@@ -65,6 +65,7 @@ module.exports = (type) => { // eslint-disable-line
         main: [
           'babel-polyfill',
           './styles/index.less',
+          'antd/dist/antd.less',
           './index'
         ],
       },
@@ -83,9 +84,16 @@ module.exports = (type) => { // eslint-disable-line
     },
 
     plugins: _.compact([
+      isDist && new webpack.LoaderOptionsPlugin({
+        minimize: true,
+        debug: false
+      }),
       isDev && new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
-      isDist && new LodashModuleReplacementPlugin(),
+      // isDist && new LodashModuleReplacementPlugin({
+      //   path: true,
+      //   flattening: true,
+      // }),
       isDist && new webpack.optimize.DedupePlugin(),
       isDist && new webpack.optimize.UglifyJsPlugin(),
       isDist && new webpack.optimize.AggressiveMergingPlugin(),
@@ -108,7 +116,7 @@ module.exports = (type) => { // eslint-disable-line
         }, {
           test: /\.less$/,
           loader: isDev ? `style-loader!css-loader?sourceMap!less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(pkgJson.theme)}}`
-            : 'style-loader!css-loader!less-loader'
+            : `style-loader!css-loader!less-loader?{"modifyVars":${JSON.stringify(pkgJson.theme)}}`
         }, {
           test: /\.css$/,
           loader: 'style-loader!css-loader'

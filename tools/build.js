@@ -11,7 +11,7 @@ const config = require('../webpack-config')('dist');
 // config.stats = {
 //   chunks: true,
 // };
-var ProgressPlugin = require('webpack/lib/ProgressPlugin');
+const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 
 
 // const ArgumentParser = require('argparse').ArgumentParser;
@@ -90,11 +90,13 @@ compiler.apply(new ProgressPlugin((percentage, msg) => {
   console.log(percentage + '%', msg);
 }));
 
-compiler.run((err) => {
+compiler.run((err, stats) => {
   if (err) console.log(err);
   else {
     // Add timestamp hash to bundle file name.
     shell.mv(path.join(buildFolder, './static/main.js'), path.join(buildFolder, `/static/main.${timestamp}.js`));
+    console.log('Creating webpack stats json for analysis...');
+    shell.ShellString(JSON.stringify(stats.toJson())).to(path.join(buildFolder, 'stats.json'));
     console.timeEnd('Done');
   }
 });
