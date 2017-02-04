@@ -36,17 +36,18 @@ export class BuildPage extends Component {
     return (
       <div className="rekit-tools-build-page">
         <Row>
-          <Col span="16">
+          <Col span="23">
             <Button type="primary" disabled={runBuildRunning} onClick={this.handleBuildButtonClick}>
               {runBuildRunning ? 'Building...' : 'Run build'}
             </Button>
+            <div className="build-result-link">
+              The build result is running at:&nbsp;
+              <a href={`http://localhost:${this.props.home.rekit.buildPort}`} target="_blank">
+                http://localhost:{this.props.home.rekit.buildPort}
+              </a>
+            </div>
           </Col>
-          <Col span="8" style={{ textAlign: 'right' }}>
-            Visit the build result at:<br />
-            <a href={`http://localhost:${this.props.home.rekit.buildPort}`} target="_blank">
-              http://localhost:{this.props.home.rekit.buildPort}
-            </a>
-          </Col>
+          <Col span="1" style={{ textAlign: 'right' }} />
         </Row>
         <hr />
         { (runBuildRunning || percent === 100) && <Progress percent={percent} />}

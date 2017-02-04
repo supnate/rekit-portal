@@ -142,7 +142,8 @@
       // Call this function when the initialization finishes
       function ON_REKIT_PORTAL_LOAD() {
         var node = document.getElementById('loading-wrapper');
-        node.parentNode.removeChild(node);
+        node && node.parentNode.removeChild(node);
+        ON_REKIT_PORTAL_LOAD = null; // This func could not be called multiple times
       }
     </script>
   </body>
