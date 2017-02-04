@@ -101,10 +101,6 @@ function mapStateToProps(state) {
   };
 }
 
-// <a href="https://github.com/supnate/rekit" target="_blank" rel="noopener noreferrer" title="Powered by Rekit.">
-//          <img src={require('../../images/logo_small.png')} alt="Rekit logo" />
-//        </a>
-
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
