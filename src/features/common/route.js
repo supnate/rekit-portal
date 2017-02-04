@@ -1,5 +1,3 @@
-import {
-} from './index';
 
 export default {
   path: 'common',

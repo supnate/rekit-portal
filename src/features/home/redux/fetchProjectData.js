@@ -75,6 +75,7 @@ export function reducer(state, action) {
         testCoverage: action.data.testCoverage,
         projectRoot: action.data.projectRoot,
         cssExt: action.data.cssExt,
+        rekit: action.data.rekit,
         fileContentById: {},
         features: action.data.features.map(f => f.key),
         projectDataNeedReload: false,

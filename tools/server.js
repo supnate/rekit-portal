@@ -29,7 +29,7 @@ function startDevServer() {
 
   const compiler = webpack(devConfig);
 
-  app.use(rekitMiddleWare(server, app));
+  app.use(rekitMiddleWare()(server, app));
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -66,7 +66,7 @@ function startBuildServer() {
   const app = express();
   const server = http.createServer(app);
   const root = path.join(__dirname, '../build');
-  app.use(rekitMiddleWare(server, app));
+  app.use(rekitMiddleWare()(server, app));
   app.use(express.static(root));
   app.use(fallback('index.html', { root }));
 

@@ -11,6 +11,7 @@ const convert = new Convert();
 
 export class BuildPage extends Component {
   static propTypes = {
+    home: PropTypes.object.isRequired,
     rekitTools: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
@@ -41,7 +42,10 @@ export class BuildPage extends Component {
             </Button>
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>
-            <Button type="ghost" disabled={runBuildRunning}><Icon type="export" />Go to the deployable application</Button>
+            Visit the build result at:<br />
+            <a href={`http://localhost:${this.props.home.rekit.buildPort}`} target="_blank">
+              http://localhost:{this.props.home.rekit.buildPort}
+            </a>
           </Col>
         </Row>
         <hr />
@@ -64,6 +68,7 @@ export class BuildPage extends Component {
 /* istanbul ignore next */
 function mapStateToProps(state) {
   return {
+    home: state.home,
     rekitTools: state.rekitTools,
   };
 }
