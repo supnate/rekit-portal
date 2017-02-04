@@ -14,6 +14,12 @@
       "transform-decorators-legacy",
       "lodash",
       [
+        "import",
+        {
+          "libraryName": "antd"
+        }
+      ],
+      [
         "module-resolver",
         {
           "alias": {
