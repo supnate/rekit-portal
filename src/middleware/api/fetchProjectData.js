@@ -4,7 +4,8 @@ const _ = require('lodash');
 const fs = require('fs');
 const rekitCore = require('rekit-core');
 
-const { refactor, utils } = rekitCore;
+const refactor = rekitCore.refactor;
+const utils = rekitCore.utils;
 
 function fetchProjectData() {
   const fids = refactor.getFeatures();

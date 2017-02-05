@@ -34,6 +34,14 @@ export class CodeView extends PureComponent {
     onError: PropTypes.func,
   };
 
+  static defaultProps = {
+    onError() {},
+  };
+
+  state = {
+    notFound: false,
+  };
+
   componentDidMount() {
     this.fetchFileContent(this.props).then(this.highlightCode);
   }
@@ -68,10 +76,17 @@ export class CodeView extends PureComponent {
       (force || !_.has(home.fileContentById, props.file))
       && !home.fetchFileContentPending
     ) {
-      this.props.actions.fetchFileContent(props.file).catch((e) => {
+      return this.props.actions.fetchFileContent(props.file).then(() => {
+        this.setState({ notFound: false });
+      }).catch((e) => {
         message.error(`Failed to load file: ${e.toString()}`);
+        if (_.get(e, 'response.status') === 404) {
+          this.setState({ notFound: true });
+          this.props.onError(404);
+        }
       });
     }
+    this.setState({ notFound: false });
     return Promise.resolve();
   }
 
@@ -83,9 +98,13 @@ export class CodeView extends PureComponent {
     return (
       <div className="home-code-view">
         <div className="file-path">{this.props.file}</div>
-        <pre><code className={`language-${lang} line-numbers`} ref={(node) => { this.codeNode = node; }}>
-          {typeof content === 'string' ? content : '// Loading...'}
-        </code></pre>
+        {this.state.notFound ?
+          <div style={{ color: 'red', marginTop: 10 }}>File not found.</div>
+        :
+          <pre><code className={`language-${lang} line-numbers`} ref={(node) => { this.codeNode = node; }}>
+            {typeof content === 'string' ? content : '// Loading...'}
+          </code></pre>
+        }
       </div>
     );
   }

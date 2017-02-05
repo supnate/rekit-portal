@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const url = require('url');
 const _ = require('lodash');
 const express = require('express');
@@ -99,8 +100,14 @@ module.exports = function() { // eslint-disable-line
             res.end();
             break;
           case '/api/file-content':
-            res.write(JSON.stringify({ content: getFileContent(req.query.file) }));
-            res.end();
+            if (!fs.existsSync(req.query.file)) {
+              res.statusCode = 404;
+              res.write(JSON.stringify({ error: 'Not found.' }));
+              res.end();
+            } else {
+              res.write(JSON.stringify({ content: getFileContent(req.query.file) }));
+              res.end();
+            }
             break;
           case '/api/exec-cmd':
             execCmd(req, res);

@@ -31,27 +31,6 @@ export function fetchFileContent(file) {
       }
     });
     return promise;
-    // const promise = new Promise((resolve, reject) => {
-    //   window.setTimeout(() => {
-    //     if (args && !args.error) { // NOTE: args.error is only used for demo purpose
-    //       dispatch({
-    //         type: HOME_FETCH_FILE_CONTENT_SUCCESS,
-    //         data: {},
-    //       });
-    //       resolve();
-    //     } else {
-    //       dispatch({
-    //         type: HOME_FETCH_FILE_CONTENT_FAILURE,
-    //         data: {
-    //           error: 'some error',
-    //         },
-    //       });
-    //       reject();
-    //     }
-    //   }, 50);
-    // });
-
-    // return promise;
   };
 }
 
