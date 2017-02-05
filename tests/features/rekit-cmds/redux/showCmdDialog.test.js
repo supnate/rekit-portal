@@ -11,19 +11,21 @@ import {
 
 describe('rekit-cmds/redux/showCmdDialog', () => {
   it('returns correct action by showCmdDialog', () => {
-    const expectedAction = {
-      type: REKIT_CMDS_SHOW_CMD_DIALOG,
-    };
-    expect(showCmdDialog()).to.deep.equal(expectedAction);
+    expect(showCmdDialog()).to.have.property('type', REKIT_CMDS_SHOW_CMD_DIALOG);
   });
 
   it('handles action type REKIT_CMDS_SHOW_CMD_DIALOG correctly', () => {
-    const prevState = {};
+    const prevState = { cmdArgs: null, cmdDialogVisible: false };
     const state = reducer(
       prevState,
-      { type: REKIT_CMDS_SHOW_CMD_DIALOG }
+      { type: REKIT_CMDS_SHOW_CMD_DIALOG, data: { dialogType: 'cmd', cmdArgs: { commandName: 'add' } } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
-    expect(state).to.deep.equal(prevState); // TODO: replace this line with real case.
+    expect(state).to.deep.equal({
+      cmdDialogVisible: true,
+      cmdArgs: {
+        commandName: 'add',
+      },
+    });
   });
 });

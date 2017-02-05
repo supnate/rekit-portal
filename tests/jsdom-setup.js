@@ -3,6 +3,10 @@
 
 const jsdom = require('jsdom').jsdom;
 
+// jsdom.defaultDocumentFeatures = {
+//   QuerySelector: true
+// };
+
 const exposedProperties = ['window', 'navigator', 'document'];
 
 global.document = jsdom('');

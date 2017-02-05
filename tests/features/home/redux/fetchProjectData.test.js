@@ -48,6 +48,7 @@ describe('home/redux/fetchProjectData', () => {
       .catch(() => {
         const actions = store.getActions();
         expect(actions[0]).to.have.property('type', HOME_FETCH_PROJECT_DATA_BEGIN);
+        expect(actions[0]).to.have.property('type', HOME_FETCH_PROJECT_DATA_FAILURE);
         expect(actions[1]).to.have.deep.property('data.error');
       });
   });

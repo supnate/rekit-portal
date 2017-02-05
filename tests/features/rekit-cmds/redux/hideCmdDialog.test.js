@@ -11,19 +11,19 @@ import {
 
 describe('rekit-cmds/redux/hideCmdDialog', () => {
   it('returns correct action by hideCmdDialog', () => {
-    const expectedAction = {
-      type: REKIT_CMDS_HIDE_CMD_DIALOG,
-    };
-    expect(hideCmdDialog()).to.deep.equal(expectedAction);
+    expect(hideCmdDialog()).to.have.property('type', REKIT_CMDS_HIDE_CMD_DIALOG);
   });
 
   it('handles action type REKIT_CMDS_HIDE_CMD_DIALOG correctly', () => {
-    const prevState = {};
+    const prevState = { cmdArgs: {}, cmdDialogVisible: true };
     const state = reducer(
       prevState,
-      { type: REKIT_CMDS_HIDE_CMD_DIALOG }
+      { type: REKIT_CMDS_HIDE_CMD_DIALOG, data: { dialogType: 'cmd' } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
-    expect(state).to.deep.equal(prevState); // TODO: replace this line with real case.
+    expect(state).to.deep.equal({
+      cmdArgs: null,
+      cmdDialogVisible: false,
+    });
   });
 });

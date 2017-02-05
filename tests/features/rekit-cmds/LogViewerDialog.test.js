@@ -1,16 +1,25 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { LogViewerDialog } from 'src/features/rekit-cmds';
+import { LogViewerDialog } from 'src/features/rekit-cmds/LogViewerDialog';
 
 describe('rekit-cmds/LogViewerDialog', () => {
-  it('renders node with correct class name', () => {
+  it('renders dialog without error', () => {
+    const props = {
+      rekitCmds: {
+        execCmdResult: {
+          args: {},
+          logs: [],
+        },
+      },
+    };
     const renderedComponent = shallow(
-      <LogViewerDialog />
+      <LogViewerDialog {...props} />
     );
 
+    // antd Modal renders the dialog into document.body, do don't test the dialog
     expect(
-      renderedComponent.find('.rekit-cmds-log-viewer-dialog').node
+      renderedComponent
     ).to.exist;
   });
 });

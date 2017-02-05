@@ -25,30 +25,31 @@ describe('rekit-cmds/redux/execCmd', () => {
   });
 
   it('dispatches success action when execCmd succeeds', () => {
+    nock('http://localhost')
+      .post('/rekit/api/exec-cmd')
+      .reply(200, { args: { commandName: 'add', type: 'component' }, logs: [] });
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: REKIT_CMDS_EXEC_CMD_BEGIN },
-      { type: REKIT_CMDS_EXEC_CMD_SUCCESS, data: {} },
-    ];
-
-    return store.dispatch(execCmd({ error: false }))
+    return store.dispatch(execCmd({}))
       .then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_CMDS_EXEC_CMD_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_CMDS_EXEC_CMD_SUCCESS);
       });
   });
 
   it('dispatches failure action when execCmd fails', () => {
+    nock('http://localhost')
+      .post('/rekit/api/exec-cmd')
+      .reply(500, {});
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: REKIT_CMDS_EXEC_CMD_BEGIN },
-      { type: REKIT_CMDS_EXEC_CMD_FAILURE, data: { error: 'some error' } },
-    ];
-
-    return store.dispatch(execCmd({ error: true }))
+    return store.dispatch(execCmd({}))
       .catch(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_CMDS_EXEC_CMD_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_CMDS_EXEC_CMD_FAILURE);
+        expect(actions[1]).to.have.deep.property('data.error');
       });
   });
 
