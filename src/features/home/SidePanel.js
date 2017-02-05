@@ -111,8 +111,10 @@ export class SidePanel extends Component {
             maskClosable={false}
             title=""
             footer=""
-            width="360px"
+            width={1||process.env.NODE_ENV === 'demo' ? '760px' : '360px'}
+
             onClose={this.hideAbout}
+            style={{ top: '50px' }}
           >
             <About />
           </Modal>
