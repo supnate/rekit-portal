@@ -26,7 +26,7 @@ export function getMeta(cmdType, cmdArgs) {
       fields.push(
         { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
         { ...baseMeta.name, autoFocus: true },
-        { ...baseMeta.checkbox, label: 'Connect store', key: 'connect', tooltip: 'Whether to connect to Redux store using react-redux' },
+        { ...baseMeta.checkbox, label: 'Connect to store', key: 'connect', tooltip: 'Whether to connect to Redux store using react-redux' },
         { ...baseMeta.textbox, label: 'Url path', key: 'urlPath', tooltip: 'If provided, will create a route rule in React Router config.' },
       );
       break;

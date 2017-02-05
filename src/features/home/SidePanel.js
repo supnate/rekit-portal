@@ -4,11 +4,11 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
-import { Dropdown, Icon, Menu } from 'antd';
+import { Dropdown, Icon, Menu, Modal } from 'antd';
 import * as actions from './redux/actions';
 import { SearchInput } from '../common';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
-import { ProjectExplorer } from './';
+import { About, ProjectExplorer } from './';
 
 export class SidePanel extends Component {
   static propTypes = {
@@ -18,12 +18,25 @@ export class SidePanel extends Component {
 
   state = {
     searchKey: null,
+    aboutDialogVisible: true,
   };
 
   @autobind
-  handleAddMenuClick(evt) {
-    console.log('menu click', evt);
+  showAbout() {
+    this.setState({
+      aboutDialogVisible: true,
+    });
+  }
 
+  @autobind
+  hideAbout() {
+    this.setState({
+      aboutDialogVisible: false,
+    });
+  }
+
+  @autobind
+  handleAddMenuClick(evt) {
     switch (evt.key) {
       case 'add-feature':
       case 'add-component':
@@ -41,6 +54,9 @@ export class SidePanel extends Component {
         break;
       case 'test-coverage':
         browserHistory.push('/tools/coverage');
+        break;
+      case 'about':
+        this.showAbout();
         break;
       default:
         break;
@@ -65,6 +81,7 @@ export class SidePanel extends Component {
         <Menu.Item key="tests"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Run tests</Menu.Item>
         <Menu.Item key="test-coverage"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Test coverage</Menu.Item>
         <Menu.Item key="build"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;Build</Menu.Item>
+        <Menu.Item key="about"><Icon type="appstore-o" style={{ color: 'transparent' }} /> &nbsp;About</Menu.Item>
       </Menu>
     );
   }
@@ -88,7 +105,18 @@ export class SidePanel extends Component {
           <SearchInput onSearch={this.handleSearch} />
         </div>
         <ProjectExplorer searchKey={this.state.searchKey} />
-
+        {this.state.aboutDialogVisible &&
+          <Modal
+            visible
+            maskClosable={false}
+            title=""
+            footer=""
+            width="360px"
+            onClose={this.hideAbout}
+          >
+            <About />
+          </Modal>
+        }
       </div>
     );
   }
