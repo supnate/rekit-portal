@@ -32,7 +32,6 @@ export class TestCoverageSummary extends PureComponent {
       } else {
         this.setState({ error: e });
       }
-      console.log(status);
     }
     this.setState({ loading: false });
   }

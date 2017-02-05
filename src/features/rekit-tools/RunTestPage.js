@@ -47,7 +47,6 @@ export class RunTestPage extends Component {
   }
 
   render() {
-    console.log('test file:', this.props.params.testFile);
     const output = this.props.rekitTools.runTestOutput || [];
     const runTestRunning = this.props.rekitTools.runTestRunning;
     return (

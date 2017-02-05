@@ -11,19 +11,22 @@ import {
 
 describe('rekit-tools/redux/clearTestOutput', () => {
   it('returns correct action by clearTestOutput', () => {
-    const expectedAction = {
-      type: REKIT_TOOLS_CLEAR_TEST_OUTPUT,
-    };
-    expect(clearTestOutput()).to.deep.equal(expectedAction);
+    expect(clearTestOutput()).to.have.property('type', REKIT_TOOLS_CLEAR_TEST_OUTPUT);
   });
 
   it('handles action type REKIT_TOOLS_CLEAR_TEST_OUTPUT correctly', () => {
-    const prevState = {};
+    const prevState = {
+      currentTestFile: 'abc',
+      runTestOutput: [{}],
+    };
     const state = reducer(
       prevState,
       { type: REKIT_TOOLS_CLEAR_TEST_OUTPUT }
     );
     expect(state).to.not.equal(prevState); // should be immutable
-    expect(state).to.deep.equal(prevState); // TODO: replace this line with real case.
+    expect(state).to.deep.equal({
+      currentTestFile: null,
+      runTestOutput: [],
+    });
   });
 });

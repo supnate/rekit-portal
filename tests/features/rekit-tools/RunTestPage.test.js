@@ -1,12 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { RunTestPage } from 'src/features/rekit-tools';
+import { RunTestPage } from 'src/features/rekit-tools/RunTestPage';
 
 describe('rekit-tools/RunTestPage', () => {
   it('renders node with correct class name', () => {
+    const props = {
+      home: {},
+      rekitTools: {},
+      actions: {},
+      params: {
+        testFile: 'abc',
+      },
+    };
     const renderedComponent = shallow(
-      <RunTestPage />
+      <RunTestPage {...props} />
     );
 
     expect(

@@ -25,30 +25,31 @@ describe('rekit-tools/redux/runTest', () => {
   });
 
   it('dispatches success action when runTest succeeds', () => {
+    nock('http://localhost')
+      .post('/rekit/api/run-test')
+      .reply(200, { data: {} });
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: REKIT_TOOLS_RUN_TEST_BEGIN },
-      { type: REKIT_TOOLS_RUN_TEST_SUCCESS, data: {} },
-    ];
-
-    return store.dispatch(runTest({ error: false }))
+    return store.dispatch(runTest('file.test.js'))
       .then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_TOOLS_RUN_TEST_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_TOOLS_RUN_TEST_SUCCESS);
       });
   });
 
   it('dispatches failure action when runTest fails', () => {
+    nock('http://localhost')
+      .post('/rekit/api/run-test')
+      .reply(500, {});
     const store = mockStore({});
-
-    const expectedActions = [
-      { type: REKIT_TOOLS_RUN_TEST_BEGIN },
-      { type: REKIT_TOOLS_RUN_TEST_FAILURE, data: { error: 'some error' } },
-    ];
 
     return store.dispatch(runTest({ error: true }))
       .catch(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_TOOLS_RUN_TEST_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_TOOLS_RUN_TEST_FAILURE);
+        expect(actions[1]).to.have.deep.property('data.error');
       });
   });
 
@@ -63,7 +64,7 @@ describe('rekit-tools/redux/runTest', () => {
     const prevState = { runTestPending: true };
     const state = reducer(
       prevState,
-      { type: REKIT_TOOLS_RUN_TEST_BEGIN }
+      { type: REKIT_TOOLS_RUN_TEST_BEGIN, data: { testFile: 'file.test.js' } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.runTestPending).to.be.true;

@@ -25,30 +25,31 @@ describe('rekit-tools/redux/runBuild', () => {
   });
 
   it('dispatches success action when runBuild succeeds', () => {
+    nock('http://localhost')
+      .post('/rekit/api/run-build')
+      .reply(200, {});
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: REKIT_TOOLS_RUN_BUILD_BEGIN },
-      { type: REKIT_TOOLS_RUN_BUILD_SUCCESS, data: {} },
-    ];
-
-    return store.dispatch(runBuild({ error: false }))
+    return store.dispatch(runBuild())
       .then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_TOOLS_RUN_BUILD_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_TOOLS_RUN_BUILD_SUCCESS);
       });
   });
 
   it('dispatches failure action when runBuild fails', () => {
+    nock('http://localhost')
+      .post('/rekit/api/run-build')
+      .reply(500, {});
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: REKIT_TOOLS_RUN_BUILD_BEGIN },
-      { type: REKIT_TOOLS_RUN_BUILD_FAILURE, data: { error: 'some error' } },
-    ];
-
-    return store.dispatch(runBuild({ error: true }))
+    return store.dispatch(runBuild())
       .catch(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', REKIT_TOOLS_RUN_BUILD_BEGIN);
+        expect(actions[1]).to.have.property('type', REKIT_TOOLS_RUN_BUILD_FAILURE);
+        expect(actions[1]).to.have.deep.property('data.error');
       });
   });
 
