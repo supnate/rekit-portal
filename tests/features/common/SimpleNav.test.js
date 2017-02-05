@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { SimpleNav } from 'src/features/common';
 
-describe('components/SimpleNav', () => {
+describe('common/SimpleNav', () => {
   it('renders node with correct dom structure', () => {
     const routes = [{
       childRoutes: [

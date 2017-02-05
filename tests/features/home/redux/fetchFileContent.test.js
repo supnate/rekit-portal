@@ -25,30 +25,34 @@ describe('home/redux/fetchFileContent', () => {
   });
 
   it('dispatches success action when fetchFileContent succeeds', () => {
+    nock('http://localhost')
+      .get('/rekit/api/file-content')
+      .query(true)
+      .reply(200, { content: 'file content' });
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: HOME_FETCH_FILE_CONTENT_BEGIN },
-      { type: HOME_FETCH_FILE_CONTENT_SUCCESS, data: {} },
-    ];
-
-    return store.dispatch(fetchFileContent({ error: false }))
+    return store.dispatch(fetchFileContent('file'))
       .then(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', HOME_FETCH_FILE_CONTENT_BEGIN);
+        expect(actions[1]).to.have.property('type', HOME_FETCH_FILE_CONTENT_SUCCESS);
+        expect(actions[1]).to.have.deep.property('data.content', 'file content');
       });
   });
 
   it('dispatches failure action when fetchFileContent fails', () => {
+    nock('http://localhost')
+      .get('/rekit/api/file-content')
+      .query(true)
+      .reply(500, {});
     const store = mockStore({});
 
-    const expectedActions = [
-      { type: HOME_FETCH_FILE_CONTENT_BEGIN },
-      { type: HOME_FETCH_FILE_CONTENT_FAILURE, data: { error: 'some error' } },
-    ];
-
-    return store.dispatch(fetchFileContent({ error: true }))
+    return store.dispatch(fetchFileContent('file'))
       .catch(() => {
-        expect(store.getActions()).to.deep.equal(expectedActions);
+        const actions = store.getActions();
+        expect(actions[0]).to.have.property('type', HOME_FETCH_FILE_CONTENT_BEGIN);
+        expect(actions[1]).to.have.property('type', HOME_FETCH_FILE_CONTENT_FAILURE);
+        expect(actions[1]).to.have.deep.property('data.error');
       });
   });
 

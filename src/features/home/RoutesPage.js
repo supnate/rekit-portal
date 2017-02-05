@@ -5,13 +5,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Icon, Tabs } from 'antd';
 import { CodeView } from './';
-import * as actions from './redux/actions';
 
 const TabPane = Tabs.TabPane;
 export class RoutesPage extends Component {
   static propTypes = {
-    rekitCmds: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
   };
@@ -81,14 +78,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(RoutesPage);

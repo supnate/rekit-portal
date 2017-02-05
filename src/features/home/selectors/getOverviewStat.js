@@ -20,7 +20,6 @@ export const getOverviewStat = createSelector(
       routes: 0,
     };
 
-    console.log('stat', stat);
     features.forEach((fid) => {
       const f = featureById[fid];
       stat.components += f.components.length;

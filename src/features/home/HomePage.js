@@ -19,7 +19,6 @@ export class HomePage extends Component {
   };
 
   componentWillMount() {
-    console.log('will mount');
     this.handleWindowResize();
     window.addEventListener('resize', this.handleWindowResize);
   }
