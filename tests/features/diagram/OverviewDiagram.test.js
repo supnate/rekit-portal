@@ -6,7 +6,7 @@ import { OverviewDiagram } from 'src/features/diagram';
 describe('diagram/OverviewDiagram', () => {
   it('renders node with correct class name', () => {
     const renderedComponent = shallow(
-      <OverviewDiagram />
+      <OverviewDiagram homeStore={{}} />
     );
 
     expect(

@@ -24,7 +24,6 @@ export class DefaultPage extends Component {
 
   constructor(props) {
     super(props);
-    console.log('props: ', props.diagramData);
   }
 
   // getDataSet() {

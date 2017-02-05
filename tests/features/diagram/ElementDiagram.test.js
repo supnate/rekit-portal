@@ -5,8 +5,12 @@ import { ElementDiagram } from 'src/features/diagram';
 
 describe('diagram/ElementDiagram', () => {
   it('renders node with correct class name', () => {
+    const props = {
+      homeStore: {},
+      elementId: 'id',
+    };
     const renderedComponent = shallow(
-      <ElementDiagram />
+      <ElementDiagram {...props} />
     );
 
     expect(

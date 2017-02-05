@@ -1,12 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { DetailedDiagram } from 'src/features/diagram';
+import { DetailedDiagram } from 'src/features/diagram/DetailedDiagram';
 
 describe('diagram/DetailedDiagram', () => {
   it('renders node with correct class name', () => {
+    const props = {
+      diagram: {},
+      actions: {},
+    };
     const renderedComponent = shallow(
-      <DetailedDiagram />
+      <DetailedDiagram {...props} />
     );
 
     expect(
