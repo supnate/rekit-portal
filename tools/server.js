@@ -12,6 +12,23 @@ const hotMiddleware = require('webpack-hot-middleware');
 const pkgJson = require('../package.json');
 const getConfig = require('../webpack-config');
 const rekitMiddleWare = require('../src/middleware');
+const ArgumentParser = require('argparse').ArgumentParser;
+
+const parser = new ArgumentParser({
+  addHelp: true,
+  description: 'Start express server for dev or build result.',
+});
+
+parser.addArgument(['--build', '-b'], {
+  help: 'Only start build server',
+  action: 'storeTrue', // TODO: why storeFalse?
+});
+
+parser.addArgument(['--build-port'], {
+  help: 'Port of build test server.',
+});
+
+const args = parser.parseArgs();
 
 const srcPath = path.join(__dirname, '../src');
 const manifestPath = path.join(__dirname, '../.tmp/dev-vendors-manifest.json');
@@ -76,12 +93,13 @@ function startBuildServer() {
     res.sendStatus(404);
   });
 
-  server.listen(pkgJson.rekit.buildPort, (err) => {
+  const port = args.build_port || pkgJson.rekit.buildPort;
+  server.listen(port, (err) => {
     if (err) {
       console.error(err);
     }
 
-    console.log(`The build server is listening at http://localhost:${pkgJson.rekit.buildPort}/`);
+    console.log(`The build server is listening at http://localhost:${port}/`);
   });
 }
 
@@ -136,4 +154,4 @@ function buildDevDll() {
 }
 
 startBuildServer();
-buildDevDll().then(startDevServer);
+if (!args.build) buildDevDll().then(startDevServer);
