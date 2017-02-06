@@ -284,6 +284,7 @@ export class ProjectExplorer extends Component {
   }
 
   renderContextMenu() {
+    console.log('render context menu: ', this.state.contextMenu);
     return (
       <Menu
         style={{ minWidth: 150 }}
