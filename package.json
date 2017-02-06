@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "description": "rekit-portal2 created by Rekit.",
+  "engines": {
+    "npm": "3.x",
+    "node": "6.9.4"
+  },
   "babel": {
     "presets": [
       "es2015",
