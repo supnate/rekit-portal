@@ -84,6 +84,7 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-polyfill": "^6.22.0",
     "body-parser": "^1.16.0",
+    "compression": "^1.6.2",
     "core-decorators": "^0.15.0",
     "d3": "^4.5.0",
     "highlight.js": "^9.9.0",

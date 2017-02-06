@@ -5,6 +5,7 @@ const http = require('http');
 const shell = require('shelljs');
 const crypto = require('crypto');
 const express = require('express');
+const compression = require('compression');
 const fallback = require('express-history-api-fallback');
 const webpack = require('webpack');
 const devMiddleware = require('webpack-dev-middleware');
@@ -83,6 +84,7 @@ function startBuildServer() {
   const app = express();
   const server = http.createServer(app);
   const root = path.join(__dirname, '../build');
+  app.use(compression());
   app.use(rekitMiddleWare()(server, app));
   app.use(express.static(root));
   app.use(fallback('index.html', { root }));
