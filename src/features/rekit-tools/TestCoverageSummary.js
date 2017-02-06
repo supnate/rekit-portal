@@ -1,5 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import _ from 'lodash';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -34,6 +34,10 @@ export class TestCoverageSummary extends PureComponent {
       }
     }
     this.setState({ loading: false });
+  }
+
+  handleRunTests() {
+    browserHistory.push('/tools/tests');
   }
 
   renderLoading() {
@@ -136,7 +140,7 @@ export class TestCoverageSummary extends PureComponent {
         {this.state.noData &&
           <div>
             <Alert message="No coverage data found. Need to run tests first." type="info" showIcon />
-            <Button type="primary">Run tests now</Button>
+            <Button type="primary" onClick={this.handleRunTests}>Run tests now</Button>
           </div>}
         {this.state.reportData && this.renderReport()}
 
