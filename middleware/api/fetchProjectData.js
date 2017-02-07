@@ -1,4 +1,5 @@
 'use strict';
+
 const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
@@ -40,7 +41,7 @@ function fetchProjectData() {
     projectName: prjPkgJson.name,
     rekit: Object.assign({}, prjPkgJson.rekit, {
       coreVersion: fs.existsSync(corePkg) ? require(corePkg).version : 'UNKNOWN', // eslint-disable-line
-      portalVersion: require('../../../package.json').version, // eslint-disable-line
+      portalVersion: require(path.join(__dirname, '../../package.json')).version, // eslint-disable-line
     }),
     cssExt: utils.getCssExt(),
   };

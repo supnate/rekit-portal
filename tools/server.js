@@ -12,7 +12,7 @@ const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const pkgJson = require('../package.json');
 const getConfig = require('../webpack-config');
-const rekitMiddleWare = require('../src/middleware');
+const rekitMiddleWare = require('../middleware');
 const ArgumentParser = require('argparse').ArgumentParser;
 
 const parser = new ArgumentParser({

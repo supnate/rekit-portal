@@ -19,10 +19,16 @@ const parser = new ArgumentParser({
 
 parser.addArgument(['--profile', '-p'], {
   help: 'Whether to show profile of the bundle.',
-  action: 'storeFalse', // TODO: why storeFalse?
+  action: 'storeTrue',
+});
+
+parser.addArgument(['--dist'], {
+  help: 'Whether to show profile of the bundle.',
+  action: 'storeTrue',
 });
 
 const args = parser.parseArgs();
+
 // Show profile of the build bundle
 // https://github.com/th0r/webpack-bundle-analyzer
 if (args.profile) {
@@ -65,10 +71,9 @@ const timestamp = crypto
 let lines = shell.cat(path.join(__dirname, '../src/index.html')).split(/\r?\n/);
 lines = lines.filter(line => line.indexOf('/.tmp/dev-vendors.js') < 0); // remove dev-vendors
 let indexHtml = lines.join('\n');
-indexHtml = indexHtml
-  .replace('<img src="/src/images/logo_small.png" />', '<img src="/static/logo_small.png" />')
-  .replace('/static/main.js', `/static/main.${timestamp}.js`)
-;
+indexHtml = indexHtml.replace('<img src="/src/images/logo_small.png" />', '<img src="/static/logo_small.png" />');
+if (!args.dist) indexHtml = indexHtml.replace('/static/main.js', `/static/main.${timestamp}.js`);
+
 shell.ShellString(indexHtml).to(path.join(buildFolder, 'index.html'));
 
 // Copy favicon
@@ -105,8 +110,14 @@ compiler.run((err, stats) => {
   }));
 
   // Add timestamp hash to bundle file name.
-  if (!stats.hasErrors()) shell.mv(path.join(buildFolder, './static/main.js'), path.join(buildFolder, `/static/main.${timestamp}.js`));
-  // console.log('Creating webpack stats json for analysis...');
-  // shell.ShellString(JSON.stringify(stats.toJson())).to(path.join(buildFolder, 'stats.json'));
+  if (!stats.hasErrors() && !args.dist) shell.mv(path.join(buildFolder, './static/main.js'), path.join(buildFolder, `/static/main.${timestamp}.js`));
+
+  // if build for npm, copy build folder to dist folder
+  if (args.dist) {
+    console.log('copy build folder to dist build.');
+    const distFolder = path.join(__dirname, '../dist');
+    shell.rm('-rf', distFolder);
+    shell.cp('-r', buildFolder, distFolder);
+  }
   console.timeEnd('Done');
 });

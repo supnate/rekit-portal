@@ -162,7 +162,6 @@ export class OverviewChordDiagram extends PureComponent {
   updateDiagram() {
     const { home, size } = this.props;
     const diagramData = getOverviewChordDiagramData(home, size, this.state.selectedFeatures);
-    console.log('refresh overview diagram: ', diagramData);
     this.svg
       // .transition() // start a transition to bring the new value into view
       // .duration(300)

@@ -1,11 +1,16 @@
 {
   "name": "rekit-portal",
-  "version": "0.0.1",
-  "private": true,
-  "description": "rekit-portal2 created by Rekit.",
-  "engines": {
-    "npm": "3.x",
-    "node": "6.9.4"
+  "version": "2.0.0-alpha.4",
+  "description": "Web app created with Rekit for managing a Rekit project.",
+  "keywords": [
+    "rekit",
+    "react",
+    "redux",
+    "react-router"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supnate/rekit-portal.git"
   },
   "babel": {
     "presets": [
@@ -70,15 +75,14 @@
   "theme": {
     "font-size-base": "14px"
   },
+  "license": "MIT",
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
     "test": "node ./tools/run_test.js",
     "build:test": "node ./tools/server.js -m build"
   },
-  "file": {
-    
-  },
+  "files": ["dist", "middleware"],
   "dependencies": {
     "ansi-to-html": "^0.5.0",
     "antd": "^2.7.0",

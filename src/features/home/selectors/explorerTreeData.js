@@ -86,7 +86,6 @@ export const getExplorerTreeData = createSelector(
   featuresSelector,
   featureByIdSelector,
   (features, featureById) => {
-    console.log('RE-COMPUTING tree data.');
     const nodes = features.map((fid) => {
       const feature = featureById[fid];
       return {
@@ -126,7 +125,6 @@ export const getFilteredExplorerTreeData = createSelector(
   getExplorerTreeData,
   keywordSelector,
   (treeData, keyword) => {
-    console.log('RE-COMPUTING filtered tree data.');
     if (!keyword) return treeData;
     return filterTreeNode(treeData, keyword);
   }
