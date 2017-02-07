@@ -37,6 +37,7 @@ function fetchProjectData() {
     features,
     testCoverage: fs.existsSync(path.join(prjRoot, 'coverage/lcov-report/index.html')),
     projectRoot: prjRoot,
+    projectName: prjPkgJson.name,
     rekit: Object.assign({}, prjPkgJson.rekit, {
       coreVersion: fs.existsSync(corePkg) ? require(corePkg).version : 'UNKNOWN', // eslint-disable-line
       portalVersion: require('../../../package.json').version, // eslint-disable-line

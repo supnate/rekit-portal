@@ -65,7 +65,6 @@ export class SidePanel extends Component {
 
   @autobind
   handleSearch(key) {
-    console.log('do search: ', key);
     this.setState({
       searchKey: key,
     });
@@ -87,8 +86,8 @@ export class SidePanel extends Component {
   }
 
   render() {
-    let prjName = this.props.home.projectRoot.split('/').pop();
-    prjName = _.upperFirst(_.lowerCase(prjName));
+    const { home } = this.props;
+    const prjName = home.projectName || home.projectRoot.split('/').pop();
     return (
       <div className="home-side-panel">
         <div className="header">
