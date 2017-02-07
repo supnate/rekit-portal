@@ -76,6 +76,9 @@
     "test": "node ./tools/run_test.js",
     "build:test": "node ./tools/server.js -m build"
   },
+  "file": {
+    
+  },
   "dependencies": {
     "ansi-to-html": "^0.5.0",
     "antd": "^2.7.0",
