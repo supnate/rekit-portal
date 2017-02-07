@@ -106,7 +106,7 @@ export class SidePanel extends Component {
         <ProjectExplorer searchKey={this.state.searchKey} />
         {this.state.aboutDialogVisible &&
           <Modal
-            // visible
+            visible
             maskClosable
             title=""
             footer=""
