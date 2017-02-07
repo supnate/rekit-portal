@@ -65,4 +65,37 @@
   .diagram-container {
     padding-right: 40px;
   }
+
+  &-overview-diagram-help, &-test-coverage-summary-help {
+    width: 260px;
+    padding-bottom: 15px;
+
+    ul {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+
+      li {
+        padding: 5px 0;
+        display: inline-block;
+        width: 50%;
+        span {
+          display: inline-block;
+          width: 16px;
+          height: 10px;
+          box-sizing: border-box;
+
+          background-color: red;
+
+          &.feature { background-color: @feature-color; }
+          &.component { background-color: @component-color; }
+          &.action { background-color: @action-color; }
+          &.misc { background-color: @misc-color; }
+        }
+      }
+    }
+
+    p {
+      margin-top: 10px;
+    }
+  }
 }

@@ -107,8 +107,8 @@ export class SidePanel extends Component {
         <ProjectExplorer searchKey={this.state.searchKey} />
         {this.state.aboutDialogVisible &&
           <Modal
-            visible
-            maskClosable={false}
+            // visible
+            maskClosable
             title=""
             footer=""
             width={1||process.env.NODE_ENV === 'demo' ? '760px' : '360px'}

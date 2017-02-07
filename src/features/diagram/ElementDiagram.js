@@ -101,8 +101,7 @@ export default class ElementDiagram extends PureComponent {
 
   updateDiagram() {
     const { homeStore, elementId } = this.props;
-    const diagramData = getElementDiagramData(homeStore, elementId);// this.props.diagramData;
-    console.log('update diagram: ', diagramData);
+    const diagramData = getElementDiagramData(homeStore, elementId);
 
     const drawBgNode = d3Selection => d3Selection
       .attr('r', d => d.r + 3)

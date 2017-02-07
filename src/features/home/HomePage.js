@@ -49,7 +49,38 @@ export class HomePage extends Component {
   }
 
   renderOverviewDiagramHelp() {
+    return (
+      <div className="home-home-page-overview-diagram-help">
+        <ul>
+          <li><span className="feature" /> Feature</li>
+          <li><span className="action" /> Action</li>
+          <li><span className="component" /> Component</li>
+          <li><span className="misc" /> Misc</li>
+        </ul>
+        <p>
+          The gragh provides an interactive overview of the project architecture.
+          You could also choose which features to show and choose whether to show internal deps.
+        </p>
+        <p>
+          It helps to quickly understand the project by features rather than be lost in massive dependencies among es modules.
+        </p>
+      </div>
+    );
+  }
 
+  renderTestCoverageHelp() {
+    return (
+      <div className="home-home-page-test-coverage-summary-help">
+        <p>
+          Rekit uses <a href="https://github.com/gotwarlost/istanbul">istanbul</a> to generate test coverage report.
+          After running all tests against the project, the test coverage will be available.
+          Running a single test or tests of a folder does not generate coverage report.
+        </p>
+        <p>
+          Note that if some tests failed, the report data may be incomplete.
+        </p>
+      </div>
+    );
   }
 
   render() {
@@ -96,7 +127,7 @@ export class HomePage extends Component {
             <OverviewChordDiagram size={this.state.svgSize} />
           </Col>
           <Col span="8" className="test-coverage-container">
-            <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Test coverage</p>} content={this.renderOverviewDiagramHelp()}>
+            <Popover placement="leftTop" title={<p style={{ fontSize: 18 }}>Test coverage</p>} content={this.renderTestCoverageHelp()}>
               <Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" />
             </Popover>
             <h3>Test coverage</h3>
