@@ -16,11 +16,13 @@ export class About extends Component {
         <div className="header">
           <img className="logo" src={require('../../images/logo.png')} alt="logo" />
           <h3>Rekit Portal</h3>
-          <p className="version">Version: v{rekit.portalVersion}</p>
+          <span className="version">Version: v{rekit.portalVersion}</span>
         </div>
 
         <p>
-          Rekit portal is a web application for managing a Rekit project. It not only provides web UIs for creating/moving/deleting elements of a Rekit app besides Rekit command line tools, but also provides tools for analysis/building/testing.
+          Rekit portal is a web application for managing a Rekit project.
+          It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
+          but also provides tools for analyzing/building/testing a Rekit application.
         </p>
         <div className="versions">
           <h5>Application Status</h5>
@@ -44,13 +46,16 @@ export class About extends Component {
         <div className="header">
           <img className="logo" src={require('../../images/logo.png')} alt="logo" />
           <h1>Welcome to the Rekit Portal demo!</h1>
-          <p className="version">Version: v{rekit.portalVersion}</p>
+          <span className="version">Version: v{rekit.portalVersion}</span>
         </div>
         <p>
-          This is a demo of Rekit and Rekit portal for you to quickly learn how Rekit helps to creating a scalable web application.
+          This is a demo of Rekit and Rekit portal for you to quickly learn how Rekit helps to creating a scalable web application. Here you are
+          seeing a real Rekit project (Rekit portal itself!) managed by Rekit portal.
         </p>
         <p>
-          Rekit portal itself is also created by Rekit. It&apos;s a web application for managing a Rekit project. It not only provides web UIs for creating/moving/deleting elements of a Rekit app, but also provides tools for analyzing/building/testing a Rekit application.
+          Rekit portal itself is also created by Rekit. It&apos;s a web application for managing a Rekit project.
+          It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
+          but also provides tools for analyzing/building/testing a Rekit application.
         </p>
         <h3>Create your own Rekit app with 3 only steps!</h3>
         <p>
@@ -59,22 +64,22 @@ export class About extends Component {
         <br />
         <Steps>
           <Step status="process" title="Install rekit" description={<ul><li><span>&gt;</span> npm install rekit@next -g</li></ul>} />
-          <Step status="process" title="Create app" description={<ul><li><span>&gt;</span> rekit create app1</li><li><span>&gt;</span> cd app1</li><li><span>&gt;</span> npm install</li></ul>} />
+          <Step status="process" title="Create an app" description={<ul><li><span>&gt;</span> rekit create app1</li><li><span>&gt;</span> cd app1</li><li><span>&gt;</span> npm install</li></ul>} />
           <Step status="process" title="Start the app" description={<ul><li><span>&gt;</span> npm start</li></ul>} />
         </Steps>
         <p>Then access <a href="http://localhost:6075" target="_blank">http://localhost:6075</a> for your app. <a href="http://localhost:6076" target="_blank">http://localhost:6076</a> for rekit portal.</p>
         <p>* Alternatively you can use <a href="https://yarnpkg.com/" target="_blank">Yarn</a> as the package manager rather than npm.</p>
         <h3>Rekit portal architecture</h3>
-        <p className="architecture">
+        <p>
           Rekit portal is a web app built with Rekit, it uses Rekit&apos;s <a href="#">feature oriented architecture</a>. Actually Rekit portal is built up with 5 well decoupled features:
-          <ol>
-            <li><b>Common</b>: provides common utilities, components for all features.</li>
-            <li><b>Home</b>: the foundation feature of Rekit portal, including managing the meta data of the project, main UI layout, project explorer etc.</li>
-            <li><b>Diagram</b>: visualize the project architecture.</li>
-            <li><b>Rekit cmds</b>: provides actions and components for communicating with backend server to create/rename/move/delete Rekit elements like components.</li>
-            <li><b>Rekit tools</b>: provides pages to test or build the project.</li>
-          </ol>
         </p>
+        <ol className="features-list">
+          <li><b>Common</b>: provides common utilities, components for all features.</li>
+          <li><b>Home</b>: the foundation feature of Rekit portal, including managing the meta data of the project, main UI layout, project explorer etc.</li>
+          <li><b>Diagram</b>: visualize the project architecture.</li>
+          <li><b>Rekit cmds</b>: provides actions and components for communicating with backend server to create/rename/move/delete Rekit elements like components.</li>
+          <li><b>Rekit tools</b>: provides pages to test or build the project.</li>
+        </ol>
         <p>
           From the overview diagram in dashboard, you can have a intuitive view of how features work together.
         </p>
@@ -82,16 +87,14 @@ export class About extends Component {
           Besides the web UI, Rekit portal also includes an express middleware to use APIs provided by Rekit core to manage the project.
         </p>
         <h3>Learn more</h3>
-        <p className="learn-more">
-          <ul>
-            <li><a href="#" target="_blank">Rekit 2.0 is out with nice new features!</a></li>
-            <li><a href="http://rekit.js.org" target="_blank">Rekit docs: rekit.js.org</a></li>
-            <li><a href="#" target="_blank">Feature oriented web development with React, Redux and React-router</a></li>
-            <li><a href="https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da" target="_blank">A new approach to managing Redux actions</a></li>
-          </ul>
-        </p>
+        <ul className="learn-more-list">
+          <li><a href="#" target="_blank">Rekit 2.0 is out with great new features!</a></li>
+          <li><a href="http://rekit.js.org" target="_blank">Rekit docs: rekit.js.org</a></li>
+          <li><a href="#" target="_blank">Feature oriented web development with React, Redux and React-router</a></li>
+          <li><a href="https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da" target="_blank">A new approach to managing Redux actions</a></li>
+        </ul>
         <p>
-          Any more questions or feedback? Please visit: <a href="https://github.com/supnate/rekit" target="_blank">https://github.com/supnate/rekit</a>
+          Any more questions or feedback? Please visit: <a href="https://github.com/supnate/rekit" target="_blank">https://github.com/supnate/rekit</a>.
         </p>
       </div>
     );
