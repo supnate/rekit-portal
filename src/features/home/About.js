@@ -57,7 +57,7 @@ export class About extends Component {
           It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
           but also provides tools for analyzing/building/testing a Rekit application.
         </p>
-        <h3>Create your own Rekit app with 3 only steps!</h3>
+        <h3>Create your own Rekit app with only 3 steps!</h3>
         <p>
           Though this demo is readonly, you can try a full-featured Rekit portal by creating your own Rekit app. It&apos;s super easy!
         </p>
