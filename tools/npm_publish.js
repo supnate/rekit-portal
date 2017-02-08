@@ -14,7 +14,7 @@ const pkgJsonTmp = path.join(prjRoot, 'package.json.tmp');
 
 const pkg = require(pkgJson); // eslint-disable-line
 
-const pkgPublish = ['name', 'version', 'description', 'repository', 'keywords', 'files', 'license']
+const pkgPublish = ['name', 'version', 'description', 'repository', 'keywords', 'files', 'dependencies', 'license']
   .reduce((prev, name) => Object.assign(prev, { [name]: pkg[name] }), {});
 
 shell.mv(pkgJson, pkgJsonTmp);
