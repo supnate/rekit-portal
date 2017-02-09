@@ -1,8 +1,6 @@
 const initialState = {
   count: 0,
   redditReactjsList: [],
-  // navTreeData: null,
-  // projectData: null,
   elementById: {},
   fileContentById: {},
   features: null,
@@ -13,7 +11,7 @@ const initialState = {
   fetchFileContentPending: false,
   fetchFileContentError: null,
 
-  demoAlertVisible: true,
+  demoAlertVisible: false,
 };
 
 export default initialState;
