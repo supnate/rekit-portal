@@ -1,1 +1,1 @@
-web: node tools/server.js -b --build-port $PORT
+web: node tools/server.js --build --readonly --build-port $PORT

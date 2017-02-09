@@ -52,7 +52,7 @@ function startDevServer() {
 
   const compiler = webpack(devConfig);
 
-  app.use(rekitMiddleWare()(server, app, { readonly: true }));
+  app.use(rekitMiddleWare()(server, app, { readonly: args.readonly }));
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,

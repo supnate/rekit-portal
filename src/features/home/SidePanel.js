@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory, Link } from 'react-router';
-import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
@@ -18,7 +17,7 @@ export class SidePanel extends Component {
 
   state = {
     searchKey: null,
-    aboutDialogVisible: true,
+    aboutDialogVisible: process.env.REKIT_ENV === 'demo',
   };
 
   @autobind
@@ -106,12 +105,11 @@ export class SidePanel extends Component {
         <ProjectExplorer searchKey={this.state.searchKey} />
         {this.state.aboutDialogVisible &&
           <Modal
-            visible={false}
+            visible
             maskClosable
             title=""
             footer=""
-            width={1||process.env.NODE_ENV === 'demo' ? '760px' : '360px'}
-
+            width={process.env.REKIT_ENV === 'demo' ? '760px' : '360px'}
             onClose={this.hideAbout}
             style={{ top: '50px' }}
           >

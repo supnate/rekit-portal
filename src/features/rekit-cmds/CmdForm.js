@@ -51,7 +51,7 @@ export class CmdForm extends Component {
         this.props.onDone();
       }).catch((e) => {
         console.log('Failed to exec cmd: ', e);
-        if (process.env.NODE_ENV === 'demo') {
+        if (process.env.REKIT_ENV === 'demo') {
           this.props.actions.showDemoAlert();
         } else {
           Modal.error({

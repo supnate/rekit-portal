@@ -39,7 +39,7 @@ export class RunTestPage extends Component {
 
   @autobind
   handleRunTestError(e) {
-    if (process.env.NODE_ENV === 'demo' && _.get(e, 'response.status') === 403) {
+    if (process.env.REKIT_ENV === 'demo' && _.get(e, 'response.status') === 403) {
       this.props.actions.showDemoAlert();
     } else {
       Modal.error({

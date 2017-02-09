@@ -1,10 +1,7 @@
 /* eslint react/jsx-no-target-blank: 0 */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Steps } from 'antd';
 import { RekitSteps } from './';
-
-const Step = Steps.Step;
 
 export class About extends Component {
   static propTypes = {
@@ -90,7 +87,7 @@ export class About extends Component {
     );
   }
   render() {
-    if (1||process.env.NODE_ENV === 'demo') {
+    if (process.env.REKIT_ENV === 'demo') {
       return this.renderDemoAbout();
     }
     return this.renderNormalAbout();

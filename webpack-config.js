@@ -111,7 +111,13 @@ module.exports = (type) => { // eslint-disable-line
       isDist && new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(type === 'dist' ? 'production' : type),
+          NODE_ENV: JSON.stringify({
+            demo: 'production',
+            dist: 'production',
+            dev: 'development',
+            test: 'test',
+          }[type]),
+          REKIT_ENV: JSON.stringify(type),
         }
       })
     ]),

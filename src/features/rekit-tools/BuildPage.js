@@ -21,7 +21,7 @@ export class BuildPage extends Component {
   handleBuildButtonClick() {
     this.props.actions.runBuild().catch((e) => {
       console.error('Failed to run build: ', e);
-      if (process.env.NODE_ENV === 'demo') {
+      if (process.env.REKIT_ENV === 'demo') {
         this.props.actions.showDemoAlert();
       } else {
         Modal.error({

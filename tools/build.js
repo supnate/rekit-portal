@@ -9,7 +9,6 @@ const crypto = require('crypto');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
-const config = require('../webpack-config')('dist');
 const ArgumentParser = require('argparse').ArgumentParser;
 
 const parser = new ArgumentParser({
@@ -33,7 +32,8 @@ parser.addArgument(['--demo'], {
 });
 
 const args = parser.parseArgs();
-
+const config = require('../webpack-config')(args.demo ? 'demo' : 'dist'); // eslint-disable-line
+console.log('build args: ', args);
 // Show profile of the build bundle
 // https://github.com/th0r/webpack-bundle-analyzer
 if (args.profile) {
@@ -123,12 +123,6 @@ compiler.run((err, stats) => {
     const distFolder = path.join(__dirname, '../dist');
     shell.rm('-rf', distFolder);
     shell.cp('-r', buildFolder, distFolder);
-  }
-
-  if (args.demo) {
-    shell.ShellString('demo').to(path.join(__dirname, '../middleware/demo.txt'));
-  } else {
-    shell.rm(path.join(__dirname, '../middleware/demo.txt'));
   }
   console.timeEnd('Done');
 });

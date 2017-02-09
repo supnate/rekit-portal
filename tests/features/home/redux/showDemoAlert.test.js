@@ -15,12 +15,12 @@ describe('home/redux/showDemoAlert', () => {
   });
 
   it('handles action type HOME_SHOW_DEMO_ALERT correctly', () => {
-    const prevState = {};
+    const prevState = { demoAlertVisible: false };
     const state = reducer(
       prevState,
       { type: HOME_SHOW_DEMO_ALERT }
     );
     expect(state).to.not.equal(prevState); // should be immutable
-    expect(state).to.deep.equal(prevState); // TODO: replace this line with real case.
+    expect(state).to.deep.equal({ demoAlertVisible: true });
   });
 });
