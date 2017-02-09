@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Steps } from 'antd';
+import { RekitSteps } from './';
 
 const Step = Steps.Step;
 
@@ -57,18 +58,7 @@ export class About extends Component {
           It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
           but also provides tools for analyzing/building/testing a Rekit application.
         </p>
-        <h3>Create your own Rekit app with only 3 steps!</h3>
-        <p>
-          Though this demo is readonly, you can try a full-featured Rekit portal by creating your own Rekit app. It&apos;s super easy!
-        </p>
-        <br />
-        <Steps>
-          <Step status="process" title="Install rekit" description={<ul><li><span>&gt;</span> npm install rekit@next -g</li></ul>} />
-          <Step status="process" title="Create an app" description={<ul><li><span>&gt;</span> rekit create app1</li><li><span>&gt;</span> cd app1</li><li><span>&gt;</span> npm install</li></ul>} />
-          <Step status="process" title="Start the app" description={<ul><li><span>&gt;</span> npm start</li></ul>} />
-        </Steps>
-        <p>Then access <a href="http://localhost:6075" target="_blank">http://localhost:6075</a> for your app. <a href="http://localhost:6076" target="_blank">http://localhost:6076</a> for rekit portal.</p>
-        <p>* Alternatively you can use <a href="https://yarnpkg.com/" target="_blank">Yarn</a> as the package manager rather than npm.</p>
+        <RekitSteps />
         <h3>Rekit portal architecture</h3>
         <p>
           Rekit portal is a web app built with Rekit, it uses Rekit&apos;s <a href="#">feature oriented architecture</a>. Actually Rekit portal is built up with 5 well decoupled features:

@@ -14,13 +14,14 @@ module.exports = (type) => { // eslint-disable-line
   // NOTE: for test, only module property is used.
 
   const isDev = type === 'dev';
-  const isDist = type === 'dist';
+  const isDist = (type === 'dist' || type === 'demo');
 
   return {
     devtool: {
       dev: 'eval',
       dll: false,
       test: false,
+      demo: false,
       dist: 'source-map',
     }[type],
     cache: true,
@@ -62,6 +63,14 @@ module.exports = (type) => { // eslint-disable-line
         ],
       },
       dist: {
+        main: [
+          'babel-polyfill',
+          './styles/index.less',
+          'antd/dist/antd.less',
+          './index'
+        ],
+      },
+      demo: {
         main: [
           'babel-polyfill',
           './styles/index.less',

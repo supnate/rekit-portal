@@ -9,6 +9,7 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Icon, Input, Modal, Select, Tooltip } from 'antd';
+import { showDemoAlert } from '../home/redux/actions';
 import * as actions from './redux/actions';
 import * as cmdFormHelper from './cmdFormHelper';
 
@@ -39,7 +40,6 @@ export class CmdForm extends Component {
   @autobind
   handleSubmit(evt) {
     evt.preventDefault();
-    console.log('form submit');
     const { cmdArgs } = this.props.rekitCmds;
     this.props.form.validateFieldsAndScroll((errors, values) => {
       if (errors) {
@@ -47,15 +47,18 @@ export class CmdForm extends Component {
       }
 
       const args = cmdFormHelper.convertArgs(values, cmdArgs);
-      console.log(args);
       this.props.actions.execCmd(args).then(() => {
         this.props.onDone();
       }).catch((e) => {
         console.log('Failed to exec cmd: ', e);
-        Modal.error({
-          title: 'Operation failed',
-          content: <span style={{ color: 'red', wordBreak: 'break-all' }}>{this.props.rekitCmds.execCmdError}</span>,
-        });
+        if (process.env.NODE_ENV === 'demo') {
+          this.props.actions.showDemoAlert();
+        } else {
+          Modal.error({
+            title: 'Operation failed',
+            content: <span style={{ color: 'red' }}>{this.props.rekitCmds.execCmdError}</span>,
+          });
+        }
       });
     });
   }
@@ -171,7 +174,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ showDemoAlert, ...actions }, dispatch)
   };
 }
 

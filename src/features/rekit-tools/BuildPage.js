@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Col, Icon, Progress, Row } from 'antd';
+import { Button, Col, Modal, Progress, Row } from 'antd';
 import Convert from 'ansi-to-html';
+import { showDemoAlert } from '../home/redux/actions';
 import * as actions from './redux/actions';
 
 const convert = new Convert();
@@ -19,7 +20,15 @@ export class BuildPage extends Component {
   @autobind
   handleBuildButtonClick() {
     this.props.actions.runBuild().catch((e) => {
-      console.error('build failed: ', e);
+      console.error('Failed to run build: ', e);
+      if (process.env.NODE_ENV === 'demo') {
+        this.props.actions.showDemoAlert();
+      } else {
+        Modal.error({
+          title: 'Failed to run build',
+          content: <span style={{ color: 'red' }}>{this.props.rekitTools.runBuildError}</span>,
+        });
+      }
     });
   }
 
@@ -77,7 +86,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ showDemoAlert, ...actions }, dispatch)
   };
 }
 

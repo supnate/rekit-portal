@@ -22,7 +22,12 @@ const parser = new ArgumentParser({
 
 parser.addArgument(['--build', '-b'], {
   help: 'Only start build server',
-  action: 'storeTrue', // TODO: why storeFalse?
+  action: 'storeTrue',
+});
+
+parser.addArgument(['--readonly'], {
+  help: 'Whether build server server is readonly',
+  action: 'storeTrue',
 });
 
 parser.addArgument(['--build-port'], {
@@ -47,7 +52,7 @@ function startDevServer() {
 
   const compiler = webpack(devConfig);
 
-  app.use(rekitMiddleWare()(server, app));
+  app.use(rekitMiddleWare()(server, app, { readonly: true }));
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -85,7 +90,7 @@ function startBuildServer() {
   const server = http.createServer(app);
   const root = path.join(__dirname, '../build');
   app.use(compression());
-  app.use(rekitMiddleWare()(server, app));
+  app.use(rekitMiddleWare()(server, app, { readonly: !!args.readonly }));
   app.use(express.static(root));
   app.use(fallback('index.html', { root }));
 

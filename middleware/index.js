@@ -3,7 +3,6 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Watchpack = require('watchpack');
@@ -79,7 +78,14 @@ module.exports = function() { // eslint-disable-line
       });
     });
   }
-  function rekitMiddleware(server, app) {
+
+  function reply403(res) {
+    res.statusCode = 403;
+    res.write('Forbidden: Rekit portal is running on readonly mode.');
+    res.end();
+  }
+
+  function rekitMiddleware(server, app, args) {
     setupSocketIo(server);
     const prjRoot = rekitCore.utils.getProjectRoot();
     app.use('/coverage', express.static(path.join(prjRoot, 'coverage'), { fallthrough: false }));
@@ -93,7 +99,6 @@ module.exports = function() { // eslint-disable-line
       try {
         switch (p) {
           case '/api/project-data':
-
             res.write(JSON.stringify(Object.assign({
               bgProcesses,
             }, fetchProjectData())));
@@ -110,9 +115,11 @@ module.exports = function() { // eslint-disable-line
             }
             break;
           case '/api/exec-cmd':
+            if (args.readonly) { reply403(res); break; }
             execCmd(req, res);
             break;
           case '/api/run-build':
+            if (args.readonly) { reply403(res); break; }
             if (bgProcesses.runningBuild) {
               res.statusCode = 500;
               res.write(JSON.stringify({ error: 'Build process is running...' }));
@@ -129,6 +136,7 @@ module.exports = function() { // eslint-disable-line
             }
             break;
           case '/api/run-test':
+            if (args.readonly) { reply403(res); break; }
             if (bgProcesses.runningTest) {
               res.statusCode = 500;
               res.write(JSON.stringify({ error: 'Test process is running...' }));

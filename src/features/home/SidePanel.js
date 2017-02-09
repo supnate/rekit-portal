@@ -8,7 +8,7 @@ import { Dropdown, Icon, Menu, Modal } from 'antd';
 import * as actions from './redux/actions';
 import { SearchInput } from '../common';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
-import { About, ProjectExplorer } from './';
+import { About, DemoAlert, ProjectExplorer } from './';
 
 export class SidePanel extends Component {
   static propTypes = {
@@ -106,7 +106,7 @@ export class SidePanel extends Component {
         <ProjectExplorer searchKey={this.state.searchKey} />
         {this.state.aboutDialogVisible &&
           <Modal
-            visible
+            visible={false}
             maskClosable
             title=""
             footer=""
@@ -118,6 +118,7 @@ export class SidePanel extends Component {
             <About />
           </Modal>
         }
+        {home.demoAlertVisible && <DemoAlert onClose={this.props.actions.hideDemoAlert} />}
       </div>
     );
   }

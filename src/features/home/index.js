@@ -9,3 +9,5 @@ export { default as App } from './App';
 export { default as RoutesPage } from './RoutesPage';
 export { default as HomePage } from './HomePage';
 export { default as About } from './About';
+export { default as DemoAlert } from './DemoAlert';
+export { default as RekitSteps } from './RekitSteps';

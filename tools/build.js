@@ -23,7 +23,12 @@ parser.addArgument(['--profile', '-p'], {
 });
 
 parser.addArgument(['--dist'], {
-  help: 'Whether to show profile of the bundle.',
+  help: 'Whether it is a dist build.',
+  action: 'storeTrue',
+});
+
+parser.addArgument(['--demo'], {
+  help: 'Whether it is a demo build.',
   action: 'storeTrue',
 });
 
@@ -118,6 +123,12 @@ compiler.run((err, stats) => {
     const distFolder = path.join(__dirname, '../dist');
     shell.rm('-rf', distFolder);
     shell.cp('-r', buildFolder, distFolder);
+  }
+
+  if (args.demo) {
+    shell.ShellString('demo').to(path.join(__dirname, '../middleware/demo.txt'));
+  } else {
+    shell.rm(path.join(__dirname, '../middleware/demo.txt'));
   }
   console.timeEnd('Done');
 });

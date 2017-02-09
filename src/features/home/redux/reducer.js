@@ -1,10 +1,14 @@
 import initialState from './initialState';
 import { reducer as fetchProjectData } from './fetchProjectData';
 import { reducer as fetchFileContent } from './fetchFileContent';
+import { reducer as showDemoAlertReducer } from './showDemoAlert';
+import { reducer as hideDemoAlertReducer } from './hideDemoAlert';
 
 const reducers = [
   fetchProjectData,
   fetchFileContent,
+  showDemoAlertReducer,
+  hideDemoAlertReducer,
 ];
 
 export default function reducer(state = initialState, action) {

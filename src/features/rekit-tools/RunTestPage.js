@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Col, Icon, Row } from 'antd';
+import { Button, Col, Icon, Modal, Row } from 'antd';
 import Convert from 'ansi-to-html';
+import { showDemoAlert } from '../home/redux/actions';
 import * as actions from './redux/actions';
 import { getTestFilePattern } from './utils';
 
@@ -31,15 +33,25 @@ export class RunTestPage extends Component {
   checkAndRunTests(props) {
     const rekitTools = this.props.rekitTools;
     if (rekitTools.currentTestFile !== props.params.testFile && !rekitTools.runTestRunning) {
-      this.props.actions.runTest(props.params.testFile);
+      this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);
+    }
+  }
+
+  @autobind
+  handleRunTestError(e) {
+    if (process.env.NODE_ENV === 'demo' && _.get(e, 'response.status') === 403) {
+      this.props.actions.showDemoAlert();
+    } else {
+      Modal.error({
+        title: 'Failed to run tests',
+        content: <span style={{ color: 'red' }}>{this.props.rekitTools.runTestError}</span>,
+      });
     }
   }
 
   @autobind
   handleTestButtonClick() {
-    this.props.actions.runTest(this.props.params.testFile).catch((e) => {
-      console.error('test failed: ', e);
-    });
+    this.props.actions.runTest(this.props.params.testFile).catch(this.handleRunTestError);
   }
   @autobind
   handleTestCoverageClick() {
@@ -92,7 +104,7 @@ function mapStateToProps(state) {
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ showDemoAlert, ...actions }, dispatch)
   };
 }
 

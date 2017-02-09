@@ -12,6 +12,8 @@ const initialState = {
   fetchProjectDataError: null,
   fetchFileContentPending: false,
   fetchFileContentError: null,
+
+  demoAlertVisible: true,
 };
 
 export default initialState;
