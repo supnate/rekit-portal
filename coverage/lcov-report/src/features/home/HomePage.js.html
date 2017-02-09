@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/features/home/HomePage.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/home</a> HomePage.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">93.33% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>14/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">92.86% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>13/14</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component, PropTypes } from 'react';
+import { autobind } from 'core-decorators';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Col, Icon, Popover, Row } from 'antd';
+import { OverviewChordDiagram } from '../diagram';
+import { TestCoverageSummary } from '../rekit-tools';
+import { getOverviewStat } from './selectors/getOverviewStat';
+import * as actions from './redux/actions';
+&nbsp;
+export class HomePage extends Component {
+  static propTypes = {
+    home: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+  };
+&nbsp;
+  state = {
+    svgSize: 460,
+  };
+&nbsp;
+  componentWillMount() {
+    this.handleWindowResize();
+    window.addEventListener('resize', this.handleWindowResize);
+  }
+<span class="fstat-no" title="function not covered" >  co</span>mponentWillUnmount() {
+    // NOTE: with RHL, it may not be executed when hot replacement happens,
+    // and then causes errors about setState on unmounted component.
+    // Just ignore it for now.
+<span class="cstat-no" title="statement not covered" >    window.removeEventListener('resize', this.handleWindowResize, false);</span>
+  }
+&nbsp;
+  @autobind
+  handleWindowResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    // TODO: fix magic numbers for the diagram.
+    // 800: min-width of the antd Row
+    // 320: side panel width
+    // 80: page container paddings
+    // 2/3: antd col/row
+    // 40: diagram container Col right-padding
+    // 60: diagram margins
+    const minWidth = 800 * 2 / 3 - 40 - 60;
+    let size = Math.min(height - 310, (width - 320 - 80) * 2 / 3 - 40 - 60);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (size &lt; minWidth) size = minWidth;
+    this.setState({
+      svgSize: size,
+    });
+  }
+&nbsp;
+  renderOverviewDiagramHelp() {
+    return (
+      &lt;div className="home-home-page-overview-diagram-help"&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;span className="feature" /&gt; Feature&lt;/li&gt;
+          &lt;li&gt;&lt;span className="action" /&gt; Action&lt;/li&gt;
+          &lt;li&gt;&lt;span className="component" /&gt; Component&lt;/li&gt;
+          &lt;li&gt;&lt;span className="misc" /&gt; Misc&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+          The gragh provides an interactive overview of the project architecture.
+          You could also choose which features to show and choose whether to show internal deps.
+        &lt;/p&gt;
+        &lt;p&gt;
+          It helps to quickly understand the project by features rather than be lost in massive dependencies among es modules.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
+  renderTestCoverageHelp() {
+    return (
+      &lt;div className="home-home-page-test-coverage-summary-help"&gt;
+        &lt;p&gt;
+          Rekit uses &lt;a href="https://github.com/gotwarlost/istanbul"&gt;istanbul&lt;/a&gt; to generate test coverage report.
+          After running all tests against the project, the test coverage will be available.
+          Running a single test or tests of a folder does not generate coverage report.
+        &lt;/p&gt;
+        &lt;p&gt;
+          Note that if some tests failed, the report data may be incomplete.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
+  render() {
+    const { features, featureById } = this.props.home;
+    const overviewStat = getOverviewStat({ features, featureById });
+    return (
+      &lt;div className="home-home-page"&gt;
+        &lt;Row className="top-badges"&gt;
+          &lt;Col span="6"&gt;
+            &lt;div className="top-badge feature"&gt;
+              &lt;Icon type="book" /&gt;
+              &lt;label className="count"&gt;{overviewStat.features}&lt;/label&gt;
+              &lt;label className="type"&gt;features&lt;/label&gt;
+            &lt;/div&gt;
+          &lt;/Col&gt;
+          &lt;Col span="6"&gt;
+            &lt;div className="top-badge route"&gt;
+              &lt;Icon type="share-alt" /&gt;
+              &lt;label className="count"&gt;{overviewStat.routes}&lt;/label&gt;
+              &lt;label className="type"&gt;routes&lt;/label&gt;
+            &lt;/div&gt;
+          &lt;/Col&gt;
+          &lt;Col span="6"&gt;
+            &lt;div className="top-badge action"&gt;
+              &lt;Icon type="notification" /&gt;
+              &lt;label className="count"&gt;{overviewStat.actions}&lt;/label&gt;
+              &lt;label className="type"&gt;actions&lt;/label&gt;
+            &lt;/div&gt;
+          &lt;/Col&gt;
+          &lt;Col span="6"&gt;
+            &lt;div className="top-badge component"&gt;
+              &lt;Icon type="appstore-o" /&gt;
+              &lt;label className="count"&gt;{overviewStat.components}&lt;/label&gt;
+              &lt;label className="type"&gt;components&lt;/label&gt;
+            &lt;/div&gt;
+          &lt;/Col&gt;
+        &lt;/Row&gt;
+        &lt;Row style={{ minWidth: 800 }}&gt;
+          &lt;Col span="16" className="diagram-container"&gt;
+            &lt;Popover placement="leftTop" title={&lt;p style={{ fontSize: 18 }}&gt;Overview diagram&lt;/p&gt;} content={this.renderOverviewDiagramHelp()}&gt;
+              &lt;Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" /&gt;
+            &lt;/Popover&gt;
+            &lt;h3&gt;Overview diagram&lt;/h3&gt;
+            &lt;OverviewChordDiagram size={this.state.svgSize} /&gt;
+          &lt;/Col&gt;
+          &lt;Col span="8" className="test-coverage-container"&gt;
+            &lt;Popover placement="leftTop" title={&lt;p style={{ fontSize: 18 }}&gt;Test coverage&lt;/p&gt;} content={this.renderTestCoverageHelp()}&gt;
+              &lt;Icon style={{ color: '#108ee9', fontSize: 16, float: 'right', marginTop: 38 }} type="question-circle-o" /&gt;
+            &lt;/Popover&gt;
+            &lt;h3&gt;Test coverage&lt;/h3&gt;
+            &lt;TestCoverageSummary /&gt;
+          &lt;/Col&gt;
+        &lt;/Row&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    home: state.home,
+  };
+}
+&nbsp;
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch)
+  };
+}
+&nbsp;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 00:34:58 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/features/diagram/selectors/getOverviewDiagramData.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">src/features/diagram/selectors</a> getOverviewDiagramData.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">6.67% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/45</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.69% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/39</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash';
+import { createSelector } from 'reselect';
+&nbsp;
+const featuresSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.features;</span>
+const featureByIdSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.featureById;</span>
+&nbsp;
+export const getOverviewDiagramData = createSelector(
+  featuresSelector,
+  featureByIdSelector,
+<span class="fstat-no" title="function not covered" >  (f</span>eatures, featureById) =&gt; {
+    const links = <span class="cstat-no" title="statement not covered" >[];</span>
+    const nodes = <span class="cstat-no" title="statement not covered" >features.map(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {</span>
+      const f = <span class="cstat-no" title="statement not covered" >featureById[fid];</span>
+      const feature = <span class="cstat-no" title="statement not covered" >{ name: f.name, id: f.key, r: 30 };</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      [...f.components, ...f.actions, ...f.misc].forEach(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (!item.deps) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >        [</span>
+          ...item.deps.actions,
+          ...item.deps.components,
+          ...item.deps.constants,
+          ...item.deps.misc,
+        ].forEach(<span class="fstat-no" title="function not covered" >(d</span>ep) =&gt; {
+<span class="cstat-no" title="statement not covered" >          if (dep.feature === fid) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+          const data = <span class="cstat-no" title="statement not covered" >{</span>
+            source: fid,
+            target: dep.feature,
+            type: dep.type,
+          };
+          const found = <span class="cstat-no" title="statement not covered" >_.find(links, data);</span>
+<span class="cstat-no" title="statement not covered" >          if (found) {</span>
+<span class="cstat-no" title="statement not covered" >            found.count += 1;</span>
+          } else {
+<span class="cstat-no" title="statement not covered" >            links.push({</span>
+              ...data,
+              count: 1,
+            });
+          }
+        });
+      });
+<span class="cstat-no" title="statement not covered" >      return feature;</span>
+    });
+&nbsp;
+    // Relation types: component, action, store, constant, misc
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; nodes.length; i++) { // eslint-disable-line</span>
+<span class="cstat-no" title="statement not covered" >      for (let j = 0; j &lt; nodes.length; j++) { // eslint-disable-line</span>
+<span class="cstat-no" title="statement not covered" >        if (i === j) <span class="cstat-no" title="statement not covered" >continue; </span></span>// eslint-disable-line
+        const f1 = <span class="cstat-no" title="statement not covered" >nodes[i];</span>
+        const f2 = <span class="cstat-no" title="statement not covered" >nodes[j];</span>
+&nbsp;
+        const arr = <span class="cstat-no" title="statement not covered" >links</span>
+          .filter(<span class="fstat-no" title="function not covered" >l </span>=&gt; <span class="cstat-no" title="statement not covered" >(l.source === f1.id &amp;&amp; l.target === f2.id) || (l.source === f2.id &amp;&amp; l.target === f1.id))</span>
+          .sort(<span class="fstat-no" title="function not covered" >(l</span>1, l2) =&gt; (<span class="cstat-no" title="statement not covered" >l1.source !== l2.source ? l1.source.localeCompare(l2.source) : l1.type.localeCompare(l2.type))</span>)
+        ;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (arr.length &gt; 0) {</span>
+          const firstSource = <span class="cstat-no" title="statement not covered" >arr[0].source;</span>
+<span class="cstat-no" title="statement not covered" >          arr.forEach(<span class="fstat-no" title="function not covered" >(l</span>ink, k) =&gt; {</span>
+            const m = <span class="cstat-no" title="statement not covered" >Math.floor(arr.length / 2);</span>
+<span class="cstat-no" title="statement not covered" >            if (arr.length % 2 === 0) {</span>
+<span class="cstat-no" title="statement not covered" >              if (k &lt; m) <span class="cstat-no" title="statement not covered" >link.pos = k - m;</span></span>
+              else <span class="cstat-no" title="statement not covered" >link.pos = k - m + 1;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >              link.pos = k - m;</span>
+            }
+<span class="cstat-no" title="statement not covered" >            if (link.source !== firstSource) {</span>
+<span class="cstat-no" title="statement not covered" >              link.pos = -link.pos;</span>
+            }
+          });
+        }
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    for (let i = 0; i &lt; features.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      for (let j = i + 1; j &lt; features.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >        links.push({</span>
+          source: features[i],
+          target: features[j],
+          type: 'f-f',
+        });
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return { nodes, links };</span>
+  },
+);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 00:34:58 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

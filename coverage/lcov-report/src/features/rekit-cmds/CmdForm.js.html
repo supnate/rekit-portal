@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/features/rekit-cmds/CmdForm.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/rekit-cmds</a> CmdForm.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">11.63% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/43</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.55% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.09% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.2% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/41</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*
+  Summary:
+    A general auto form to generate rekit command.
+*/
+&nbsp;
+import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
+import { autobind } from 'core-decorators';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Button, Checkbox, Form, Icon, Input, Modal, Select, Tooltip } from 'antd';
+import { showDemoAlert } from '../home/redux/actions';
+import * as actions from './redux/actions';
+import * as cmdFormHelper from './cmdFormHelper';
+&nbsp;
+const Option = Select.Option;
+&nbsp;
+export class CmdForm extends Component {
+  static propTypes = {
+    rekitCmds: PropTypes.object.isRequired,
+    home: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    form: PropTypes.object.isRequired,
+    onDone: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+  };
+&nbsp;
+  static defaultProps = {
+    onDone() {},
+    onCancel() {},
+  };
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
+    // auto focus the first text input
+<span class="cstat-no" title="statement not covered" >    if (_.get(this.autoFocusNode, 'refs.input')) {</span>
+<span class="cstat-no" title="statement not covered" >      window.setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.autoFocusNode.refs.input.select(),</span> 50);</span>
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleSubmit(evt) {
+<span class="cstat-no" title="statement not covered" >    evt.preventDefault();</span>
+    const { cmdArgs } = <span class="cstat-no" title="statement not covered" >this.props.rekitCmds;</span>
+<span class="cstat-no" title="statement not covered" >    this.props.form.validateFieldsAndScroll(<span class="fstat-no" title="function not covered" >(e</span>rrors, values) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (errors) {</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+&nbsp;
+      const args = <span class="cstat-no" title="statement not covered" >cmdFormHelper.convertArgs(values, cmdArgs);</span>
+<span class="cstat-no" title="statement not covered" >      this.props.actions.execCmd(args).then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.props.onDone();</span>
+      }).catch(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
+<span class="cstat-no" title="statement not covered" >        console.log('Failed to exec cmd: ', e);</span>
+<span class="cstat-no" title="statement not covered" >        if (process.env.REKIT_ENV === 'demo') {</span>
+<span class="cstat-no" title="statement not covered" >          this.props.actions.showDemoAlert();</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          Modal.error({</span>
+            title: 'Operation failed',
+            content: &lt;span style={{ color: 'red' }}&gt;{this.props.rekitCmds.execCmdError}&lt;/span&gt;,
+          });
+        }
+      });
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderWidget(meta) {
+    const { home, rekitCmds } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const disabled = <span class="cstat-no" title="statement not covered" >rekitCmds.execCmdPending || meta.disabled;</span>
+    const commonProps = <span class="cstat-no" title="statement not covered" >{};</span>
+<span class="cstat-no" title="statement not covered" >    if (meta.autoFocus) {</span>
+<span class="cstat-no" title="statement not covered" >      commonProps.ref = <span class="fstat-no" title="function not covered" >(n</span>ode) =&gt; { <span class="cstat-no" title="statement not covered" >this.autoFocusNode = node; </span>};</span>
+    }
+<span class="cstat-no" title="statement not covered" >    switch (meta.widget) {</span>
+      case 'feature':
+<span class="cstat-no" title="statement not covered" >        return (</span>
+          &lt;Select disabled={disabled} {...commonProps}&gt;
+            {home.features.map(<span class="fstat-no" title="function not covered" >f </span>=&gt; (
+<span class="cstat-no" title="statement not covered" >              &lt;Option key={home.featureById[f].key}&gt;{home.featureById[f].name}&lt;/Option&gt;</span>
+            ))}
+          &lt;/Select&gt;
+        );
+      case 'textbox':
+<span class="cstat-no" title="statement not covered" >        return &lt;Input disabled={disabled} {...commonProps} /&gt;;</span>
+      case 'checkbox':
+<span class="cstat-no" title="statement not covered" >        return &lt;Checkbox disabled={disabled} {...commonProps} /&gt;;</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        return &lt;span style={{ color: 'red' }}&gt;Unknown widget: {meta.widget}&lt;/span&gt;;</span>
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  re</span>nderFormItem(meta) {
+    const { getFieldDecorator } = <span class="cstat-no" title="statement not covered" >this.props.form;</span>
+    const formItemLayout = <span class="cstat-no" title="statement not covered" >{</span>
+      labelCol: { span: 8 },
+      wrapperCol: { span: 14 },
+    };
+&nbsp;
+    let label;
+<span class="cstat-no" title="statement not covered" >    if (meta.tooltip) {</span>
+<span class="cstat-no" title="statement not covered" >      label = (</span>
+        &lt;span&gt;
+          {meta.label}
+          &lt;Tooltip title={meta.tooltip}&gt; &amp;nbsp;&lt;Icon style={{ color: '#108ee9' }} type="question-circle-o" /&gt;&lt;/Tooltip&gt;
+        &lt;/span&gt;
+      );
+    } else {
+<span class="cstat-no" title="statement not covered" >      label = meta.label;</span>
+    }
+&nbsp;
+    const rules = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >    if (meta.required) {</span>
+<span class="cstat-no" title="statement not covered" >      rules.push({</span>
+        required: true,
+        message: `${meta.label} is required.`,
+      });
+    }
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;Form.Item
+        key={meta.key}
+        {...formItemLayout}
+        label={label}
+      &gt;
+        {getFieldDecorator(meta.key, {
+          initialValue: meta.initialValue,
+          rules,
+        })(
+          this.renderWidget(meta)
+        )}
+      &lt;/Form.Item&gt;
+    );
+  }
+&nbsp;
+  render() {
+    const { rekitCmds } = this.props;
+    const cmdArgs = rekitCmds.cmdArgs;
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!cmdArgs) {
+      // not ready
+      return &lt;div className="rekit-cmds-cmd-form" /&gt;;
+    }
+&nbsp;
+    const meta = <span class="cstat-no" title="statement not covered" >cmdFormHelper.getMeta(cmdArgs.type, cmdArgs);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="rekit-cmds-cmd-form"&gt;
+        &lt;Form
+          horizontal
+          onSubmit={this.handleSubmit}
+        &gt;
+          {
+            meta.fields.map(this.renderFormItem)
+          }
+          &lt;div className="form-footer"&gt;
+            &lt;Button type="ghost" onClick={this.props.onCancel} disabled={rekitCmds.execCmdPending}&gt;Cancel&lt;/Button&gt;
+            &lt;Button type="primary" htmlType="submit" loading={rekitCmds.execCmdPending}&gt;
+              {rekitCmds.execCmdPending ? 'Loading...' : 'Ok'}
+            &lt;/Button&gt;
+          &lt;/div&gt;
+        &lt;/Form&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    home: state.home,
+    rekitCmds: state.rekitCmds,
+  };
+}
+&nbsp;
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ showDemoAlert, ...actions }, dispatch)
+  };
+}
+&nbsp;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form.create()(CmdForm));
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 00:34:58 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
