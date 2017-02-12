@@ -1,6 +1,6 @@
 {
   "name": "rekit-portal",
-  "version": "2.0.0-alpha.7",
+  "version": "2.0.0-alpha.9",
   "description": "Web app created with Rekit for managing a Rekit project.",
   "keywords": [
     "rekit",
@@ -79,6 +79,7 @@
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
+    "npm-publish": "node ./tools/npm_publish.js",
     "test": "node ./tools/run_test.js",
     "build:test": "node ./tools/server.js -m build"
   },

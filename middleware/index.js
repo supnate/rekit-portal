@@ -87,6 +87,7 @@ module.exports = function() { // eslint-disable-line
   }
 
   function rekitMiddleware(server, app, args) {
+    args = args || {};
     setupSocketIo(server);
     const prjRoot = rekitCore.utils.getProjectRoot();
     app.use('/coverage', express.static(path.join(prjRoot, 'coverage'), { fallthrough: false }));
