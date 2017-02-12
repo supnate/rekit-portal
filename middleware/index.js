@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const Watchpack = require('watchpack');
@@ -105,6 +106,12 @@ module.exports = function() { // eslint-disable-line
             res.end();
             break;
           case '/api/file-content':
+            if (!_.startsWith(path.resolve(req.query.file), prjRoot)) {
+              res.statusCode = 403;
+              res.write('Forbidden: not allowed to access file out of the project.');
+              res.end();
+              break;
+            }
             if (!fs.existsSync(req.query.file)) {
               res.statusCode = 404;
               res.write(JSON.stringify({ error: 'Not found.' }));
