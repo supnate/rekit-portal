@@ -21,7 +21,7 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.props.actions.fetchProjectData().then(window.ON_REKIT_PORTAL_LOAD);
+    this.props.actions.fetchProjectData();
   }
 
   componentWillReceiveProps(nextProps) {

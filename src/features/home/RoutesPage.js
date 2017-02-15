@@ -40,6 +40,7 @@ export class RoutesPage extends Component {
         <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
           <TabPane tab="Rules" key="rules">
             <p>This is a rough overview of routing config defined in a feature. </p>
+            <p>NOTE: if route path has parameters, you need to alter the link address with correct values after click the route link. </p>
             <p>For more detailed information, please look into the <Link to={`/${fid}/routes/code`}>code</Link>.</p>
             {feature.routes.length === 0
               ? <Alert type="info" message="No routing rules defined." showIcon />
@@ -54,7 +55,7 @@ export class RoutesPage extends Component {
                 <tbody>
                   {feature.routes.map(route => (
                     <tr key={route.path}>
-                      <td>{route.path}</td>
+                      <td><a href={route.path} target="_blank">{route.path}</a></td>
                       <td>{fid}/{route.component}</td>
                     </tr>
                   ))}

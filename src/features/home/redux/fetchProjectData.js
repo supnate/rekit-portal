@@ -13,23 +13,25 @@ export function fetchProjectData() {
       type: HOME_FETCH_PROJECT_DATA_BEGIN,
     });
 
-    const promise = new Promise(async (resolve, reject) => {
-      try {
-        const res = await axios.get('/rekit/api/project-data');
-        dispatch({
-          type: HOME_FETCH_PROJECT_DATA_SUCCESS,
-          data: res.data,
-        });
-        resolve(res.data);
-      } catch (e) {
-        dispatch({
-          type: HOME_FETCH_PROJECT_DATA_FAILURE,
-          data: { error: { e } },
-        });
-        reject(e);
-      }
+    return new Promise((resolve, reject) => {
+      axios.get('/rekit/api/project-data').then(
+        (res) => {
+          if (window.ON_REKIT_PORTAL_LOAD) window.ON_REKIT_PORTAL_LOAD();
+          dispatch({
+            type: HOME_FETCH_PROJECT_DATA_SUCCESS,
+            data: res.data,
+          });
+          resolve(res.data);
+        },
+        (err) => {
+          dispatch({
+            type: HOME_FETCH_PROJECT_DATA_FAILURE,
+            data: { error: err },
+          });
+          reject(err);
+        },
+      );
     });
-    return promise;
   };
 }
 
