@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 
+const srcFilesSelector = state => state.srcFiles;
 const featuresSelector = state => state.features;
 const featureByIdSelector = state => state.featureById;
 const keywordSelector = (state, keyword) => keyword;
@@ -83,10 +84,11 @@ function getMiscTreeData(feature) {
 }
 
 export const getExplorerTreeData = createSelector(
+  srcFilesSelector,
   featuresSelector,
   featureByIdSelector,
-  (features, featureById) => {
-    const nodes = features.map((fid) => {
+  (srcFiles, features, featureById) => {
+    const featureNodes = features.map((fid) => {
       const feature = featureById[fid];
       return {
         key: feature.key,
@@ -102,7 +104,21 @@ export const getExplorerTreeData = createSelector(
       };
     });
 
-    return { root: true, children: _.compact(nodes) };
+    const allNodes = [
+      {
+        key: 'features-node',
+        label: 'Features',
+        icon: 'features',
+        children: _.compact(featureNodes),
+      },
+      {
+        key: 'others-node',
+        label: 'Others',
+        icon: 'folder',
+        children: srcFiles.map(getChildData),
+      }
+    ];
+    return { root: true, children: allNodes };
   }
 );
 

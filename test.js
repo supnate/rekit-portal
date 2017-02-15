@@ -1,9 +1,12 @@
 'use strict';
 
 const path = require('path');
+const fetchProjectData = require('./middleware/api/fetchProjectData');
 // console.log(path.join('/Users/abc/../def', '../nate'));
-console.log(path.resolve('/Users/abc/../nate'));
-
+// console.log(path.resolve('/Users/abc/../nate'));
+console.time('Done');
+fetchProjectData();
+console.timeEnd('Done');
 // const _ = require('lodash');
 // const core = require('rekit-core');
 

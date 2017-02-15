@@ -311,6 +311,13 @@ export class ProjectExplorer extends Component {
     );
   }
 
+  renderTreeNodeIcon(icon) {
+    if (icon === 'features') {
+      return <img src={require('../../images/logo_small.png')} alt="" />;
+    }
+    return <Icon type={icon} />;
+  }
+
   renderTreeNodeTitle(nodeData) {
     const markDescription = {
       a: 'Async action',
@@ -319,7 +326,7 @@ export class ProjectExplorer extends Component {
     };
     return (
       <span>
-        {nodeData.icon && <Icon type={nodeData.icon} />}
+        {nodeData.icon && this.renderTreeNodeIcon(nodeData.icon)}
         <label>
           {nodeData.searchable ? this.renderHighlightedTreeNodeLabel(nodeData.label) : nodeData.label}
           {_.has(nodeData, 'count') ? ` (${nodeData.count})` : ''}

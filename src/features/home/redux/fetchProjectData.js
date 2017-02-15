@@ -74,6 +74,7 @@ export function reducer(state, action) {
         // projectData: action.data,
         elementById,
         featureById,
+        srcFiles: action.data.srcFiles,
         testCoverage: action.data.testCoverage,
         projectRoot: action.data.projectRoot,
         cssExt: action.data.cssExt,
