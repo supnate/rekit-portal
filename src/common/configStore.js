@@ -9,7 +9,7 @@ const middlewares = [ // REKIT_ARCHOR_DO_NOT_CHANGE
 let devToolsExtension = f => f;
 
 /* istanbul ignore if  */
-if (process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'development') {
   const createLogger = require('redux-logger');
 
   const logger = createLogger({ collapsed: true });

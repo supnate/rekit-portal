@@ -36,7 +36,7 @@ function handleIndexRoute(route) {
   route.childRoutes = route.childRoutes.filter(child => { // eslint-disable-line
     if (child.isIndex) {
       /* istanbul ignore next */
-      // if (process.env.NODE_ENV === 'dev' && route.indexRoute) {
+      // if (process.env.NODE_ENV === 'development' && route.indexRoute) {
       //   console.error('More than one index route: ', route);
       // }
 
