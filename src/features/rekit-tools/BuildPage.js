@@ -34,7 +34,7 @@ export class BuildPage extends Component {
 
   render() {
     let output = this.props.rekitTools.runBuildOutput || [];
-    const { runBuildRunning } = this.props.rekitTools;
+    const { runBuildRunning, runBuildPending } = this.props.rekitTools;
     let percent = 0;
     output = _.uniq(output.map((t) => {
       const p = parseFloat(t.split('%'));
@@ -46,7 +46,7 @@ export class BuildPage extends Component {
       <div className="rekit-tools-build-page">
         <Row>
           <Col span="23">
-            <Button type="primary" disabled={runBuildRunning} onClick={this.handleBuildButtonClick}>
+            <Button type="primary" disabled={runBuildRunning || runBuildPending} onClick={this.handleBuildButtonClick}>
               {runBuildRunning ? 'Building...' : 'Run build'}
             </Button>
             <div className="build-result-link">

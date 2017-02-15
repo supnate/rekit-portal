@@ -67,6 +67,7 @@ export function reducer(state, action) {
       return {
         ...state,
         runTestPending: false,
+
         runTestError: action.data.error,
       };
 

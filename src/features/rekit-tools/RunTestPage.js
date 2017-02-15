@@ -20,22 +20,22 @@ export class RunTestPage extends Component {
     params: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
-    this.checkAndRunTests(this.props);
-  }
+  // componentDidMount() {
+  //   this.checkAndRunTests(this.props);
+  // }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.params.testFile !== this.props.params.testFile) {
-      this.checkAndRunTests(nextProps);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.params.testFile !== this.props.params.testFile) {
+  //     this.checkAndRunTests(nextProps);
+  //   }
+  // }
 
-  checkAndRunTests(props) {
-    const rekitTools = this.props.rekitTools;
-    if (rekitTools.currentTestFile !== props.params.testFile && !rekitTools.runTestRunning) {
-      this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);
-    }
-  }
+  // checkAndRunTests(props) {
+  //   const rekitTools = this.props.rekitTools;
+  //   if (rekitTools.currentTestFile !== props.params.testFile && !rekitTools.runTestRunning) {
+  //     this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);
+  //   }
+  // }
 
   @autobind
   handleRunTestError(e) {
@@ -60,7 +60,7 @@ export class RunTestPage extends Component {
 
   render() {
     const output = this.props.rekitTools.runTestOutput || [];
-    const runTestRunning = this.props.rekitTools.runTestRunning;
+    const { runTestPending, runTestRunning } = this.props.rekitTools;
     return (
       <div className="rekit-tools-run-test-page">
         <h2><label>Run tests: </label>tests/{getTestFilePattern(this.props.params.testFile)}</h2>
@@ -72,7 +72,7 @@ export class RunTestPage extends Component {
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>
             {!this.props.params.testFile && this.props.home.testCoverage &&
-              <Button type="ghost" disabled={runTestRunning} onClick={this.handleTestCoverageClick}>
+              <Button type="ghost" disabled={runTestRunning || runTestPending} onClick={this.handleTestCoverageClick}>
                 <Icon type="pie-chart" />Test coverage
               </Button>}
           </Col>

@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/16</span>
+        <span class='fraction'>4/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>8/24</span>
+        <span class='fraction'>8/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/8</span>
+        <span class='fraction'>1/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">40% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/16</span>
+        <span class='fraction'>4/10</span>
       </div>
     </div>
   </div>
@@ -180,19 +180,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -293,22 +293,22 @@ export class RunTestPage extends Component {
     params: PropTypes.object.isRequired,
   };
 &nbsp;
-<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
-<span class="cstat-no" title="statement not covered" >    this.checkAndRunTests(this.props);</span>
-  }
+  // componentDidMount() {
+  //   this.checkAndRunTests(this.props);
+  // }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  co</span>mponentWillReceiveProps(nextProps) {
-<span class="cstat-no" title="statement not covered" >    if (nextProps.params.testFile !== this.props.params.testFile) {</span>
-<span class="cstat-no" title="statement not covered" >      this.checkAndRunTests(nextProps);</span>
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.params.testFile !== this.props.params.testFile) {
+  //     this.checkAndRunTests(nextProps);
+  //   }
+  // }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  ch</span>eckAndRunTests(props) {
-    const rekitTools = <span class="cstat-no" title="statement not covered" >this.props.rekitTools;</span>
-<span class="cstat-no" title="statement not covered" >    if (rekitTools.currentTestFile !== props.params.testFile &amp;&amp; !rekitTools.runTestRunning) {</span>
-<span class="cstat-no" title="statement not covered" >      this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);</span>
-    }
-  }
+  // checkAndRunTests(props) {
+  //   const rekitTools = this.props.rekitTools;
+  //   if (rekitTools.currentTestFile !== props.params.testFile &amp;&amp; !rekitTools.runTestRunning) {
+  //     this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);
+  //   }
+  // }
 &nbsp;
   @autobind
 <span class="fstat-no" title="function not covered" >  ha</span>ndleRunTestError(e) {
@@ -333,7 +333,7 @@ export class RunTestPage extends Component {
 &nbsp;
   render() {
     const output = this.props.rekitTools.runTestOutput || [];
-    const runTestRunning = this.props.rekitTools.runTestRunning;
+    const { runTestPending, runTestRunning } = this.props.rekitTools;
     return (
       &lt;div className="rekit-tools-run-test-page"&gt;
         &lt;h2&gt;&lt;label&gt;Run tests: &lt;/label&gt;tests/{getTestFilePattern(this.props.params.testFile)}&lt;/h2&gt;
@@ -345,7 +345,7 @@ export class RunTestPage extends Component {
           &lt;/Col&gt;
           &lt;Col span="8" style={{ textAlign: 'right' }}&gt;
             {!this.props.params.testFile &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.props.home.testCoverage </span>&amp;&amp;
-<span class="branch-2 cbranch-no" title="branch not covered" >              &lt;Button type="ghost" disabled={runTestRunning} onClick={this.handleTestCoverageClick}&gt;</span>
+<span class="branch-2 cbranch-no" title="branch not covered" >              &lt;Button type="ghost" disabled={runTestRunning || runTestPending} onClick={this.handleTestCoverageClick}&gt;</span>
                 &lt;Icon type="pie-chart" /&gt;Test coverage
               &lt;/Button&gt;}
           &lt;/Col&gt;
@@ -391,7 +391,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 00:34:58 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 15 2017 23:03:40 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
