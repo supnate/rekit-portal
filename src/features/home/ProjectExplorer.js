@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { browserHistory } from 'react-router';
 import _ from 'lodash';
+import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
@@ -37,8 +38,16 @@ export class ProjectExplorer extends Component {
     searchKey: '',
   };
 
+  constructor(props) {
+    super(props);
+    const defaultOpen = ['features-node'];
+    if (!Cookies.getJSON('explorerExpandedKeys')) {
+      Cookies.set('explorerExpandedKeys', defaultOpen);
+    }
+    this.state.expandedKeys = Cookies.getJSON('explorerExpandedKeys');
+  }
   state = {
-    expandedKeys: [], // ['common', 'home', 'diagram', 'rekit-cmds', 'rekit-tools'],
+    expandedKeys: [],
     contextMenu: [],
     selectedKey: null,
   };
@@ -129,8 +138,9 @@ export class ProjectExplorer extends Component {
     const key = evt.node.props.eventKey;
 
     const hasChildren = !!_.get(evt, 'node.props.children');
+    const keysInCookie = Cookies.getJSON('explorerExpandedKeys');
 
-    let expandedKeys = this.state.expandedKeys;
+    let expandedKeys = keysInCookie || this.state.expandedKeys;
     let selectedKey = this.state.selectedKey;
     if (hasChildren) {
       // toggle expanding
@@ -158,6 +168,7 @@ export class ProjectExplorer extends Component {
       }
     }
 
+    Cookies.set('explorerExpandedKeys', expandedKeys, { expires: 999 });
     this.setState({
       selectedKey,
       expandedKeys,
@@ -167,14 +178,16 @@ export class ProjectExplorer extends Component {
   @autobind
   handleExpand(expanded, evt) {
     const key = evt.node.props.eventKey;
+    const keysInCookie = Cookies.getJSON('explorerExpandedKeys');
 
-    let expandedKeys = this.state.expandedKeys;
+    let expandedKeys = keysInCookie || this.state.expandedKeys;
     if (expandedKeys.includes(key)) {
       expandedKeys = expandedKeys.filter(k => k !== key);
     } else {
       expandedKeys = [...expandedKeys, key];
     }
 
+    Cookies.set('explorerExpandedKeys', expandedKeys, { expires: 999 });
     this.setState({
       expandedKeys,
     });
