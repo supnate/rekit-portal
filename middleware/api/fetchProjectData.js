@@ -19,7 +19,7 @@ function readDir(dir) {
       if (shell.test('-d', file)) {
         return {
           name: path.basename(file),
-          file,
+          file: utils.getRelativePath(file),
           children: readDir(file),
         };
       }
@@ -35,6 +35,24 @@ function readDir(dir) {
     });
 }
 
+function mapRelPathForDepsByArr(arr) {
+  arr.forEach((item) => {
+    if (item.file) item.file = utils.getRelativePath(item.file);
+    if (item.children) mapRelPathForDepsByArr(item.children);
+  });
+}
+
+function mapRelPathForDeps(deps) {
+  mapRelPathForDepsByArr(
+    [].concat(
+      deps.components,
+      deps.actions,
+      deps.misc,
+      deps.constants
+    )
+  );
+}
+
 function fetchProjectData() {
   const fids = refactor.getFeatures();
 
@@ -47,14 +65,21 @@ function fetchProjectData() {
   features.forEach((f) => {
     f.components.forEach((item) => {
       item.deps = refactor.getDeps(item.file);
+      mapRelPathForDeps(item.deps);
+      item.file = utils.getRelativePath(item.file);
     });
 
     f.actions.forEach((item) => {
       item.deps = refactor.getDeps(item.file);
+      mapRelPathForDeps(item.deps);
+      item.file = utils.getRelativePath(item.file);
     });
 
     f.misc.forEach((item) => {
       if (!item.children && /\.js$/.test(item.file)) item.deps = refactor.getDeps(item.file);
+      if (item.children) mapRelPathForDepsByArr(item.children);
+      if (item.deps) mapRelPathForDeps(item.deps);
+      item.file = utils.getRelativePath(item.file);
     });
   });
 

@@ -25,12 +25,14 @@ export class ElementPage extends Component {
 
   getElementData() {
     const { elementById, projectRoot } = this.props.home;
-    const { feature, file } = this.props.params;
-    const fullPath = `${projectRoot}/src/features/${feature}/${file}`;
+    const { file } = this.props.params;
+    const fullPath = projectRoot + file;
+
+    // const fullPath = `${projectRoot}/src/features/${feature}/${file}`;
 
     const arr = fullPath.split('.');
     const ext = arr.length > 1 ? arr.pop() : null;
-    const ele = elementById[fullPath];
+    const ele = elementById[file];
 
     return {
       ...ele,
@@ -44,8 +46,9 @@ export class ElementPage extends Component {
 
   @autobind
   handleTabChange(tabKey) {
-    const data = this.getElementData();
-    browserHistory.push(`/element/${data.feature}/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
+    // const data = this.getElementData();
+    browserHistory.push(`/element/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
+    // browserHistory.push(`/element/${data.feature}/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
   }
 
   @autobind
@@ -114,7 +117,7 @@ export class ElementPage extends Component {
         codeFile = `${home.projectRoot}/src/features/${data.feature}/${data.name}.${home.cssExt}`;
         break;
       case 'test':
-        codeFile = `${home.projectRoot}/tests/features/${data.feature}/${this.props.params.file.replace('.js', '')}.test.js`;
+        codeFile = `${home.projectRoot}/tests/${this.props.params.file.replace(/^src\//, '').replace('.js', '')}.test.js`;
         break;
       default:
         codeFile = data.file;

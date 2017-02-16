@@ -33,6 +33,8 @@ export class RoutesPage extends Component {
     let tabKey = this.props.params.type;
     if (tabKey !== 'code') tabKey = 'rules';
     const feature = this.props.home.featureById[fid];
+    const routes = feature.routes;
+console.log('routes: ', routes);
     const codeFile = `${this.props.home.projectRoot}/src/features/${fid}/route.js`;
     return (
       <div className="home-routes-page">
@@ -42,7 +44,7 @@ export class RoutesPage extends Component {
             <p>This is a rough overview of routing config defined in a feature. </p>
             <p>NOTE: if route path has parameters, you need to alter the link address with correct values after click the route link. </p>
             <p>For more detailed information, please look into the <Link to={`/${fid}/routes/code`}>code</Link>.</p>
-            {feature.routes.length === 0
+            {routes.length === 0
               ? <Alert type="info" message="No routing rules defined." showIcon />
               :
               <table>

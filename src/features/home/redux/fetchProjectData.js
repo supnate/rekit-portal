@@ -69,6 +69,8 @@ export function reducer(state, action) {
         [...f.components, ...f.actions, ...f.misc].forEach(setElementById);
       });
 
+      action.data.srcFiles.forEach(setElementById);
+
       return {
         ...state,
         // projectData: action.data,

@@ -150,21 +150,25 @@ export class ProjectExplorer extends Component {
         expandedKeys = [...expandedKeys, key];
       }
     } else {
-      // key is the full file path
+      // key is the relative file path
       selectedKey = key;
 
       if (evt.node.props.className === 'routes') {
+        // feature's routes
         browserHistory.push(`/${key.replace('-routes', '')}/routes`);
       } else {
-        const prjRoot = this.props.home.projectRoot;
-        const ele = this.props.home.elementById[key];
-        const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
+        // const prjRoot = this.props.home.projectRoot;
+        // const ele = this.props.home.elementById[key];
+        // const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
 
         let tab = '';
         if (/element\/[^/]+\/[^/]+\/(code|diagram|style|test)$/.test(document.location.pathname)) {
+          // remember the current tab
           tab = `/${RegExp.$1}`;
         }
-        browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}${tab}`);
+
+        browserHistory.push(`/element/${encodeURIComponent(key)}${tab}`);
+        // browserHistory.push(`/element/${ele.feature || '_src_'}/${encodeURIComponent(file)}${tab}`);
       }
     }
 
