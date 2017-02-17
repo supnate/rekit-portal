@@ -2,10 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Button, Icon, Tabs } from 'antd';
-import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
 import { colors } from '../common';
 import { CodeView } from './';
@@ -15,7 +13,6 @@ const TabPane = Tabs.TabPane;
 export class ElementPage extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
   };
 
@@ -53,8 +50,9 @@ export class ElementPage extends Component {
 
   @autobind
   handleRunTest() {
-    const { feature, file } = this.props.params;
-    browserHistory.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
+    const { file } = this.props.params;
+    browserHistory.push(`/tools/tests/${encodeURIComponent(file)}`);
+    // browserHistory.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
   }
 
   renderNotFound() {
@@ -67,6 +65,7 @@ export class ElementPage extends Component {
 
   renderMarks() {
     const data = this.getElementData();
+    if (!data.feature) return null;
     const featureById = this.props.home.featureById;
     const markDescription = {
       a: 'Async action',
@@ -100,6 +99,8 @@ export class ElementPage extends Component {
       return this.renderNotFound();
     }
 
+    console.log(data);
+
     const { home } = this.props;
     const onlyCode = data.hasCode && !data.hasDiagram && !data.hasTest;
 
@@ -114,10 +115,10 @@ export class ElementPage extends Component {
         codeFile = data.file;
         break;
       case 'style':
-        codeFile = `${home.projectRoot}/src/features/${data.feature}/${data.name}.${home.cssExt}`;
+        codeFile = `src/features/${data.feature}/${data.name}.${home.cssExt}`;
         break;
       case 'test':
-        codeFile = `${home.projectRoot}/tests/${this.props.params.file.replace(/^src\//, '').replace('.js', '')}.test.js`;
+        codeFile = `tests/${this.props.params.file.replace(/^src\//, '').replace('.js', '')}.test.js`;
         break;
       default:
         codeFile = data.file;
@@ -133,17 +134,19 @@ export class ElementPage extends Component {
     const arr = data.file.split('.');
     const ext = arr.length > 1 ? arr.pop() : null;
 
+    // const title = data.feature ? `${data.feature} / ${data.name}` : data.file;
     return (
       <div className="home-element-page">
         <div className="page-title">
           <h2>
-            <Icon type={iconTypes[data.type] || 'file'} style={{ color: colors[data.type] }} /> {this.props.params.feature} / {data.name}
+            <Icon type={iconTypes[data.type] || 'file'} style={{ color: colors[data.type] }} />&nbsp;
+            {data.feature ? `${data.feature} / ${data.name}` : data.file}
             {this.renderMarks()}
           </h2>
         </div>
         {data.isPic &&
           <div className="pic-wrapper">
-            <img src={codeFile.replace(home.projectRoot, '')} alt={codeFile} />
+            <img src={`/${codeFile}`} alt={codeFile} />
           </div>
         }
         {!onlyCode && data.hasCode && !data.isPic && <Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}>
@@ -172,14 +175,6 @@ function mapStateToProps(state) {
   };
 }
 
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(ElementPage);

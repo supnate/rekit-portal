@@ -25,52 +25,94 @@ export const getElementDiagramData = createSelector(
       r: 40,
     });
 
-    features.forEach((fid) => {
-      const f = featureById[fid];
+    _.values(elementById).forEach((item) => {
+      if (!item.deps) return;
+      const allDeps = [
+        ...item.deps.actions,
+        ...item.deps.components,
+        ...item.deps.constants,
+        ...item.deps.misc,
+      ];
 
-      [...f.components, ...f.actions, ...f.misc].forEach((item) => {
-        if (!item.deps) return;
-
-        const allDeps = [
-          ...item.deps.actions,
-          ...item.deps.components,
-          ...item.deps.constants,
-          ...item.deps.misc,
-        ];
-
-        allDeps.forEach((dep) => {
-          if (item.file === element.file) {
-            // if the element depends on others
-            nodes.push({
-              name: dep.name,
-              id: dep.file,
-              type: dep.type,
-              file: dep.file,
-              r: 10,
-            });
-            links.push({
-              source: item.file,
-              target: dep.file,
-              type: 'dep',
-            });
-          } else if (dep.file === element.file) {
-            // if other depends on the element
-            nodes.push({
-              name: item.name,
-              id: item.file,
-              type: item.type,
-              file: item.file,
-              r: 10,
-            });
-            links.push({
-              source: item.file,
-              target: element.file,
-              type: 'dep',
-            });
-          }
-        });
+      allDeps.forEach((dep) => {
+        if (item.file === element.file) {
+          // if the element depends on others
+          nodes.push({
+            name: dep.name,
+            id: dep.file,
+            type: dep.type,
+            file: dep.file,
+            r: 10,
+          });
+          links.push({
+            source: item.file,
+            target: dep.file,
+            type: 'dep',
+          });
+        } else if (dep.file === element.file) {
+          // if other depends on the element
+          nodes.push({
+            name: item.name,
+            id: item.file,
+            type: item.type,
+            file: item.file,
+            r: 10,
+          });
+          links.push({
+            source: item.file,
+            target: element.file,
+            type: 'dep',
+          });
+        }
       });
     });
+
+    // features.forEach((fid) => {
+    //   const f = featureById[fid];
+
+    //   [...f.components, ...f.actions, ...f.misc].forEach((item) => {
+    //     if (!item.deps) return;
+
+    //     const allDeps = [
+    //       ...item.deps.actions,
+    //       ...item.deps.components,
+    //       ...item.deps.constants,
+    //       ...item.deps.misc,
+    //     ];
+
+    //     allDeps.forEach((dep) => {
+    //       if (item.file === element.file) {
+    //         // if the element depends on others
+    //         nodes.push({
+    //           name: dep.name,
+    //           id: dep.file,
+    //           type: dep.type,
+    //           file: dep.file,
+    //           r: 10,
+    //         });
+    //         links.push({
+    //           source: item.file,
+    //           target: dep.file,
+    //           type: 'dep',
+    //         });
+    //       } else if (dep.file === element.file) {
+    //         // if other depends on the element
+    //         nodes.push({
+    //           name: item.name,
+    //           id: item.file,
+    //           type: item.type,
+    //           file: item.file,
+    //           r: 10,
+    //         });
+    //         links.push({
+    //           source: item.file,
+    //           target: element.file,
+    //           type: 'dep',
+    //         });
+    //       }
+    //     });
+    //   });
+    // });
 
     // remove duplicated nodes
     nodes = _.uniqBy(nodes, 'id');
@@ -85,7 +127,7 @@ export const getElementDiagramData = createSelector(
         n.name = 'constants';
         n.type = 'misc';
       }
-      if (ele.feature !== element.feature) {
+      if (ele.feature && ele.feature !== element.feature) {
         if (!_.find(nodes, { id: ele.feature })) {
           nodes.push({
             name: featureById[ele.feature].name,

@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">11.32% </span>
+        <span class="strong">12.5% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/53</span>
+        <span class='fraction'>7/56</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/16</span>
+        <span class='fraction'>0/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">13.33% </span>
+        <span class="strong">14.89% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/45</span>
+        <span class='fraction'>7/47</span>
       </div>
     </div>
   </div>
@@ -191,12 +191,29 @@
 146
 147
 148
-149</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -279,8 +296,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -342,6 +374,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash';
 import { createSelector } from 'reselect';
 &nbsp;
+const srcFilesSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.srcFiles;</span>
 const featuresSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.features;</span>
 const featureByIdSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.featureById;</span>
 const keywordSelector = <span class="fstat-no" title="function not covered" >(s</span>tate, keyword) =&gt; <span class="cstat-no" title="statement not covered" >keyword;</span>
@@ -424,10 +457,11 @@ function <span class="fstat-no" title="function not covered" >getMiscTreeData(</
 }
 &nbsp;
 export const getExplorerTreeData = createSelector(
+  srcFilesSelector,
   featuresSelector,
   featureByIdSelector,
-<span class="fstat-no" title="function not covered" >  (f</span>eatures, featureById) =&gt; {
-    const nodes = <span class="cstat-no" title="statement not covered" >features.map(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {</span>
+<span class="fstat-no" title="function not covered" >  (s</span>rcFiles, features, featureById) =&gt; {
+    const featureNodes = <span class="cstat-no" title="statement not covered" >features.map(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {</span>
       const feature = <span class="cstat-no" title="statement not covered" >featureById[fid];</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         key: feature.key,
@@ -443,7 +477,21 @@ export const getExplorerTreeData = createSelector(
       };
     });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return { root: true, children: _.compact(nodes) };</span>
+    const allNodes = <span class="cstat-no" title="statement not covered" >[</span>
+      {
+        key: 'features-node',
+        label: 'Features',
+        icon: 'features',
+        children: _.compact(featureNodes),
+      },
+      {
+        key: 'others-node',
+        label: 'Others',
+        icon: 'folder',
+        children: srcFiles.map(getChildData),
+      }
+    ];
+<span class="cstat-no" title="statement not covered" >    return { root: true, children: allNodes };</span>
   }
 );
 &nbsp;
@@ -493,7 +541,7 @@ export const getExpandedKeys = createSelector(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 15 2017 23:03:40 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:11:20 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

@@ -214,8 +214,9 @@ export default class ElementDiagram extends PureComponent {
     const home = this.props.homeStore;
     const ele = home.elementById[node.id];
     if (ele.type !== 'feature') {
-      const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
-      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+      // const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
+      browserHistory.push(`/element/${encodeURIComponent(ele.file)}/diagram`);
+      // browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
     }
   }
 

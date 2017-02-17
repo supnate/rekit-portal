@@ -4,11 +4,12 @@ const path = require('path');
 const fetchProjectData = require('./middleware/api/fetchProjectData');
 // console.log(path.join('/Users/abc/../def', '../nate'));
 // console.log(path.resolve('/Users/abc/../nate'));
+const core = require('rekit-core');
 console.time('Done');
-fetchProjectData();
+// fetchProjectData();
+console.log(JSON.stringify(fetchProjectData()));
 console.timeEnd('Done');
 // const _ = require('lodash');
-// const core = require('rekit-core');
 
 // const refactor = core.refactor;
 // const vio = core.vio;
