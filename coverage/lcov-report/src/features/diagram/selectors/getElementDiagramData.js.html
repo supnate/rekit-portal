@@ -27,7 +27,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>0/14</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -162,56 +162,7 @@
 117
 118
 119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+120</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -281,57 +232,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -448,58 +350,9 @@ export const getElementDiagramData = createSelector(
       });
     });
 &nbsp;
-    // features.forEach((fid) =&gt; {
-    //   const f = featureById[fid];
-&nbsp;
-    //   [...f.components, ...f.actions, ...f.misc].forEach((item) =&gt; {
-    //     if (!item.deps) return;
-&nbsp;
-    //     const allDeps = [
-    //       ...item.deps.actions,
-    //       ...item.deps.components,
-    //       ...item.deps.constants,
-    //       ...item.deps.misc,
-    //     ];
-&nbsp;
-    //     allDeps.forEach((dep) =&gt; {
-    //       if (item.file === element.file) {
-    //         // if the element depends on others
-    //         nodes.push({
-    //           name: dep.name,
-    //           id: dep.file,
-    //           type: dep.type,
-    //           file: dep.file,
-    //           r: 10,
-    //         });
-    //         links.push({
-    //           source: item.file,
-    //           target: dep.file,
-    //           type: 'dep',
-    //         });
-    //       } else if (dep.file === element.file) {
-    //         // if other depends on the element
-    //         nodes.push({
-    //           name: item.name,
-    //           id: item.file,
-    //           type: item.type,
-    //           file: item.file,
-    //           r: 10,
-    //         });
-    //         links.push({
-    //           source: item.file,
-    //           target: element.file,
-    //           type: 'dep',
-    //         });
-    //       }
-    //     });
-    //   });
-    // });
-&nbsp;
     // remove duplicated nodes
 <span class="cstat-no" title="statement not covered" >    nodes = _.uniqBy(nodes, 'id');</span>
 <span class="cstat-no" title="statement not covered" >    links = _.uniqBy(links, <span class="fstat-no" title="function not covered" >l </span>=&gt; <span class="cstat-no" title="statement not covered" >`${l.source}-&gt;${l.target}`)</span>;</span>
-    // const getSortKey = n =&gt; console.log(elementById[n.id].feature) || (elementById[n.id].feature || elementById[n].type);
-    // nodes.sort((n1, n2) =&gt; getSortKey(n1).localeCompare(getSortKey(n2)));
 &nbsp;
     // add features node
 <span class="cstat-no" title="statement not covered" >    nodes.forEach(<span class="fstat-no" title="function not covered" >(n</span>) =&gt; {</span>
@@ -508,7 +361,7 @@ export const getElementDiagramData = createSelector(
 <span class="cstat-no" title="statement not covered" >        n.name = 'constants';</span>
 <span class="cstat-no" title="statement not covered" >        n.type = 'misc';</span>
       }
-<span class="cstat-no" title="statement not covered" >      if (ele.feature !== element.feature) {</span>
+<span class="cstat-no" title="statement not covered" >      if (ele.feature &amp;&amp; ele.feature !== element.feature) {</span>
 <span class="cstat-no" title="statement not covered" >        if (!_.find(nodes, { id: ele.feature })) {</span>
 <span class="cstat-no" title="statement not covered" >          nodes.push({</span>
             name: featureById[ele.feature].name,
@@ -553,7 +406,7 @@ export const getElementDiagramData = createSelector(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:11:20 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:41:02 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

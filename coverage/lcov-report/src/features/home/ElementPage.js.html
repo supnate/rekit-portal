@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">39.29% </span>
+        <span class="strong">38.18% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>22/56</span>
+        <span class='fraction'>21/55</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">16.67% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>2/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">44.9% </span>
+        <span class="strong">43.75% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>22/49</span>
+        <span class='fraction'>21/48</span>
       </div>
     </div>
   </div>
@@ -221,22 +221,7 @@
 176
 177
 178
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+179</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -247,7 +232,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -339,8 +323,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -375,14 +357,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -429,10 +403,8 @@
 import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Button, Icon, Tabs } from 'antd';
-import * as actions from './redux/actions';
 import { ElementDiagram } from '../diagram';
 import { colors } from '../common';
 import { CodeView } from './';
@@ -442,7 +414,6 @@ const TabPane = Tabs.TabPane;
 export class ElementPage extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
   };
 &nbsp;
@@ -481,7 +452,7 @@ export class ElementPage extends Component {
   @autobind
 <span class="fstat-no" title="function not covered" >  ha</span>ndleRunTest() {
     const { file } = <span class="cstat-no" title="statement not covered" >this.props.params;</span>
-<span class="cstat-no" title="statement not covered" >    browserHistory.push(`/tools/tests/${encodeURIComponent(file.replace(/\.js$/, ''))}`);</span>
+<span class="cstat-no" title="statement not covered" >    browserHistory.push(`/tools/tests/${encodeURIComponent(file)}`);</span>
     // browserHistory.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
   }
 &nbsp;
@@ -528,8 +499,6 @@ export class ElementPage extends Component {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!data) {
 <span class="cstat-no" title="statement not covered" >      return this.renderNotFound();</span>
     }
-&nbsp;
-    console.log(data);
 &nbsp;
     const { home } = this.props;
     const onlyCode = data.hasCode &amp;&amp; !data.hasDiagram &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >!data.hasTest;</span>
@@ -605,16 +574,8 @@ function mapStateToProps(state) {
   };
 }
 &nbsp;
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-&nbsp;
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(ElementPage);
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -622,7 +583,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:11:20 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:41:02 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

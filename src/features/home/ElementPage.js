@@ -99,8 +99,6 @@ export class ElementPage extends Component {
       return this.renderNotFound();
     }
 
-    console.log(data);
-
     const { home } = this.props;
     const onlyCode = data.hasCode && !data.hasDiagram && !data.hasTest;
 

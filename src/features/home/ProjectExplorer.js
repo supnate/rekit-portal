@@ -54,6 +54,7 @@ export class ProjectExplorer extends Component {
 
   getMenuItems(treeNode) {
     const evtKey = treeNode.props.eventKey;
+    // eventKey is 'file' property of most items
     const { home } = this.props;
     let ele = home.elementById[evtKey] || home.featureById[evtKey];
     if (!ele) {
@@ -64,6 +65,11 @@ export class ProjectExplorer extends Component {
       };
     }
     switch (ele.type) {
+      case 'features':
+        return [
+          menuItems.addFeature,
+          menuItems.runTests,
+        ];
       case 'feature':
         return [
           menuItems.addComponent,
@@ -234,6 +240,12 @@ export class ProjectExplorer extends Component {
     const cmdContext = this.cmdContext;
     const prjRoot = this.props.home.projectRoot;
     switch (evt.key) {
+      case 'add-feature':
+        this.props.actions.showCmdDialog('cmd', {
+          type: evt.key,
+          ...this.cmdContext,
+        });
+        break;
       case 'add-component':
       case 'add-action':
       case 'move':
@@ -251,6 +263,8 @@ export class ProjectExplorer extends Component {
       case 'run-tests':
         if (!cmdContext.elementName) {
           browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
+        } else if (cmdContext.elementType === 'features') {
+          browserHistory.push('/tools/tests/features');
         } else if (cmdContext.elementType === 'feature') {
           browserHistory.push(`/tools/tests/${cmdContext.feature}`);
         }

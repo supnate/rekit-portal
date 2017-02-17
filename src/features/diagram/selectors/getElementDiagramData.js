@@ -67,58 +67,9 @@ export const getElementDiagramData = createSelector(
       });
     });
 
-    // features.forEach((fid) => {
-    //   const f = featureById[fid];
-
-    //   [...f.components, ...f.actions, ...f.misc].forEach((item) => {
-    //     if (!item.deps) return;
-
-    //     const allDeps = [
-    //       ...item.deps.actions,
-    //       ...item.deps.components,
-    //       ...item.deps.constants,
-    //       ...item.deps.misc,
-    //     ];
-
-    //     allDeps.forEach((dep) => {
-    //       if (item.file === element.file) {
-    //         // if the element depends on others
-    //         nodes.push({
-    //           name: dep.name,
-    //           id: dep.file,
-    //           type: dep.type,
-    //           file: dep.file,
-    //           r: 10,
-    //         });
-    //         links.push({
-    //           source: item.file,
-    //           target: dep.file,
-    //           type: 'dep',
-    //         });
-    //       } else if (dep.file === element.file) {
-    //         // if other depends on the element
-    //         nodes.push({
-    //           name: item.name,
-    //           id: item.file,
-    //           type: item.type,
-    //           file: item.file,
-    //           r: 10,
-    //         });
-    //         links.push({
-    //           source: item.file,
-    //           target: element.file,
-    //           type: 'dep',
-    //         });
-    //       }
-    //     });
-    //   });
-    // });
-
     // remove duplicated nodes
     nodes = _.uniqBy(nodes, 'id');
     links = _.uniqBy(links, l => `${l.source}->${l.target}`);
-    // const getSortKey = n => console.log(elementById[n.id].feature) || (elementById[n.id].feature || elementById[n].type);
-    // nodes.sort((n1, n2) => getSortKey(n1).localeCompare(getSortKey(n2)));
 
     // add features node
     nodes.forEach((n) => {

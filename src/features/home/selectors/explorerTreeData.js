@@ -106,7 +106,7 @@ export const getExplorerTreeData = createSelector(
 
     const allNodes = [
       {
-        key: 'features-node',
+        key: 'features',
         label: 'Features',
         icon: 'features',
         children: _.compact(featureNodes),
