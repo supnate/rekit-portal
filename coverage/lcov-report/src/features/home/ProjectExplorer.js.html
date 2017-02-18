@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">8.87% </span>
+        <span class="strong">8.59% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>11/124</span>
+        <span class='fraction'>11/128</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">2.6% </span>
+        <span class="strong">2.5% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/77</span>
+        <span class='fraction'>2/80</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">12.5% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>3/24</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">9.24% </span>
+        <span class="strong">8.94% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>11/119</span>
+        <span class='fraction'>11/123</span>
       </div>
     </div>
   </div>
@@ -478,7 +478,16 @@
 433
 434
 435
-436</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -550,6 +559,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -716,8 +726,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -734,6 +750,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -980,8 +998,9 @@ export class ProjectExplorer extends Component {
       };
     }
 <span class="cstat-no" title="statement not covered" >    switch (ele.type) {</span>
-      case 'node':
+      case 'features':
 <span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.addFeature,
           menuItems.runTests,
         ];
       case 'feature':
@@ -1154,6 +1173,12 @@ export class ProjectExplorer extends Component {
     const cmdContext = <span class="cstat-no" title="statement not covered" >this.cmdContext;</span>
     const prjRoot = <span class="cstat-no" title="statement not covered" >this.props.home.projectRoot;</span>
 <span class="cstat-no" title="statement not covered" >    switch (evt.key) {</span>
+      case 'add-feature':
+<span class="cstat-no" title="statement not covered" >        this.props.actions.showCmdDialog('cmd', {</span>
+          type: evt.key,
+          ...this.cmdContext,
+        });
+<span class="cstat-no" title="statement not covered" >        break;</span>
       case 'add-component':
       case 'add-action':
       case 'move':
@@ -1171,6 +1196,8 @@ export class ProjectExplorer extends Component {
       case 'run-tests':
 <span class="cstat-no" title="statement not covered" >        if (!cmdContext.elementName) {</span>
 <span class="cstat-no" title="statement not covered" >          browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);</span>
+        } else <span class="cstat-no" title="statement not covered" >if (cmdContext.elementType === 'features') {</span>
+<span class="cstat-no" title="statement not covered" >          browserHistory.push('/tools/tests/features');</span>
         } else <span class="cstat-no" title="statement not covered" >if (cmdContext.elementType === 'feature') {</span>
 <span class="cstat-no" title="statement not covered" >          browserHistory.push(`/tools/tests/${cmdContext.feature}`);</span>
         }
@@ -1354,7 +1381,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:41:02 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 18 2017 14:10:00 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

@@ -261,11 +261,14 @@ export class ProjectExplorer extends Component {
         break;
       }
       case 'run-tests':
-        if (!cmdContext.elementName) {
-          browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
-        } else if (cmdContext.elementType === 'features') {
+        if (cmdContext.elementType === 'features') {
+          // features node
           browserHistory.push('/tools/tests/features');
+        } else if (!cmdContext.elementName) {
+          // components, actions
+          browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
         } else if (cmdContext.elementType === 'feature') {
+          // feature node
           browserHistory.push(`/tools/tests/${cmdContext.feature}`);
         }
         break;

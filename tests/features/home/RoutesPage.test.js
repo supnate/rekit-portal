@@ -10,7 +10,8 @@ describe('home/RoutesPage', () => {
         features: ['f1'],
         featureById: {
           f1: { name: 'F1', routes: [] },
-        }
+        },
+        rekit: {},
       },
       params: {
         feature: 'f1',

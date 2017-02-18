@@ -74,7 +74,7 @@ describe('home/redux/fetchProjectData', () => {
     const prevState = { fetchProjectDataPending: true };
     const state = reducer(
       prevState,
-      { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: { features: [] } }
+      { type: HOME_FETCH_PROJECT_DATA_SUCCESS, data: { features: [], srcFiles: [] } }
     );
     expect(state).to.not.equal(prevState); // should be immutable
     expect(state.fetchProjectDataPending).to.be.false;

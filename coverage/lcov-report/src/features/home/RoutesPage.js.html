@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">47.62% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>9/18</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">28.57% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>2/7</span>
+        <span class='fraction'>10/21</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">33.33% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>1/3</span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.94% </span>
+        <span class="strong">25% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>9/17</span>
+        <span class='fraction'>10/20</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -129,8 +129,19 @@
 84
 85
 86
-87</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,14 +171,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -218,7 +242,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component, PropTypes } from 'react';
 import { browserHistory, Link } from 'react-router';
 import { autobind } from 'core-decorators';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Icon, Tabs } from 'antd';
 import { CodeView } from './';
@@ -245,22 +268,35 @@ export class RoutesPage extends Component {
     }
   }
 &nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderNotFound(fid) {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="home-routes-page"&gt;
+        &lt;span style={{ color: 'red' }}&gt;Feature not found: {fid}.&lt;/span&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
   render() {
     const fid = this.props.params.feature;
     let tabKey = this.props.params.type;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (tabKey !== 'code') <span class="cstat-no" title="statement not covered" >tabKey = 'rules';</span>
     const feature = this.props.home.featureById[fid];
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!feature) {
+<span class="cstat-no" title="statement not covered" >      return this.renderNotFound(fid);</span>
+    }
     const routes = feature.routes;
-console.log('routes: ', routes);
-    const codeFile = `${this.props.home.projectRoot}/src/features/${fid}/route.js`;
+    const devPort = this.props.home.rekit.devPort;
+&nbsp;
+    const codeFile = `src/features/${fid}/route.js`;
     return (
       &lt;div className="home-routes-page"&gt;
         &lt;h2&gt;&lt;Icon type="share-alt" /&gt; &amp;nbsp;{fid} / routes&lt;/h2&gt;
         &lt;Tabs activeKey={tabKey} animated={false} onChange={this.handleTabChange}&gt;
           &lt;TabPane tab="Rules" key="rules"&gt;
             &lt;p&gt;This is a rough overview of routing config defined in a feature. &lt;/p&gt;
-            &lt;p&gt;NOTE: if route path has parameters, you need to alter the link address with correct values after click the route link. &lt;/p&gt;
+            &lt;p&gt;If a route rule isIndex === true and also has a path property then there will be two rules.&lt;/p&gt;
             &lt;p&gt;For more detailed information, please look into the &lt;Link to={`/${fid}/routes/code`}&gt;code&lt;/Link&gt;.&lt;/p&gt;
+            &lt;p&gt;NOTE: if route path has parameters, you need to alter the link address with correct values after click the route link. &lt;/p&gt;
             {routes.length === 0
               ? &lt;Alert type="info" message="No routing rules defined." showIcon /&gt;
               :
@@ -272,9 +308,9 @@ console.log('routes: ', routes);
                   &lt;/tr&gt;
                 &lt;/thead&gt;
                 &lt;tbody&gt;
-                  {feature.routes.map(<span class="fstat-no" title="function not covered" >ro</span>ute =&gt; (
+                  {routes.map(<span class="fstat-no" title="function not covered" >ro</span>ute =&gt; (
 <span class="cstat-no" title="statement not covered" >                    &lt;tr key={route.path}&gt;</span>
-                      &lt;td&gt;&lt;a href={route.path} target="_blank"&gt;{route.path}&lt;/a&gt;&lt;/td&gt;
+                      &lt;td&gt;&lt;a href={`//localhost:${devPort}${route.path}`} target="_blank"&gt;{route.path}&lt;/a&gt;&lt;/td&gt;
                       &lt;td&gt;{fid}/{route.component}&lt;/td&gt;
                     &lt;/tr&gt;
                   ))}
@@ -307,7 +343,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 17 2017 23:41:02 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 18 2017 14:10:00 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
