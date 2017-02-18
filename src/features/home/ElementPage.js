@@ -34,7 +34,7 @@ export class ElementPage extends Component {
     return {
       ...ele,
       hasDiagram: /^(js|jsx)$/.test(ext),
-      hasTest: /^(js|jsx)$/.test(ext),
+      hasTest: ele.feature && /^(js|jsx)$/.test(ext),
       hasCode: /^(js|jsx|html|css|less|scss|txt|json|sass|md|log|pl|py|sh|cmd)$/.test(ext),
       isPic: /^(jpe?g|png|gif|bmp)$/.test(ext),
     };
@@ -108,7 +108,7 @@ export class ElementPage extends Component {
 
     if (!data.hasCode) tabKey = 'diagram';
     if (onlyCode) tabKey = 'code';
-    if (tabKey === 'style' && data.type !== 'component') tabKey = 'diagram';
+    if (tabKey === 'style' && (data.type !== 'component' || !data.feature)) tabKey = 'diagram';
     switch (tabKey) {
       case 'code':
         codeFile = data.file;
@@ -153,7 +153,7 @@ export class ElementPage extends Component {
             <ElementDiagram homeStore={this.props.home} elementId={data.file} />
           </TabPane>}
           {data.hasCode && <TabPane tab="Code" key="code" />}
-          {data.type === 'component' && <TabPane tab="Style" key="style" />}
+          {(data.type === 'component' && data.feature) && <TabPane tab="Style" key="style" />}
           {data.hasTest && <TabPane tab="Test" key="test">
             <Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}>
               <Icon type="play-circle-o" /> Run test

@@ -78,7 +78,7 @@ export const getElementDiagramData = createSelector(
         n.name = 'constants';
         n.type = 'misc';
       }
-      if (ele.feature && ele.feature !== element.feature) {
+      if (ele && ele.feature && ele.feature !== element.feature) {
         if (!_.find(nodes, { id: ele.feature })) {
           nodes.push({
             name: featureById[ele.feature].name,

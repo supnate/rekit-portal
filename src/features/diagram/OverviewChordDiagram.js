@@ -323,7 +323,6 @@ export class OverviewChordDiagram extends PureComponent {
 
   @autobind
   handleGroupMouseover(d) {
-    console.log('mouseover: ', d);
     if (d.type === 'file') this.tooltip.show(d);
     this.setState({
       highlightedGroup: d,

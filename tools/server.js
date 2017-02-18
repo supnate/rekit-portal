@@ -92,6 +92,7 @@ function startBuildServer() {
   app.use(compression());
   app.use(rekitMiddleWare()(server, app, { readonly: !!args.readonly }));
   app.use(express.static(root));
+  app.use(express.static(path.join(__dirname, '..')));
   app.use(fallback('index.html', { root }));
 
   // Other files should not happen, respond 404

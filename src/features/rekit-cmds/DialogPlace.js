@@ -3,8 +3,9 @@ import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Modal } from 'antd';
 import * as actions from './redux/actions';
-import { CmdDialog, CmdForm, cmdSuccessNotification, LogViewerDialog } from './';
+import { CmdForm, cmdSuccessNotification, LogViewerDialog } from './';
 
 const displayName = _.flow(_.lowerCase, _.upperFirst);
 
@@ -32,12 +33,20 @@ export class DialogPlace extends Component {
     return (
       <div className="rekit-cmds-dialog-place">
         {rekitCmds.cmdDialogVisible &&
-          <CmdDialog title={displayName(rekitCmds.cmdArgs.type)} onClose={() => hideCmdDialog('cmd')}>
+          <Modal
+            visible
+            maskClosable={false}
+            footer=""
+            wrapClassName="rekit-cmds-cmd-dialog"
+            title={displayName(rekitCmds.cmdArgs.type)}
+            onClose={() => hideCmdDialog('cmd')}
+            {...this.props}
+          >
             <CmdForm
               onCancel={() => hideCmdDialog('cmd')}
               onDone={() => this.handleCmdSuccess('cmd')}
             />
-          </CmdDialog>
+          </Modal>
         }
         {rekitCmds.logViewerDialogVisible &&
           <LogViewerDialog onClose={() => hideCmdDialog('logViewer')} />
