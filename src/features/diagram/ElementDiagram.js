@@ -21,7 +21,7 @@ export default class ElementDiagram extends PureComponent {
 
   componentDidMount() {
     const pageContainer = document.querySelector('.page-container');
-    chartHeight = pageContainer.offsetHeight - 240; // 240 is header height and paddings
+    chartHeight = pageContainer.offsetHeight - 250; // 250 is header height and paddings
     chartWidth = pageContainer.offsetWidth - 80; // 80 is paddings
     if (chartHeight < 400) chartHeight = 400;
     if (chartWidth < 400) chartWidth = 400;

@@ -23,13 +23,13 @@ export class ElementPage extends Component {
   getElementData() {
     const { elementById, projectRoot } = this.props.home;
     const { file } = this.props.params;
+    if (!file) return null;
     const fullPath = projectRoot + file;
-
-    // const fullPath = `${projectRoot}/src/features/${feature}/${file}`;
-
     const arr = fullPath.split('.');
     const ext = arr.length > 1 ? arr.pop() : null;
     const ele = elementById[file];
+
+    if (!ele) return null;
 
     return {
       ...ele,
@@ -58,7 +58,7 @@ export class ElementPage extends Component {
   renderNotFound() {
     return (
       <div className="home-element-page">
-        Not found.
+        <span style={{ color: 'red' }}>Element not found, please check the URL or if element exists.</span>
       </div>
     );
   }
@@ -94,6 +94,7 @@ export class ElementPage extends Component {
   }
 
   render() {
+    // throw new Error('test');
     const data = this.getElementData();
     if (!data) {
       return this.renderNotFound();

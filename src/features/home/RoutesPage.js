@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory, Link } from 'react-router';
 import { autobind } from 'core-decorators';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Alert, Icon, Tabs } from 'antd';
 import { CodeView } from './';
@@ -34,8 +33,9 @@ export class RoutesPage extends Component {
     if (tabKey !== 'code') tabKey = 'rules';
     const feature = this.props.home.featureById[fid];
     const routes = feature.routes;
-console.log('routes: ', routes);
-    const codeFile = `${this.props.home.projectRoot}/src/features/${fid}/route.js`;
+    const devPort = this.props.home.rekit.devPort;
+
+    const codeFile = `src/features/${fid}/route.js`;
     return (
       <div className="home-routes-page">
         <h2><Icon type="share-alt" /> &nbsp;{fid} / routes</h2>
@@ -43,6 +43,7 @@ console.log('routes: ', routes);
           <TabPane tab="Rules" key="rules">
             <p>This is a rough overview of routing config defined in a feature. </p>
             <p>NOTE: if route path has parameters, you need to alter the link address with correct values after click the route link. </p>
+            <p>If a route rule isIndex === true and also has a path property then there will be two rules.</p>
             <p>For more detailed information, please look into the <Link to={`/${fid}/routes/code`}>code</Link>.</p>
             {routes.length === 0
               ? <Alert type="info" message="No routing rules defined." showIcon />
@@ -55,9 +56,9 @@ console.log('routes: ', routes);
                   </tr>
                 </thead>
                 <tbody>
-                  {feature.routes.map(route => (
+                  {routes.map(route => (
                     <tr key={route.path}>
-                      <td><a href={route.path} target="_blank">{route.path}</a></td>
+                      <td><a href={`//localhost:${devPort}${route.path}`} target="_blank">{route.path}</a></td>
                       <td>{fid}/{route.component}</td>
                     </tr>
                   ))}

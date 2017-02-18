@@ -11,7 +11,7 @@ export class DefaultPage extends Component {
 
   render() {
     return (
-      <div className="f-1-default-page">
+      <div className="f-345-default-page">
         Page Content: f-1/DefaultPage
       </div>
     );

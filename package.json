@@ -90,6 +90,7 @@
   "dependencies": {
     "body-parser": "^1.16.0",
     "js-cookie": "^2.1.3",
+    "redbox-react": "^1.3.3",
     "socket.io": "^1.7.2",
     "watchpack": "^1.2.0"
   },

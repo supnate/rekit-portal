@@ -3,8 +3,8 @@ import {
 } from './';
 
 export default {
-  path: 'f-1',
-  name: 'F 1',
+  path: 'f-345',
+  name: 'F 345',
   childRoutes: [
     { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
   ],
