@@ -5,6 +5,7 @@ import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 import { Checkbox, Col, Icon, Popover, Row, Tooltip } from 'antd';
 import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
 
@@ -136,7 +137,6 @@ export class OverviewChordDiagram extends PureComponent {
       .append('svg:path')
       .attr('d', 'M0,-5L10,0L0,5')
     ;
-
     this.pieBgGroup = this.svg.append('svg:g');
     this.linksGroup = this.svg.append('svg:g');
     this.featureNamesTextGroup = this.svg.append('svg:g');
@@ -144,6 +144,12 @@ export class OverviewChordDiagram extends PureComponent {
     this.elementNodesGroup = this.svg.append('svg:g');
     this.fileNodesGroup = this.svg.append('svg:g');
 
+    this.tooltip = d3Tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(d => this.props.home.elementById[d.id].name)
+    ;
+    this.svg.call(this.tooltip);
     this.updateDiagram();
   }
 
@@ -206,7 +212,7 @@ export class OverviewChordDiagram extends PureComponent {
     };
 
     const drawNode = (d3Selection) => {
-      const nodes = d3Selection
+      d3Selection
         .attr('id', d => `group-${d.type}-${uid(d.id)}`)
         .attr('stroke-width', d => d.strokeWidth)
         .attr('class', getCssClass)
@@ -220,19 +226,20 @@ export class OverviewChordDiagram extends PureComponent {
           return d3Path;
         })
         .on('mouseover', this.handleGroupMouseover)
+        .on('mouseout', this.handleGroupMouseout)
         .on('click', this.handleGroupClick)
       ;
       // update tooltip
-      nodes.selectAll('title').remove();
-      nodes.append('svg:title')
-        .text((d) => {
-          if (d.type === 'file') {
-            const ele = this.props.home.elementById[d.id];
-            return ele.name;
-          }
-          return '';
-        })
-      ;
+      // nodes.selectAll('title').remove();
+      // nodes.append('svg:title')
+      //   .text((d) => {
+      //     if (d.type === 'file') {
+      //       const ele = this.props.home.elementById[d.id];
+      //       return ele.name;
+      //     }
+      //     return '';
+      //   })
+      // ;
     };
 
     const nodes = container.selectAll('path').data(groups);
@@ -316,18 +323,25 @@ export class OverviewChordDiagram extends PureComponent {
 
   @autobind
   handleGroupMouseover(d) {
+    console.log('mouseover: ', d);
+    if (d.type === 'file') this.tooltip.show(d);
     this.setState({
       highlightedGroup: d,
     });
   }
+  @autobind
+  handleGroupMouseout(d) {
+    this.tooltip.hide(d);
+  }
 
   @autobind
   handleGroupClick(d) {
+    this.tooltip.hide();
     if (d.type === 'file') {
       const { elementById, projectRoot } = this.props.home;
       const ele = elementById[d.id];
       const file = ele.file.replace(`${projectRoot}/src/features/${ele.feature}/`, '');
-      browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
+      browserHistory.push(`/element/${encodeURIComponent(file)}/diagram`);
     }
   }
 
