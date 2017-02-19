@@ -1,4 +1,5 @@
 import React, { PureComponent, PropTypes } from 'react';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
@@ -102,6 +103,9 @@ export default class ElementDiagram extends PureComponent {
   updateDiagram() {
     const { homeStore, elementId } = this.props;
     const diagramData = getElementDiagramData(homeStore, elementId);
+    const dataNodes = diagramData.nodes;
+    // d3.forceLayout will alter links data, so clone it so that the data could be re-used.
+    const dataLinks = _.cloneDeep(diagramData.links);
 
     const drawBgNode = d3Selection => d3Selection
       .attr('r', d => d.r + 3)
@@ -116,7 +120,7 @@ export default class ElementDiagram extends PureComponent {
         .on('end', this.dragended)
       )
     ;
-    const bgNodes = this.bgNodesGroup.selectAll('circle').data(diagramData.nodes.filter(n => n.type === 'feature'));
+    const bgNodes = this.bgNodesGroup.selectAll('circle').data(dataNodes.filter(n => n.type === 'feature'));
     bgNodes.exit().remove();
     this.bgNodes = drawBgNode(bgNodes);
     this.bgNodes = drawBgNode(bgNodes.enter().append('circle')).merge(this.bgNodes);
@@ -134,7 +138,7 @@ export default class ElementDiagram extends PureComponent {
         .on('end', this.dragended)
       )
     ;
-    const nodes = this.nodesGroup.selectAll('circle').data(diagramData.nodes);
+    const nodes = this.nodesGroup.selectAll('circle').data(dataNodes);
     nodes.exit().remove();
     this.nodes = drawNode(nodes);
     this.nodes = drawNode(nodes.enter().append('circle')).merge(this.nodes);
@@ -145,7 +149,7 @@ export default class ElementDiagram extends PureComponent {
       .attr('stroke-dasharray', d => (d.target === elementId ? '3, 3' : ''))
       .attr('marker-end', l => (l.type === 'dep' ? `url(#${l.source === elementId ? 'dep-on' : 'dep-by'})` : ''))
     ;
-    const links = this.linksGroup.selectAll('line').data(diagramData.links.filter(l => l.type !== 'no-line'));
+    const links = this.linksGroup.selectAll('line').data(dataLinks.filter(l => l.type !== 'no-line'));
     links.exit().remove();
     this.links = drawLink(links);
     this.links = drawLink(links.enter().append('line')).merge(this.links);
@@ -164,7 +168,7 @@ export default class ElementDiagram extends PureComponent {
       )
     ;
 
-    const nodeLabels = this.nodeLabelsGroup.selectAll('text').data(diagramData.nodes);
+    const nodeLabels = this.nodeLabelsGroup.selectAll('text').data(dataNodes);
     nodeLabels.exit().remove();
     this.nodeLabels = drawNodeLabel(nodeLabels);
     this.nodeLabels = drawNodeLabel(nodeLabels.enter().append('text')).merge(this.nodeLabels);
@@ -175,10 +179,10 @@ export default class ElementDiagram extends PureComponent {
       'no-line': 260,
     };
 
-    this.sim.nodes(diagramData.nodes);
+    this.sim.nodes(dataNodes);
     this.sim
       .force('link')
-      .links(diagramData.links)
+      .links(dataLinks)
       .distance(d => distanceMap[d.type] || 50)
     ;
     this.sim.alpha(1).restart();
@@ -214,9 +218,7 @@ export default class ElementDiagram extends PureComponent {
     const home = this.props.homeStore;
     const ele = home.elementById[node.id];
     if (ele.type !== 'feature') {
-      // const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
       browserHistory.push(`/element/${encodeURIComponent(ele.file)}/diagram`);
-      // browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
     }
   }
 
