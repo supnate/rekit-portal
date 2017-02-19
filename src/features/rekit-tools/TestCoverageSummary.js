@@ -92,7 +92,7 @@ export class TestCoverageSummary extends PureComponent {
           </div>
         </li>
 
-        <li><h4>Features coverage:</h4></li>
+        <li><h4>Coverage by feature:</h4></li>
         {features.map((fid) => {
           const p = coverage[fid].percentage;
           const name = featureById[fid].name;
