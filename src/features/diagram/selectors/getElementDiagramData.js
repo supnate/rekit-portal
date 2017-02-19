@@ -27,6 +27,11 @@ export const getElementDiagramData = createSelector(
 
     _.values(elementById).forEach((item) => {
       if (!item.deps) return;
+      // exclude index.js for features
+      // if (/^src\/features\/[^/]+\/index\.js$/.test(item.file)) {
+      //   console.log('exlucde: ', item.file);
+      //   return;
+      // }
       const allDeps = [
         ...item.deps.actions,
         ...item.deps.components,
