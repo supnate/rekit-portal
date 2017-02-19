@@ -13,6 +13,8 @@ const getFileContent = require('./api/getFileContent');
 const runBuild = require('./api/runBuild');
 const runTest = require('./api/runTest');
 
+const utils = rekitCore.utils;
+
 // rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
 module.exports = function() { // eslint-disable-line
@@ -90,7 +92,7 @@ module.exports = function() { // eslint-disable-line
     args = args || {};
     setupSocketIo(server);
     const prjRoot = rekitCore.utils.getProjectRoot();
-    app.use('/coverage', express.static(path.join(prjRoot, 'coverage'), { fallthrough: false }));
+    app.use('/coverage', express.static(utils.joinPath(prjRoot, 'coverage'), { fallthrough: false }));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -107,7 +109,8 @@ module.exports = function() { // eslint-disable-line
             res.end();
             break;
           case '/api/file-content':
-            if (!_.startsWith(path.resolve(req.query.file), prjRoot)) {
+            if (!_.startsWith(utils.joinPath(prjRoot, req.query.file), prjRoot)) {
+              // prevent ../.. in req.query.file
               res.statusCode = 403;
               res.write('Forbidden: not allowed to access file out of the project.');
               res.end();

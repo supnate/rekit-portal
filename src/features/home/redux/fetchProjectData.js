@@ -24,6 +24,7 @@ export function fetchProjectData() {
           resolve(res.data);
         },
         (err) => {
+          if (window.ON_REKIT_PORTAL_LOAD) window.ON_REKIT_PORTAL_LOAD();
           dispatch({
             type: HOME_FETCH_PROJECT_DATA_FAILURE,
             data: { error: err },

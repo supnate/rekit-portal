@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
 const rekitCore = require('rekit-core');
@@ -52,21 +51,21 @@ function fetchProjectData() {
   });
 
   const prjRoot = utils.getProjectRoot();
-  const srcFiles = refactor.getSrcFiles(); // readDir(path.join(prjRoot, 'src'));
+  const srcFiles = refactor.getSrcFiles(); // readDir(utils.joinPath(prjRoot, 'src'));
   mapRelPathForDepsByArr(srcFiles);
 
-  const prjPkgJson = require(path.join(prjRoot, 'package.json')); // eslint-disable-line
-  const corePkg = path.join(prjRoot, 'node_modules/rekit-core/package.json');
-  // const portalPkg = path.join(prjRoot, 'node_modules/rekit-portal/package.json');
+  const prjPkgJson = require(utils.joinPath(prjRoot, 'package.json')); // eslint-disable-line
+  const corePkg = utils.joinPath(prjRoot, 'node_modules/rekit-core/package.json');
+  // const portalPkg = utils.joinPath(prjRoot, 'node_modules/rekit-portal/package.json');
   return {
     features,
     srcFiles,
-    testCoverage: fs.existsSync(path.join(prjRoot, 'coverage/lcov-report/index.html')),
+    testCoverage: fs.existsSync(utils.joinPath(prjRoot, 'coverage/lcov-report/index.html')),
     projectRoot: prjRoot,
     projectName: prjPkgJson.name,
     rekit: Object.assign({}, prjPkgJson.rekit, {
       coreVersion: fs.existsSync(corePkg) ? require(corePkg).version : 'UNKNOWN', // eslint-disable-line
-      portalVersion: require(path.join(__dirname, '../../package.json')).version, // eslint-disable-line
+      portalVersion: require(utils.joinPath(__dirname, '../../package.json')).version, // eslint-disable-line
     }),
     cssExt: utils.getCssExt(),
   };

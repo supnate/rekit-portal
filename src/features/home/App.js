@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import enUS from 'antd/lib/locale-provider/en_US';
-import { LocaleProvider, message, Spin } from 'antd';
+import { LocaleProvider, message, Modal, Spin } from 'antd';
 import { SidePanel } from './';
 import DialogPlace from '../rekit-cmds/DialogPlace';
 import { fetchProjectData } from './redux/actions';
@@ -21,7 +21,12 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    this.props.actions.fetchProjectData();
+    this.props.actions.fetchProjectData().catch((err) => {
+      Modal.error({
+        title: 'Failed to load project data',
+        content: err && (err.message || err.toString()),
+      });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
