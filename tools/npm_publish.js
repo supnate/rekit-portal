@@ -22,5 +22,5 @@ const pkgPublish = ['name', 'version', 'description', 'repository', 'keywords', 
 
 shell.mv(pkgJson, pkgJsonTmp);
 shell.ShellString(JSON.stringify(pkgPublish, null, '  ')).to(pkgJson);
-shell.exec('npm publish --tag next', { cwd: prjRoot });
+shell.exec('npm publish', { cwd: prjRoot });
 shell.mv(pkgJsonTmp, pkgJson);
