@@ -40,7 +40,7 @@ export class ProjectExplorer extends Component {
 
   constructor(props) {
     super(props);
-    const defaultOpen = ['features-node'];
+    const defaultOpen = ['features'];
     if (!Cookies.getJSON('explorerExpandedKeys')) {
       Cookies.set('explorerExpandedKeys', defaultOpen);
     }
