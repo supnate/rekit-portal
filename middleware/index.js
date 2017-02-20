@@ -41,18 +41,18 @@ module.exports = function() { // eslint-disable-line
   });
 
   // Watchpack.prototype.watch(string[] files, string[] directories, [number startTime])
-  wp.watch([], [rekitCore.utils.getProjectRoot()], Date.now() - 10);
+  // Watch src files change only
+  wp.watch([], [path.join(rekitCore.utils.getProjectRoot(), 'src')], Date.now() - 10);
   // starts watching these files and directories
   // calling this again will override the files and directories
-
 
   wp.on('aggregated', (changes) => {
     // changes: an array of all changed files
     console.log('aggregated: ', changes);
     rekitCore.vio.reset();
-    const newProjectData = fetchProjectData();
-    if (_.isEqual(newProjectData, lastProjectData)) return;
-    lastProjectData = newProjectData;
+    // const newProjectData = fetchProjectData();
+    // if (_.isEqual(newProjectData, lastProjectData)) return;
+    // lastProjectData = newProjectData;
     if (io) io.emit('fileChanged', changes);
   });
 

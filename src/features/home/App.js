@@ -31,7 +31,7 @@ export class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.home.projectDataNeedReload && !nextProps.home.fetchProjectDataError && !nextProps.home.fetchProjectDataPending) {
-      const hide = message.loading('Reloading project explorer...');
+      const hide = message.loading('Reloading project data...');
       this.props.actions.fetchProjectData()
       .then(hide)
       .catch((e) => {
