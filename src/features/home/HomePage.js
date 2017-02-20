@@ -1,17 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { autobind } from 'core-decorators';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Col, Icon, Popover, Row } from 'antd';
 import { OverviewChordDiagram } from '../diagram';
 import { TestCoverageSummary } from '../rekit-tools';
 import { getOverviewStat } from './selectors/getOverviewStat';
-import * as actions from './redux/actions';
 
 export class HomePage extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
   };
 
   state = {
@@ -145,15 +142,6 @@ function mapStateToProps(state) {
     home: state.home,
   };
 }
-
-/* istanbul ignore next */
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ ...actions }, dispatch)
-  };
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
 )(HomePage);
