@@ -17,6 +17,7 @@ const utils = rekitCore.utils;
 
 // rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
 
+let lastProjectData = null;
 module.exports = function() { // eslint-disable-line
   let io = null;
 
@@ -49,6 +50,9 @@ module.exports = function() { // eslint-disable-line
     // changes: an array of all changed files
     console.log('aggregated: ', changes);
     rekitCore.vio.reset();
+    const newProjectData = fetchProjectData();
+    if (_.isEqual(newProjectData, lastProjectData)) return;
+    lastProjectData = newProjectData;
     if (io) io.emit('fileChanged', changes);
   });
 
@@ -102,12 +106,14 @@ module.exports = function() { // eslint-disable-line
 
       try {
         switch (p) {
-          case '/api/project-data':
+          case '/api/project-data': {
+            lastProjectData = fetchProjectData();
             res.write(JSON.stringify(Object.assign({
               bgProcesses,
-            }, fetchProjectData())));
+            }, lastProjectData)));
             res.end();
             break;
+          }
           case '/api/file-content':
             if (!_.startsWith(utils.joinPath(prjRoot, req.query.file), prjRoot)) {
               // prevent ../.. in req.query.file
