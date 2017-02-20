@@ -6,8 +6,8 @@ const fetchProjectData = require('./middleware/api/fetchProjectData');
 // console.log(path.resolve('/Users/abc/../nate'));
 const core = require('rekit-core');
 console.time('Done');
-// fetchProjectData();
-console.log(JSON.stringify(fetchProjectData()));
+fetchProjectData();
+// console.log(JSON.stringify(fetchProjectData()));
 console.timeEnd('Done');
 // const _ = require('lodash');
 
