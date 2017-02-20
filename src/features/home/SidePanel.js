@@ -88,7 +88,7 @@ export class SidePanel extends Component {
     const { home } = this.props;
     const prjName = home.projectName || home.projectRoot.split('/').pop();
     return (
-      <div className="home-side-panel">
+      <div className="home-side-panel dark-theme">
         <div className="header">
           <Link className="home-link" to="/" title={this.props.home.projectRoot}>
             <h5><Icon type="home" /> {prjName}</h5>

@@ -1,6 +1,7 @@
 @import '../../styles/mixins.less';
 
 .home-side-panel {
+  background-color: #f7f7f7;
   .header {
     margin: -10px -10px 0 -10px;
     padding: 10px 10px;
@@ -45,5 +46,50 @@
   }
   .toolbar {
     margin-top: 12px;
+  }
+}
+
+#react-root .home-side-panel.dark-theme {
+  background-color: #2a2d33;
+
+  .header {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .home-link,
+  .ant-dropdown-trigger,
+  .ant-tree-title,
+  .ant-tree-switcher:after {
+    font-weight: normal;
+    color: #a9a9ab;
+  }
+
+  .ant-tree-switcher:after {
+    color: #ccc;
+  }
+
+  .ant-tree-title .search-highlight {
+    background-color: #f90;
+    color: #444;
+  }
+
+  .ant-tree li a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .ant-tree li a.ant-tree-node-selected {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .toolbar {
+    input {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #ccc;
+      border-color: rgba(255, 255, 255, 0);
+    }
+
+    .ant-input-search-icon:before {
+      color: #ccc;
+    }
   }
 }
