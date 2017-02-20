@@ -59,7 +59,7 @@ export class App extends Component {
       <LocaleProvider locale={enUS}>
         <div className="home-app">
           <SidePanel />
-          <div className="page-container">
+          <div id="page-container" className="page-container">
             {this.props.children}
           </div>
           <DialogPlace />

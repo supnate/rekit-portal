@@ -168,7 +168,7 @@ export class ProjectExplorer extends Component {
         // const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
 
         let tab = '';
-        if (/element\/[^/]+\/[^/]+\/(code|diagram|style|test)$/.test(document.location.pathname)) {
+        if (/element\/[^/]+\/(code|diagram|style|test)$/.test(document.location.pathname)) {
           // remember the current tab
           tab = `/${RegExp.$1}`;
         }

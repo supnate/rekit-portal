@@ -41,6 +41,10 @@ export class ElementPage extends Component {
     // return _.find(featureById[feature].components, { name: ele.name });
   }
 
+  getPageContainer() {
+    return document.getElementById('page-container');
+  }
+
   @autobind
   handleTabChange(tabKey) {
     // const data = this.getElementData();
@@ -154,12 +158,11 @@ export class ElementPage extends Component {
           </TabPane>}
           {data.hasCode && <TabPane tab="Code" key="code" />}
           {(data.type === 'component' && data.feature) && <TabPane tab="Style" key="style" />}
-          {data.hasTest && <TabPane tab="Test" key="test">
-            <Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}>
-              <Icon type="play-circle-o" /> Run test
-            </Button>
-          </TabPane>}
+          {data.hasTest && <TabPane tab="Test" key="test" />}
         </Tabs>}
+        {data.hasTest && tabKey === 'test' && <Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}>
+          <Icon type="play-circle-o" /> Run test
+        </Button>}
         {tabKey !== 'diagram' && data.hasCode && <CodeView file={codeFile} />}
         {!data.hasCode && !data.isPic && <Alert type="info" showIcon message={`".${ext}" is not supported to be displayed.`} />}
       </div>
