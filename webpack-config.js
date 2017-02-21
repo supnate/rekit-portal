@@ -74,7 +74,7 @@ module.exports = (type) => { // eslint-disable-line
         main: [
           'babel-polyfill',
           './styles/index.less',
-          'antd/dist/antd.less',
+          './styles/antdCustom.less',
           './index'
         ],
       },

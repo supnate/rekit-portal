@@ -79,7 +79,7 @@
   "scripts": {
     "start": "node ./tools/server.js",
     "build": "node ./tools/build.js",
-    "npm-publish": "node ./tools/npm_publish.js",
+    "npm:publish": "node ./tools/npm_publish.js",
     "test": "node ./tools/run_test.js",
     "build:test": "node ./tools/server.js -m build"
   },
