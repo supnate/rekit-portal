@@ -73,7 +73,7 @@
     "css": "less"
   },
   "theme": {
-    "font-size-base": "14px"
+    
   },
   "license": "MIT",
   "scripts": {

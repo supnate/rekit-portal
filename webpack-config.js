@@ -5,7 +5,7 @@
 const path = require('path');
 const _ = require('lodash');
 const webpack = require('webpack');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const pkgJson = require('./package.json');
 
@@ -37,7 +37,7 @@ module.exports = (type) => { // eslint-disable-line
           'react-hot-loader/patch',
           `webpack-hot-middleware/client?http://0.0.0.0:${pkgJson.rekit.devPort}`,
           './styles/index.less',
-          'antd/dist/antd.less',
+          './styles/antdCustom.less',
           './index',
         ],
       },
@@ -66,7 +66,7 @@ module.exports = (type) => { // eslint-disable-line
         main: [
           'babel-polyfill',
           './styles/index.less',
-          'antd/dist/antd.less',
+          './styles/antdCustom.less',
           './index'
         ],
       },
@@ -133,8 +133,8 @@ module.exports = (type) => { // eslint-disable-line
           loader: 'url-loader?limit=1000000' // TODO: it seems only inline base64 font works.
         }, {
           test: /\.less$/,
-          loader: isDev ? `style-loader!css-loader?sourceMap!less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(pkgJson.theme)}}`
-            : `style-loader!css-loader!less-loader?{"modifyVars":${JSON.stringify(pkgJson.theme)}}`
+          loader: isDev ? 'style-loader!css-loader?sourceMap!less-loader?{"sourceMap":true}'
+            : 'style-loader!css-loader!less-loader'
         }, {
           test: /\.css$/,
           loader: 'style-loader!css-loader'
