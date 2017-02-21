@@ -131,7 +131,6 @@ export const getOverviewChordDiagramData = createSelector(
       allElements.forEach((ele) => {
         if (!ele.deps) return;
         if (/^src\/features\/[^/]+\/index\.js$/.test(ele.file)) {
-          console.log('exlucde: ', ele.file);
           return;
         }
         const allDeps = [
