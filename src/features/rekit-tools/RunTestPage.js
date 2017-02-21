@@ -67,7 +67,7 @@ export class RunTestPage extends Component {
         <Row>
           <Col span="16">
             <Button type="primary" disabled={runTestRunning} onClick={this.handleTestButtonClick}>
-              {runTestRunning ? 'Running tests...' : 'Re-run tests'}
+              {runTestRunning ? 'Running tests...' : 'Run tests'}
             </Button>
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>

@@ -22,7 +22,7 @@ export const getElementDiagramData = createSelector(
       id: element.file,
       type: element.type,
       file: element.file,
-      r: 40,
+      r: 50,
     });
 
     _.values(elementById).forEach((item) => {
@@ -47,7 +47,7 @@ export const getElementDiagramData = createSelector(
             id: dep.file,
             type: dep.type,
             file: dep.file,
-            r: 10,
+            r: 14,
           });
           links.push({
             source: item.file,
@@ -61,7 +61,7 @@ export const getElementDiagramData = createSelector(
             id: item.file,
             type: item.type,
             file: item.file,
-            r: 10,
+            r: 14,
           });
           links.push({
             source: item.file,
@@ -89,7 +89,7 @@ export const getElementDiagramData = createSelector(
             name: featureById[ele.feature].name,
             id: ele.feature,
             type: 'feature',
-            r: 20,
+            r: 22,
           });
 
           links.push({

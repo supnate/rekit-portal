@@ -36,8 +36,8 @@ export default class ElementDiagram extends PureComponent {
 
     // TODO: Why not equal to r?
     const refXMap = {
-      'dep-on': 26,
-      'dep-by': 76,
+      'dep-on': 32,
+      'dep-by': 92,
     };
     this.svg.append('svg:defs').selectAll('marker')
       .data(['dep-on', 'dep-by'])
@@ -176,7 +176,7 @@ export default class ElementDiagram extends PureComponent {
     const distanceMap = {
       child: 100,
       dep: 100,
-      'no-line': 260,
+      'no-line': 280,
     };
 
     this.sim.nodes(dataNodes);
