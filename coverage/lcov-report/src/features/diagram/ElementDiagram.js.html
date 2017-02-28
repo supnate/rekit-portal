@@ -3,12 +3,12 @@
 <head>
     <title>Code coverage report for src/features/diagram/ElementDiagram.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="..\..\..\prettify.css" />
-    <link rel="stylesheet" href="..\..\..\base.css" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(..\..\..\sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\..\index.html">All files</a> / <a href="index.html">src/features/diagram</a> ElementDiagram.js
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/diagram</a> ElementDiagram.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">4.08% </span>
+        <span class="strong">4% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/98</span>
+        <span class='fraction'>4/100</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">3.33% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>2/41</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">4.55% </span>
+        <span class="strong">4.44% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/88</span>
+        <span class='fraction'>4/90</span>
       </div>
     </div>
   </div>
@@ -309,7 +309,10 @@
 264
 265
 266
-267</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+267
+268
+269</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -413,6 +416,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -525,9 +531,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -576,6 +580,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PureComponent, PropTypes } from 'react';
+import _ from 'lodash';
 import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
@@ -612,8 +617,8 @@ export default class ElementDiagram extends PureComponent {
 &nbsp;
     // TODO: Why not equal to r?
     const refXMap = <span class="cstat-no" title="statement not covered" >{</span>
-      'dep-on': 26,
-      'dep-by': 76,
+      'dep-on': 32,
+      'dep-by': 92,
     };
 <span class="cstat-no" title="statement not covered" >    this.svg.append('svg:defs').selectAll('marker')</span>
       .data(['dep-on', 'dep-by'])
@@ -679,6 +684,9 @@ export default class ElementDiagram extends PureComponent {
 <span class="fstat-no" title="function not covered" >  up</span>dateDiagram() {
     const { homeStore, elementId } = <span class="cstat-no" title="statement not covered" >this.props;</span>
     const diagramData = <span class="cstat-no" title="statement not covered" >getElementDiagramData(homeStore, elementId);</span>
+    const dataNodes = <span class="cstat-no" title="statement not covered" >diagramData.nodes;</span>
+    // d3.forceLayout will alter links data, so clone it so that the data could be re-used.
+    const dataLinks = <span class="cstat-no" title="statement not covered" >_.cloneDeep(diagramData.links);</span>
 &nbsp;
     const drawBgNode = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >d3</span>Selection =&gt; <span class="cstat-no" title="statement not covered" >d3Selection</span></span>
       .attr('r', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d.r + 3)</span>
@@ -693,7 +701,7 @@ export default class ElementDiagram extends PureComponent {
         .on('end', this.dragended)
       )
     ;
-    const bgNodes = <span class="cstat-no" title="statement not covered" >this.bgNodesGroup.selectAll('circle').data(diagramData.nodes.filter(<span class="fstat-no" title="function not covered" >n </span>=&gt; <span class="cstat-no" title="statement not covered" >n.type === 'feature')</span>);</span>
+    const bgNodes = <span class="cstat-no" title="statement not covered" >this.bgNodesGroup.selectAll('circle').data(dataNodes.filter(<span class="fstat-no" title="function not covered" >n </span>=&gt; <span class="cstat-no" title="statement not covered" >n.type === 'feature')</span>);</span>
 <span class="cstat-no" title="statement not covered" >    bgNodes.exit().remove();</span>
 <span class="cstat-no" title="statement not covered" >    this.bgNodes = drawBgNode(bgNodes);</span>
 <span class="cstat-no" title="statement not covered" >    this.bgNodes = drawBgNode(bgNodes.enter().append('circle')).merge(this.bgNodes);</span>
@@ -711,7 +719,7 @@ export default class ElementDiagram extends PureComponent {
         .on('end', this.dragended)
       )
     ;
-    const nodes = <span class="cstat-no" title="statement not covered" >this.nodesGroup.selectAll('circle').data(diagramData.nodes);</span>
+    const nodes = <span class="cstat-no" title="statement not covered" >this.nodesGroup.selectAll('circle').data(dataNodes);</span>
 <span class="cstat-no" title="statement not covered" >    nodes.exit().remove();</span>
 <span class="cstat-no" title="statement not covered" >    this.nodes = drawNode(nodes);</span>
 <span class="cstat-no" title="statement not covered" >    this.nodes = drawNode(nodes.enter().append('circle')).merge(this.nodes);</span>
@@ -722,7 +730,7 @@ export default class ElementDiagram extends PureComponent {
       .attr('stroke-dasharray', <span class="fstat-no" title="function not covered" >d </span>=&gt; (<span class="cstat-no" title="statement not covered" >d.target === elementId ? '3, 3' : '')</span>)
       .attr('marker-end', <span class="fstat-no" title="function not covered" >l </span>=&gt; (<span class="cstat-no" title="statement not covered" >l.type === 'dep' ? `url(#${l.source === elementId ? 'dep-on' : 'dep-by'})` : '')</span>)
     ;
-    const links = <span class="cstat-no" title="statement not covered" >this.linksGroup.selectAll('line').data(diagramData.links.filter(<span class="fstat-no" title="function not covered" >l </span>=&gt; <span class="cstat-no" title="statement not covered" >l.type !== 'no-line')</span>);</span>
+    const links = <span class="cstat-no" title="statement not covered" >this.linksGroup.selectAll('line').data(dataLinks.filter(<span class="fstat-no" title="function not covered" >l </span>=&gt; <span class="cstat-no" title="statement not covered" >l.type !== 'no-line')</span>);</span>
 <span class="cstat-no" title="statement not covered" >    links.exit().remove();</span>
 <span class="cstat-no" title="statement not covered" >    this.links = drawLink(links);</span>
 <span class="cstat-no" title="statement not covered" >    this.links = drawLink(links.enter().append('line')).merge(this.links);</span>
@@ -741,7 +749,7 @@ export default class ElementDiagram extends PureComponent {
       )
     ;
 &nbsp;
-    const nodeLabels = <span class="cstat-no" title="statement not covered" >this.nodeLabelsGroup.selectAll('text').data(diagramData.nodes);</span>
+    const nodeLabels = <span class="cstat-no" title="statement not covered" >this.nodeLabelsGroup.selectAll('text').data(dataNodes);</span>
 <span class="cstat-no" title="statement not covered" >    nodeLabels.exit().remove();</span>
 <span class="cstat-no" title="statement not covered" >    this.nodeLabels = drawNodeLabel(nodeLabels);</span>
 <span class="cstat-no" title="statement not covered" >    this.nodeLabels = drawNodeLabel(nodeLabels.enter().append('text')).merge(this.nodeLabels);</span>
@@ -749,13 +757,13 @@ export default class ElementDiagram extends PureComponent {
     const distanceMap = <span class="cstat-no" title="statement not covered" >{</span>
       child: 100,
       dep: 100,
-      'no-line': 260,
+      'no-line': 280,
     };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    this.sim.nodes(diagramData.nodes);</span>
+<span class="cstat-no" title="statement not covered" >    this.sim.nodes(dataNodes);</span>
 <span class="cstat-no" title="statement not covered" >    this.sim</span>
       .force('link')
-      .links(diagramData.links)
+      .links(dataLinks)
       .distance(<span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >distanceMap[d.type] || 50)</span>
     ;
 <span class="cstat-no" title="statement not covered" >    this.sim.alpha(1).restart();</span>
@@ -791,9 +799,7 @@ export default class ElementDiagram extends PureComponent {
     const home = <span class="cstat-no" title="statement not covered" >this.props.homeStore;</span>
     const ele = <span class="cstat-no" title="statement not covered" >home.elementById[node.id];</span>
 <span class="cstat-no" title="statement not covered" >    if (ele.type !== 'feature') {</span>
-      // const file = ele.file.replace(`${home.projectRoot}/src/features/${ele.feature}/`, '');
 <span class="cstat-no" title="statement not covered" >      browserHistory.push(`/element/${encodeURIComponent(ele.file)}/diagram`);</span>
-      // browserHistory.push(`/element/${ele.feature}/${encodeURIComponent(file)}/diagram`);
     }
   }
 &nbsp;
@@ -847,10 +853,10 @@ export default class ElementDiagram extends PureComponent {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 18 2017 20:46:43 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 01 2017 00:32:09 GMT+0800 (CST)
 </div>
 </div>
-<script src="..\..\..\prettify.js"></script>
+<script src="../../../prettify.js"></script>
 <script>
 window.onload = function () {
         if (typeof prettyPrint === 'function') {
@@ -858,6 +864,6 @@ window.onload = function () {
         }
 };
 </script>
-<script src="..\..\..\sorter.js"></script>
+<script src="../../../sorter.js"></script>
 </body>
 </html>

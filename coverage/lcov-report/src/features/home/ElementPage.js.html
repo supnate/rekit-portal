@@ -3,12 +3,12 @@
 <head>
     <title>Code coverage report for src/features/home/ElementPage.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="..\..\..\prettify.css" />
-    <link rel="stylesheet" href="..\..\..\base.css" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(..\..\..\sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\..\index.html">All files</a> / <a href="index.html">src/features/home</a> ElementPage.js
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/home</a> ElementPage.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">23.73% </span>
+        <span class="strong">23.33% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>14/59</span>
+        <span class='fraction'>14/60</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">5.88% </span>
+        <span class="strong">5.63% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/68</span>
+        <span class='fraction'>4/71</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.86% </span>
+        <span class="strong">37.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/7</span>
+        <span class='fraction'>3/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">26% </span>
+        <span class="strong">25.49% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/50</span>
+        <span class='fraction'>13/51</span>
       </div>
     </div>
   </div>
@@ -222,7 +222,10 @@
 177
 178
 179
-180</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+180
+181
+182
+183</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -266,6 +269,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -359,7 +366,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -442,6 +448,10 @@ export class ElementPage extends Component {
       isPic: /^(jpe?g|png|gif|bmp)$/.test(ext),
     };
     // return _.find(featureById[feature].components, { name: ele.name });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tPageContainer() {
+<span class="cstat-no" title="statement not covered" >    return document.getElementById('page-container');</span>
   }
 &nbsp;
   @autobind
@@ -557,12 +567,11 @@ export class ElementPage extends Component {
           &lt;/TabPane&gt;}
           {data.hasCode &amp;&amp; &lt;TabPane tab="Code" key="code" /&gt;}
           {(data.type === 'component' &amp;&amp; data.feature) &amp;&amp; &lt;TabPane tab="Style" key="style" /&gt;}
-          {data.hasTest &amp;&amp; &lt;TabPane tab="Test" key="test"&gt;
-            &lt;Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}&gt;
-              &lt;Icon type="play-circle-o" /&gt; Run test
-            &lt;/Button&gt;
-          &lt;/TabPane&gt;}
+          {data.hasTest &amp;&amp; &lt;TabPane tab="Test" key="test" /&gt;}
         &lt;/Tabs&gt;}
+        {data.hasTest &amp;&amp; tabKey === 'test' &amp;&amp; &lt;Button type="primary" style={{ marginBottom: 10 }} onClick={this.handleRunTest}&gt;
+          &lt;Icon type="play-circle-o" /&gt; Run test
+        &lt;/Button&gt;}
         {tabKey !== 'diagram' &amp;&amp; data.hasCode &amp;&amp; &lt;CodeView file={codeFile} /&gt;}
         {!data.hasCode &amp;&amp; !data.isPic &amp;&amp; &lt;Alert type="info" showIcon message={`".${ext}" is not supported to be displayed.`} /&gt;}
       &lt;/div&gt;
@@ -586,10 +595,10 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Feb 18 2017 20:46:43 GMT+0800 (China Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 01 2017 00:32:09 GMT+0800 (CST)
 </div>
 </div>
-<script src="..\..\..\prettify.js"></script>
+<script src="../../../prettify.js"></script>
 <script>
 window.onload = function () {
         if (typeof prettyPrint === 'function') {
@@ -597,6 +606,6 @@ window.onload = function () {
         }
 };
 </script>
-<script src="..\..\..\sorter.js"></script>
+<script src="../../../sorter.js"></script>
 </body>
 </html>
