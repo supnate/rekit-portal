@@ -4,7 +4,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const rekitCore = require('rekit-core');
 
-const refactor = rekitCore.refactor;
+const app = rekitCore.app;
 const utils = rekitCore.utils;
 
 function mapRelPathForDepsByArr(arr) {
@@ -23,26 +23,26 @@ function mapRelPathForDepsByArr(arr) {
 }
 
 function fetchProjectData() {
-  const fids = refactor.getFeatures();
+  const fids = app.getFeatures();
 
   const features = fids.map(f => (Object.assign({
     key: f,
     type: 'feature',
     name: _.flow(_.lowerCase, _.upperFirst)(f),
-  }, refactor.getFeatureStructure(f))));
+  }, app.getFeatureStructure(f))));
 
   features.forEach((f) => {
     f.components.forEach((item) => {
-      item.deps = refactor.getDeps(item.file);
+      item.deps = app.getDeps(item.file);
     });
     mapRelPathForDepsByArr(f.components);
 
     f.actions.forEach((item) => {
-      item.deps = refactor.getDeps(item.file);
+      item.deps = app.getDeps(item.file);
     });
 
     f.misc.forEach((item) => {
-      if (!item.children && /\.js$/.test(item.file)) item.deps = refactor.getDeps(item.file);
+      if (!item.children && /\.js$/.test(item.file)) item.deps = app.getDeps(item.file);
     });
 
     mapRelPathForDepsByArr(f.components);
@@ -51,7 +51,7 @@ function fetchProjectData() {
   });
 
   const prjRoot = utils.getProjectRoot();
-  const srcFiles = refactor.getSrcFiles(); // readDir(utils.joinPath(prjRoot, 'src'));
+  const srcFiles = app.getSrcFiles(); // readDir(utils.joinPath(prjRoot, 'src'));
   mapRelPathForDepsByArr(srcFiles);
 
   const prjPkgJson = require(utils.joinPath(prjRoot, 'package.json')); // eslint-disable-line
