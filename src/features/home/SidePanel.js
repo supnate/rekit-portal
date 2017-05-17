@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { browserHistory, Link } from 'react-router';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';

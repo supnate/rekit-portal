@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { browserHistory } from 'react-router';
+import createHistory from 'history/createBrowserHistory'
 import _ from 'lodash';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
@@ -11,6 +11,7 @@ import * as actions from './redux/actions';
 import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
 import { getExpandedKeys, getFilteredExplorerTreeData } from './selectors/explorerTreeData';
 
+const browserHistory = createHistory();
 const TreeNode = Tree.TreeNode;
 
 const menuItems = {

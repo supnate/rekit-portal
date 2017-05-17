@@ -1,6 +1,7 @@
-import React, { PureComponent, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 import * as d3 from 'd3';
 import { Checkbox, Col, Icon, Popover, Row } from 'antd';

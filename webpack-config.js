@@ -45,7 +45,6 @@ module.exports = (type) => { // eslint-disable-line
         // Here dll is only used for dev.
         'dev-vendors': [
           'react-hot-loader',
-          'react-proxy',
           'babel-polyfill',
           'lodash',
           'react',

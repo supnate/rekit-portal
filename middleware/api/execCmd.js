@@ -10,4 +10,3 @@ function execCmd(req) {
 }
 
 module.exports = execCmd;
-

@@ -1,5 +1,6 @@
 /* eslint react/jsx-no-target-blank: 0 */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { RekitSteps } from './';
 

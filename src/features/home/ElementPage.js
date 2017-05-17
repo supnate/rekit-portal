@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
 import { Alert, Button, Icon, Tabs } from 'antd';

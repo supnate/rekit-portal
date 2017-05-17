@@ -1,5 +1,6 @@
-import React, { PureComponent, PropTypes } from 'react';
-import { browserHistory, Link } from 'react-router';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory, Link } from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
 import { connect } from 'react-redux';

@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router-dom';
 
 export function gotoPage(urlPath) {
   browserHistory.push(urlPath);

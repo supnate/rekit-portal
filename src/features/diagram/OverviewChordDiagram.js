@@ -1,5 +1,6 @@
-import React, { PureComponent, PropTypes } from 'react';
-import { browserHistory } from 'react-router';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';

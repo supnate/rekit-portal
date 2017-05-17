@@ -4,12 +4,12 @@ import { AppContainer } from 'react-hot-loader';
 import { render } from 'react-dom';
 import io from 'socket.io-client';
 import { browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
+// import { syncHistoryWithStore } from 'react-router-redux';
 import Root from './Root';
 import configStore from './common/configStore';
 
 const store = configStore();
-const history = syncHistoryWithStore(browserHistory, store);
+// const history = syncHistoryWithStore(browserHistory, store);
 
 if (process.env.NODE_ENV !== 'test') {
   const socket = io();
@@ -60,7 +60,7 @@ if (!root) {
 
 render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <Root store={store} />
   </AppContainer>,
   root
 );
@@ -71,7 +71,7 @@ if (module.hot) {
     const NextRoot = require('./Root').default; // eslint-disable-line
     render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <NextRoot store={store} />
       </AppContainer>,
       root
     );

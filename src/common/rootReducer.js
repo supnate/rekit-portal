@@ -1,7 +1,6 @@
 // This file is auto maintained by Rekit, you usually don't need to edit it manually.
 
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import homeReducer from '../features/home/redux/reducer';
 import commonReducer from '../features/common/redux/reducer';
 import rekitCmdsReducer from '../features/rekit-cmds/redux/reducer';
@@ -15,7 +14,6 @@ import rekitToolsReducer from '../features/rekit-tools/redux/reducer';
 // So that it's easy for others to understand it and Rekit could manage theme.
 
 const reducerMap = {
-  routing: routerReducer,
   home: homeReducer,
   common: commonReducer,
   rekitCmds: rekitCmdsReducer,
