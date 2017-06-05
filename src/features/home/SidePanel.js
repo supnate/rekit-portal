@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { Dropdown, Icon, Menu, Modal } from 'antd';
 import * as actions from './redux/actions';
+import history from '../../common/history';
 import { SearchInput } from '../common';
 import { showCmdDialog } from '../rekit-cmds/redux/actions';
 import { About, DemoAlert, ProjectExplorer } from './';
@@ -47,13 +48,13 @@ export class SidePanel extends Component {
         });
         break;
       case 'build':
-        browserHistory.push('/tools/build');
+        history.push('/tools/build');
         break;
       case 'tests':
-        browserHistory.push('/tools/tests');
+        history.push('/tools/tests');
         break;
       case 'test-coverage':
-        browserHistory.push('/tools/coverage');
+        history.push('/tools/coverage');
         break;
       case 'about':
         this.showAbout();

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
@@ -8,6 +7,7 @@ import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 import { Checkbox, Col, Icon, Popover, Row, Tooltip } from 'antd';
+import history from '../../common/history';
 import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
 
 let uidSeed = 0;
@@ -341,7 +341,7 @@ export class OverviewChordDiagram extends PureComponent {
       const { elementById, projectRoot } = this.props.home;
       const ele = elementById[d.id];
       const file = ele.file.replace(`${projectRoot}/src/features/${ele.feature}/`, '');
-      browserHistory.push(`/element/${encodeURIComponent(file)}/diagram`);
+      history.push(`/element/${encodeURIComponent(file)}/diagram`);
     }
   }
 

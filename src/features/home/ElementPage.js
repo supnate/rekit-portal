@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { browserHistory } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
 import { Alert, Button, Icon, Tabs } from 'antd';
+import history from '../../common/history';
 import { ElementDiagram } from '../diagram';
 import { colors } from '../common';
 import { CodeView } from './';
@@ -14,17 +14,18 @@ const TabPane = Tabs.TabPane;
 export class ElementPage extends Component {
   static propTypes = {
     home: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
-    params: {},
+    match: {},
   };
 
   getElementData() {
     const { elementById, projectRoot } = this.props.home;
-    const { file } = this.props.params;
+    let file = this.props.match.params.file;
     if (!file) return null;
+    file = decodeURIComponent(file);
     const fullPath = projectRoot + file;
     const arr = fullPath.split('.');
     const ext = arr.length > 1 ? arr.pop() : null;
@@ -49,15 +50,15 @@ export class ElementPage extends Component {
   @autobind
   handleTabChange(tabKey) {
     // const data = this.getElementData();
-    browserHistory.push(`/element/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
-    // browserHistory.push(`/element/${data.feature}/${encodeURIComponent(this.props.params.file)}/${tabKey}`);
+    history.push(`/element/${encodeURIComponent(this.props.match.params.file)}/${tabKey}`);
+    // history.push(`/element/${data.feature}/${encodeURIComponent(this.props.match.params.file)}/${tabKey}`);
   }
 
   @autobind
   handleRunTest() {
-    const { file } = this.props.params;
-    browserHistory.push(`/tools/tests/${encodeURIComponent(file)}`);
-    // browserHistory.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
+    const { file } = this.props.match.params;
+    history.push(`/tools/tests/${encodeURIComponent(file)}`);
+    // history.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
   }
 
   renderNotFound() {
@@ -109,7 +110,7 @@ export class ElementPage extends Component {
     const onlyCode = data.hasCode && !data.hasDiagram && !data.hasTest;
 
     let codeFile;
-    let tabKey = this.props.params.type || (onlyCode ? 'code' : 'diagram');
+    let tabKey = this.props.match.params.type || (onlyCode ? 'code' : 'diagram');
 
     if (!data.hasCode) tabKey = 'diagram';
     if (onlyCode) tabKey = 'code';
@@ -122,7 +123,7 @@ export class ElementPage extends Component {
         codeFile = `src/features/${data.feature}/${data.name}.${home.cssExt}`;
         break;
       case 'test':
-        codeFile = `tests/${this.props.params.file.replace(/^src\//, '').replace('.js', '')}.test.js`;
+        codeFile = `tests/${decodeURIComponent(this.props.match.params.file).replace(/^src\//, '').replace('.js', '')}.test.js`;
         break;
       default:
         codeFile = data.file;

@@ -42,4 +42,5 @@ function handleIndexRoute(route) {
 }
 
 routes.forEach(handleIndexRoute);
+
 export default routes;

@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as d3 from 'd3';
 import { Alert, Button, Icon, Tooltip } from 'antd';
+import history from '../../common/history';
 
 export class TestCoverageSummary extends PureComponent {
   static propTypes = {
@@ -38,7 +39,7 @@ export class TestCoverageSummary extends PureComponent {
   }
 
   handleRunTests() {
-    browserHistory.push('/tools/tests');
+    history.push('/tools/tests');
   }
 
   renderLoading() {

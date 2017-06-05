@@ -25,7 +25,6 @@ if (process.env.NODE_ENV !== 'test') {
   });
 
   socket.on('output', (data) => {
-    console.log('on output: ', data);
     store.dispatch({
       type: 'REKIT_PORTAL_OUTPUT',
       data,

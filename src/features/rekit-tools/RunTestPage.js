@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
 import { autobind } from 'core-decorators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Button, Col, Icon, Modal, Row } from 'antd';
 import Convert from 'ansi-to-html';
+import history from '../../common/history';
 import { showDemoAlert } from '../home/redux/actions';
 import * as actions from './redux/actions';
 import { getTestFilePattern } from './utils';
@@ -18,7 +18,7 @@ export class RunTestPage extends Component {
     home: PropTypes.object.isRequired,
     rekitTools: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   };
 
   // componentDidMount() {
@@ -26,15 +26,15 @@ export class RunTestPage extends Component {
   // }
 
   // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.params.testFile !== this.props.params.testFile) {
+  //   if (nextProps.match.params.testFile !== this.props.match.params.testFile) {
   //     this.checkAndRunTests(nextProps);
   //   }
   // }
 
   // checkAndRunTests(props) {
   //   const rekitTools = this.props.rekitTools;
-  //   if (rekitTools.currentTestFile !== props.params.testFile && !rekitTools.runTestRunning) {
-  //     this.props.actions.runTest(props.params.testFile).catch(this.handleRunTestError);
+  //   if (rekitTools.currentTestFile !== props.match.params.testFile && !rekitTools.runTestRunning) {
+  //     this.props.actions.runTest(props.match.params.testFile).catch(this.handleRunTestError);
   //   }
   // }
 
@@ -52,11 +52,11 @@ export class RunTestPage extends Component {
 
   @autobind
   handleTestButtonClick() {
-    this.props.actions.runTest(this.props.params.testFile).catch(this.handleRunTestError);
+    this.props.actions.runTest(this.props.match.params.testFile).catch(this.handleRunTestError);
   }
   @autobind
   handleTestCoverageClick() {
-    browserHistory.push('/tools/coverage');
+    history.push('/tools/coverage');
   }
 
   render() {
@@ -64,7 +64,7 @@ export class RunTestPage extends Component {
     const { runTestPending, runTestRunning } = this.props.rekitTools;
     return (
       <div className="rekit-tools-run-test-page">
-        <h2><label>Run tests: </label>tests/{getTestFilePattern(this.props.params.testFile)}</h2>
+        <h2><label>Run tests: </label>tests/{getTestFilePattern(this.props.match.params.testFile)}</h2>
         <Row>
           <Col span="16">
             <Button type="primary" disabled={runTestRunning} onClick={this.handleTestButtonClick}>
@@ -72,7 +72,7 @@ export class RunTestPage extends Component {
             </Button>
           </Col>
           <Col span="8" style={{ textAlign: 'right' }}>
-            {!this.props.params.testFile && this.props.home.testCoverage &&
+            {!this.props.match.params.testFile && this.props.home.testCoverage &&
               <Button type="ghost" disabled={runTestRunning || runTestPending} onClick={this.handleTestCoverageClick}>
                 <Icon type="pie-chart" />Test coverage
               </Button>}

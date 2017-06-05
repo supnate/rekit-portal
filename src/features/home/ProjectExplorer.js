@@ -1,17 +1,16 @@
 import React, { PropTypes, Component } from 'react';
-import createHistory from 'history/createBrowserHistory'
 import _ from 'lodash';
 import Cookies from 'js-cookie';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
+import history from '../../common/history';
 import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
 import * as actions from './redux/actions';
 import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
 import { getExpandedKeys, getFilteredExplorerTreeData } from './selectors/explorerTreeData';
 
-const browserHistory = createHistory();
 const TreeNode = Tree.TreeNode;
 
 const menuItems = {
@@ -162,7 +161,7 @@ export class ProjectExplorer extends Component {
 
       if (evt.node.props.className === 'routes') {
         // feature's routes
-        browserHistory.push(`/${key.replace('-routes', '')}/routes`);
+        history.push(`/${key.replace('-routes', '')}/routes`);
       } else {
         // const prjRoot = this.props.home.projectRoot;
         // const ele = this.props.home.elementById[key];
@@ -174,8 +173,9 @@ export class ProjectExplorer extends Component {
           tab = `/${RegExp.$1}`;
         }
 
-        browserHistory.push(`/element/${encodeURIComponent(key)}${tab}`);
-        // browserHistory.push(`/element/${ele.feature || '_src_'}/${encodeURIComponent(file)}${tab}`);
+        history.push(`/element/${encodeURIComponent(key)}${tab}`);
+        // history.push(`/element/?file=${key}`);
+        // history.push(`/element/${ele.feature || '_src_'}/${encodeURIComponent(file)}${tab}`);
       }
     }
 
@@ -258,19 +258,19 @@ export class ProjectExplorer extends Component {
         break;
       case 'run-test': {
         const relFile = cmdContext.file.replace(`${prjRoot}/`, '');
-        browserHistory.push(`/tools/tests/${encodeURIComponent(relFile)}`);
+        history.push(`/tools/tests/${encodeURIComponent(relFile)}`);
         break;
       }
       case 'run-tests':
         if (cmdContext.elementType === 'features') {
           // features node
-          browserHistory.push('/tools/tests/features');
+          history.push('/tools/tests/features');
         } else if (!cmdContext.elementName) {
           // components, actions
-          browserHistory.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
+          history.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);
         } else if (cmdContext.elementType === 'feature') {
           // feature node
-          browserHistory.push(`/tools/tests/${cmdContext.feature}`);
+          history.push(`/tools/tests/${cmdContext.feature}`);
         }
         break;
       case 'del':

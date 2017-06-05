@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Alert, Button } from 'antd';
+import history from '../../common/history';
 
 export class TestCoveragePage extends Component {
   static propTypes = {
@@ -10,7 +10,7 @@ export class TestCoveragePage extends Component {
   };
 
   handleRunTestsClick() {
-    browserHistory.push('/tools/tests');
+    history.push('/tools/tests');
   }
 
   render() {

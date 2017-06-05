@@ -1,10 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { routerMiddleware } from 'react-router-redux'
+import history from './history';
 import rootReducer from './rootReducer';
 
-const middlewares = [ // REKIT_ARCHOR_DO_NOT_CHANGE
+const router = routerMiddleware(history);
+
+// NOTE: Do not change middleares delaration pattern since rekit plugins may register middlewares to it.
+const middlewares = [
   thunk,
-]; // REKIT_ARCHOR_DO_NOT_CHANGE
+  router,
+];
 
 let devToolsExtension = f => f;
 

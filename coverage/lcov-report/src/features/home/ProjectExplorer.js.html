@@ -1,0 +1,1409 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/features/home/ProjectExplorer.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/home</a> ProjectExplorer.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.59% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>11/128</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.5% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/80</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.94% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>11/123</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes, Component } from 'react';
+import _ from 'lodash';
+import Cookies from 'js-cookie';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { autobind } from 'core-decorators';
+import { Dropdown, Icon, Menu, message, Modal, Tree, Spin } from 'antd';
+import history from '../../common/history';
+import cmdSuccessNotification from '../rekit-cmds/cmdSuccessNotification';
+import * as actions from './redux/actions';
+import { execCmd, showCmdDialog, dismissExecCmdError } from '../rekit-cmds/redux/actions';
+import { getExpandedKeys, getFilteredExplorerTreeData } from './selectors/explorerTreeData';
+&nbsp;
+const TreeNode = Tree.TreeNode;
+&nbsp;
+const menuItems = {
+  addAction: { name: 'Add action', key: 'add-action' },
+  addComponent: { name: 'Add component', key: 'add-component' },
+  addFeature: { name: 'Add feature', key: 'add-feature' },
+  del: { name: 'Delete', key: 'del' },
+  move: { name: 'Move', key: 'move' },
+  rename: { name: 'Rename', key: 'rename' },
+  showTest: { name: 'Unit test', key: 'show-test' },
+  runTest: { name: 'Run test', key: 'run-test' },
+  runTests: { name: 'Run tests', key: 'run-tests' },
+  showStyle: { name: 'Style', key: 'show-style' },
+};
+&nbsp;
+export class ProjectExplorer extends Component {
+  static propTypes = {
+    home: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    searchKey: PropTypes.string,
+    treeData: PropTypes.object.isRequired,
+  };
+&nbsp;
+  static defaultProps = {
+    searchKey: '',
+  };
+&nbsp;
+  constructor(props) {
+    super(props);
+    const defaultOpen = ['features'];
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!Cookies.getJSON('explorerExpandedKeys')) {
+      Cookies.set('explorerExpandedKeys', defaultOpen);
+    }
+    this.state.expandedKeys = Cookies.getJSON('explorerExpandedKeys');
+  }
+  state = {
+    expandedKeys: [],
+    contextMenu: [],
+    selectedKey: null,
+  };
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tMenuItems(treeNode) {
+    const evtKey = <span class="cstat-no" title="statement not covered" >treeNode.props.eventKey;</span>
+    // eventKey is 'file' property of most items
+    const { home } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    let ele = <span class="cstat-no" title="statement not covered" >home.elementById[evtKey] || home.featureById[evtKey];</span>
+<span class="cstat-no" title="statement not covered" >    if (!ele) {</span>
+      const key = <span class="cstat-no" title="statement not covered" >treeNode.props.eventKey;</span>
+      const i = <span class="cstat-no" title="statement not covered" >key.lastIndexOf('-');</span>
+<span class="cstat-no" title="statement not covered" >      ele = {</span>
+        type: key.substring(i + 1),
+      };
+    }
+<span class="cstat-no" title="statement not covered" >    switch (ele.type) {</span>
+      case 'features':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.addFeature,
+          menuItems.runTests,
+        ];
+      case 'feature':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.addComponent,
+          menuItems.addAction,
+          menuItems.rename,
+          menuItems.runTests,
+          menuItems.del,
+        ];
+      case 'routes':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'actions':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.addAction,
+          menuItems.runTests,
+        ];
+      case 'action':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.rename,
+          menuItems.move,
+          menuItems.runTest,
+          menuItems.del,
+        ];
+      case 'components':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.addComponent,
+          menuItems.runTests,
+        ];
+      case 'component':
+<span class="cstat-no" title="statement not covered" >        return [</span>
+          menuItems.rename,
+          menuItems.move,
+          menuItems.runTest,
+          menuItems.del,
+        ];
+      case 'misc':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'misc-file':
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return [];</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  cr</span>eateCmdContext(evt) {
+    // when right click a menu item, need to cache the node context for context menu usage.
+&nbsp;
+    const key = <span class="cstat-no" title="statement not covered" >evt.node.props.eventKey;</span>
+    const { home } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const ele = <span class="cstat-no" title="statement not covered" >home.elementById[key] || home.featureById[key];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (ele) {</span>
+<span class="cstat-no" title="statement not covered" >      this.cmdContext = {</span>
+        feature: ele.feature,
+        elementType: ele.type,
+        elementName: ele.name,
+        file: key,
+      };
+    } else {
+      // for &lt;feature&gt;.routes, .actions, .components, .misc
+      const i = <span class="cstat-no" title="statement not covered" >key.lastIndexOf('-');</span>
+<span class="cstat-no" title="statement not covered" >      this.cmdContext = {</span>
+        feature: key.substring(0, i),
+        elementType: key.substring(i + 1),
+        elementName: null,
+      };
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleSelect(selected, evt) {
+    const key = <span class="cstat-no" title="statement not covered" >evt.node.props.eventKey;</span>
+&nbsp;
+    const hasChildren = <span class="cstat-no" title="statement not covered" >!!_.get(evt, 'node.props.children');</span>
+    const keysInCookie = <span class="cstat-no" title="statement not covered" >Cookies.getJSON('explorerExpandedKeys');</span>
+&nbsp;
+    let expandedKeys = <span class="cstat-no" title="statement not covered" >keysInCookie || this.state.expandedKeys;</span>
+    let selectedKey = <span class="cstat-no" title="statement not covered" >this.state.selectedKey;</span>
+<span class="cstat-no" title="statement not covered" >    if (hasChildren) {</span>
+      // toggle expanding
+<span class="cstat-no" title="statement not covered" >      if (expandedKeys.includes(key)) {</span>
+<span class="cstat-no" title="statement not covered" >        expandedKeys = expandedKeys.filter(<span class="fstat-no" title="function not covered" >k </span>=&gt; <span class="cstat-no" title="statement not covered" >k !== key)</span>;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        expandedKeys = [...expandedKeys, key];</span>
+      }
+    } else {
+      // key is the relative file path
+<span class="cstat-no" title="statement not covered" >      selectedKey = key;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (evt.node.props.className === 'routes') {</span>
+        // feature's routes
+<span class="cstat-no" title="statement not covered" >        history.push(`/${key.replace('-routes', '')}/routes`);</span>
+      } else {
+        // const prjRoot = this.props.home.projectRoot;
+        // const ele = this.props.home.elementById[key];
+        // const file = key.replace(`${prjRoot}/src/features/${ele.feature}/`, '');
+&nbsp;
+        let tab = <span class="cstat-no" title="statement not covered" >'';</span>
+<span class="cstat-no" title="statement not covered" >        if (/element\/[^/]+\/(code|diagram|style|test)$/.test(document.location.pathname)) {</span>
+          // remember the current tab
+<span class="cstat-no" title="statement not covered" >          tab = `/${RegExp.$1}`;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        history.push(`/element/${encodeURIComponent(key)}${tab}`);</span>
+        // history.push(`/element/?file=${key}`);
+        // history.push(`/element/${ele.feature || '_src_'}/${encodeURIComponent(file)}${tab}`);
+      }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Cookies.set('explorerExpandedKeys', expandedKeys, { expires: 999 });</span>
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      selectedKey,
+      expandedKeys,
+    });
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleExpand(expanded, evt) {
+    const key = <span class="cstat-no" title="statement not covered" >evt.node.props.eventKey;</span>
+    const keysInCookie = <span class="cstat-no" title="statement not covered" >Cookies.getJSON('explorerExpandedKeys');</span>
+&nbsp;
+    let expandedKeys = <span class="cstat-no" title="statement not covered" >keysInCookie || this.state.expandedKeys;</span>
+<span class="cstat-no" title="statement not covered" >    if (expandedKeys.includes(key)) {</span>
+<span class="cstat-no" title="statement not covered" >      expandedKeys = expandedKeys.filter(<span class="fstat-no" title="function not covered" >k </span>=&gt; <span class="cstat-no" title="statement not covered" >k !== key)</span>;</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      expandedKeys = [...expandedKeys, key];</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    Cookies.set('explorerExpandedKeys', expandedKeys, { expires: 999 });</span>
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      expandedKeys,
+    });
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleContextMenu(evt) {
+    const menus = <span class="cstat-no" title="statement not covered" >this.getMenuItems(evt.node);</span>
+<span class="cstat-no" title="statement not covered" >    if (!menus.length) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      contextMenu: menus,
+    });
+&nbsp;
+    // When right click, set the current tree node context
+<span class="cstat-no" title="statement not covered" >    this.createCmdContext(evt);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.contextMenuArchor.style.display = 'inline-block';</span>
+    const x = <span class="cstat-no" title="statement not covered" >evt.event.clientX - this.rootNode.offsetLeft + this.rootNode.scrollLeft;</span> // eslint-disable-line
+    const y = <span class="cstat-no" title="statement not covered" >evt.event.clientY - this.rootNode.offsetTop + this.rootNode.scrollTop;</span> // eslint-disable-line
+<span class="cstat-no" title="statement not covered" >    this.contextMenuArchor.style.left = `${x}px`;</span>
+<span class="cstat-no" title="statement not covered" >    this.contextMenuArchor.style.top = `${y}px`;</span>
+    // This seems to be the most compatible method for now, use standard new Event() when possible such as:
+    // var ev = new Event("look", {"bubbles":true, "cancelable":false});
+    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent
+    const clickEvent = <span class="cstat-no" title="statement not covered" >document.createEvent('HTMLEvents');</span>
+<span class="cstat-no" title="statement not covered" >    clickEvent.initEvent('click', true, true);</span>
+<span class="cstat-no" title="statement not covered" >    this.contextMenuArchor.dispatchEvent(clickEvent);</span>
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleContextMenuVisibleChange(visible) {
+<span class="cstat-no" title="statement not covered" >    if (!visible) {</span>
+<span class="cstat-no" title="statement not covered" >      this.contextMenuArchor.style.display = 'none';</span>
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleMenuClick(evt) {
+    const cmdContext = <span class="cstat-no" title="statement not covered" >this.cmdContext;</span>
+    const prjRoot = <span class="cstat-no" title="statement not covered" >this.props.home.projectRoot;</span>
+<span class="cstat-no" title="statement not covered" >    switch (evt.key) {</span>
+      case 'add-feature':
+<span class="cstat-no" title="statement not covered" >        this.props.actions.showCmdDialog('cmd', {</span>
+          type: evt.key,
+          ...this.cmdContext,
+        });
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'add-component':
+      case 'add-action':
+      case 'move':
+      case 'rename':
+<span class="cstat-no" title="statement not covered" >        this.props.actions.showCmdDialog('cmd', {</span>
+          type: evt.key,
+          ...this.cmdContext,
+        });
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'run-test': {
+        const relFile = <span class="cstat-no" title="statement not covered" >cmdContext.file.replace(`${prjRoot}/`, '');</span>
+<span class="cstat-no" title="statement not covered" >        history.push(`/tools/tests/${encodeURIComponent(relFile)}`);</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      }
+      case 'run-tests':
+<span class="cstat-no" title="statement not covered" >        if (cmdContext.elementType === 'features') {</span>
+          // features node
+<span class="cstat-no" title="statement not covered" >          history.push('/tools/tests/features');</span>
+        } else <span class="cstat-no" title="statement not covered" >if (!cmdContext.elementName) {</span>
+          // components, actions
+<span class="cstat-no" title="statement not covered" >          history.push(`/tools/tests/${cmdContext.feature}%2F${cmdContext.elementType}`);</span>
+        } else <span class="cstat-no" title="statement not covered" >if (cmdContext.elementType === 'feature') {</span>
+          // feature node
+<span class="cstat-no" title="statement not covered" >          history.push(`/tools/tests/${cmdContext.feature}`);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      case 'del':
+<span class="cstat-no" title="statement not covered" >        Modal.confirm({</span>
+          title: 'Confirm',
+          content: cmdContext.elementType === 'feature'
+            ? `Delete ${cmdContext.elementType}: ${cmdContext.elementName} ? `
+            : `Delete ${cmdContext.elementType}: ${cmdContext.feature}/${cmdContext.elementName} ? `,
+          onOk: <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+            const hide = <span class="cstat-no" title="statement not covered" >message.loading(`Deleting ${cmdContext.elementName}`, 0);</span>
+<span class="cstat-no" title="statement not covered" >            this.props.actions.execCmd({</span>
+              commandName: 'remove',
+              type: cmdContext.elementType,
+              name: cmdContext.elementType === 'feature'
+                ? `${cmdContext.elementName}`
+                : `${cmdContext.feature}/${cmdContext.elementName}`,
+            })
+            .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >              hide();</span>
+<span class="cstat-no" title="statement not covered" >              cmdSuccessNotification({</span>
+                commandName: 'delete',
+                type: cmdContext.elementType,
+              }, this.props.actions.showCmdDialog);
+            })
+            .catch(<span class="fstat-no" title="function not covered" >(e</span> = <span class="branch-0 cbranch-no" title="branch not covered" >'Unknown error.')</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >              Modal.error({</span>
+                title: 'Failed to delete',
+                content: e.toString(),
+              });
+            });
+          }
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      default:
+<span class="cstat-no" title="statement not covered" >        break;</span>
+    }
+  }
+&nbsp;
+  renderLoading() {
+    return (
+      &lt;div className="home-project-explorer"&gt;
+        &lt;Spin /&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderContextMenu() {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;Menu
+        style={{ minWidth: 150 }}
+        onSelect={this.handleMenuClick}
+        selectedKeys={[]}
+      &gt;
+        {
+          this.state.contextMenu.map(<span class="fstat-no" title="function not covered" >me</span>nuItem =&gt; <span class="cstat-no" title="statement not covered" >&lt;Menu.Item key={menuItem.key}&gt;{menuItem.name}&lt;/Menu.Item&gt;)</span>
+        }
+      &lt;/Menu&gt;
+    );
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderHighlightedTreeNodeLabel(label) {
+    const searchKey = <span class="cstat-no" title="statement not covered" >this.props.searchKey;</span>
+<span class="cstat-no" title="statement not covered" >    if (!searchKey) <span class="cstat-no" title="statement not covered" >return label;</span></span>
+    const i = <span class="cstat-no" title="statement not covered" >label.toLowerCase().indexOf(searchKey.toLowerCase());</span>
+<span class="cstat-no" title="statement not covered" >    if (i === -1) <span class="cstat-no" title="statement not covered" >return label;</span></span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;span&gt;
+        {label.substring(0, i)}
+        &lt;span className="search-highlight"&gt;{label.substring(i, i + searchKey.length)}&lt;/span&gt;
+        {label.substring(i + searchKey.length, label.length)}
+      &lt;/span&gt;
+    );
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderTreeNodeIcon(icon) {
+<span class="cstat-no" title="statement not covered" >    if (icon === 'features') {</span>
+<span class="cstat-no" title="statement not covered" >      return &lt;img src={require('../../images/logo_small.png')} alt="" /&gt;;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return &lt;Icon type={icon} /&gt;;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderTreeNodeTitle(nodeData) {
+    const markDescription = <span class="cstat-no" title="statement not covered" >{</span>
+      a: 'Async action',
+      c: 'Connected to Redux store',
+      r: 'Used in route config',
+    };
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;span&gt;
+        {nodeData.icon &amp;&amp; this.renderTreeNodeIcon(nodeData.icon)}
+        &lt;label&gt;
+          {nodeData.searchable ? this.renderHighlightedTreeNodeLabel(nodeData.label) : nodeData.label}
+          {_.has(nodeData, 'count') ? ` (${nodeData.count})` : ''}
+        &lt;/label&gt;
+        {
+          nodeData.marks &amp;&amp; nodeData.marks.map(<span class="fstat-no" title="function not covered" >ma</span>rk =&gt; (
+<span class="cstat-no" title="statement not covered" >            &lt;span</span>
+              key={mark}
+              title={markDescription[mark.toLowerCase()]}
+              className={`mark mark-${mark.toLowerCase()}`}
+            &gt;{mark}&lt;/span&gt;
+          ))
+        }
+      &lt;/span&gt;
+    );
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  re</span>nderTreeNode(nodeData) {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;TreeNode
+        key={nodeData.key}
+        title={this.renderTreeNodeTitle(nodeData)}
+        className={nodeData.className}
+        isLeaf={!nodeData.children}
+      &gt;
+        {nodeData.children &amp;&amp; nodeData.children.map(this.renderTreeNode)}
+      &lt;/TreeNode&gt;
+    );
+  }
+&nbsp;
+  render() {
+    const { home, treeData, searchKey } = this.props;
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!home.features) {
+      return this.renderLoading();
+    }
+&nbsp;
+    const treeNodes = <span class="cstat-no" title="statement not covered" >treeData.children.map(this.renderTreeNode);</span>
+    let expandedKeys = <span class="cstat-no" title="statement not covered" >this.state.expandedKeys;</span>
+<span class="cstat-no" title="statement not covered" >    if (searchKey) {</span>
+<span class="cstat-no" title="statement not covered" >      expandedKeys = getExpandedKeys(home, searchKey);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="home-project-explorer" ref={<span class="fstat-no" title="function not covered" >(n</span>ode) =&gt; { <span class="cstat-no" title="statement not covered" >this.rootNode = node; </span>}}&gt;
+        {treeNodes.length &gt; 0 ? &lt;Tree
+          autoExpandParent={false}
+          selectedKeys={[this.state.selectedKey]}
+          expandedKeys={expandedKeys}
+          onRightClick={this.handleContextMenu}
+          onSelect={this.handleSelect}
+          onExpand={this.handleExpand}
+        &gt;
+          {treeNodes}
+        &lt;/Tree&gt;
+        : &lt;div className="no-results"&gt;No results.&lt;/div&gt;}
+        &lt;Dropdown overlay={this.renderContextMenu()} trigger={['click']} onVisibleChange={this.handleContextMenuVisibleChange}&gt;
+          &lt;span ref={<span class="fstat-no" title="function not covered" >(n</span>ode) =&gt; { <span class="cstat-no" title="statement not covered" >this.contextMenuArchor = node; </span>}} className="context-menu-archor"&gt;&amp;nbsp;&lt;/span&gt;
+        &lt;/Dropdown&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+/* istanbul ignore next */
+function mapStateToProps(state, props) {
+  return {
+    home: state.home,
+    treeData: getFilteredExplorerTreeData(state.home, props.searchKey),
+  };
+}
+&nbsp;
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions, execCmd, showCmdDialog, dismissExecCmdError }, dispatch)
+  };
+}
+&nbsp;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectExplorer);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 25 2017 17:16:54 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

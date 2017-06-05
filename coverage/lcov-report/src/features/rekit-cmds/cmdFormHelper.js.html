@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/features/rekit-cmds/cmdFormHelper.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">src/features/rekit-cmds</a> cmdFormHelper.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/25</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash';
+&nbsp;
+const baseMeta = {
+  feature: { label: 'Feature', key: 'feature', type: 'string', widget: 'feature', required: true },
+  name: { label: 'Name', key: 'name', type: 'string', widget: 'textbox', required: true },
+  checkbox: { type: 'bool', widget: 'checkbox' },
+  textbox: { type: 'string', widget: 'textbox' },
+};
+&nbsp;
+// NOTE: autoFocus only supports textbox now
+export function <span class="fstat-no" title="function not covered" >getMeta(</span>cmdType, cmdArgs) {
+  const meta = <span class="cstat-no" title="statement not covered" >{};</span>
+  const fields = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >  switch (cmdType) {</span>
+    case 'add-feature':
+<span class="cstat-no" title="statement not covered" >      fields.push({ ...baseMeta.name, autoFocus: true });</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case 'add-action':
+<span class="cstat-no" title="statement not covered" >      fields.push(</span>
+        { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
+        { ...baseMeta.name, autoFocus: true },
+        { ...baseMeta.checkbox, label: 'Async', key: 'async', tooltip: 'Whether the action is async using redux-middleware-thunk.' },
+      );
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case 'add-component':
+<span class="cstat-no" title="statement not covered" >      fields.push(</span>
+        { ...baseMeta.feature, initialValue: cmdArgs.feature || null },
+        { ...baseMeta.name, autoFocus: true },
+        { ...baseMeta.checkbox, label: 'Connect to store', key: 'connect', tooltip: 'Whether to connect to Redux store using react-redux' },
+        { ...baseMeta.textbox, label: 'Url path', key: 'urlPath', tooltip: 'If provided, will create a route rule in React Router config.' },
+      );
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case 'rename':
+    case 'move':
+<span class="cstat-no" title="statement not covered" >      fields.push(</span>
+        cmdArgs.elementType !== 'feature' &amp;&amp; { ...baseMeta.feature, initialValue: cmdArgs.feature, key: 'targetFeature', label: 'Target feature' },
+        { ...baseMeta.name, autoFocus: true, initialValue: cmdArgs.elementName, key: 'newName', label: 'New name' },
+      );
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    default:
+<span class="cstat-no" title="statement not covered" >      console.log('Unknown cmd type: ', cmdType);</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  meta.fields = _.compact(fields);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return meta;</span>
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >convertArgs(</span>values, cmdArgs) {
+<span class="cstat-no" title="statement not covered" >  console.log('cmd args: ', cmdArgs);</span>
+<span class="cstat-no" title="statement not covered" >  switch (cmdArgs.type) {</span>
+    case 'add-feature':
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        commandName: 'add',
+        type: 'feature',
+        name: values.name,
+      };
+    case 'add-action':
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        commandName: 'add',
+        type: 'action',
+        name: `${values.feature}/${values.name}`,
+        async: values.async,
+      };
+    case 'add-component':
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        commandName: 'add',
+        type: 'component',
+        name: `${values.feature}/${values.name}`,
+        urlPath: values.urlPath || false,
+        connect: values.connect || false,
+      };
+    case 'move':
+    case 'rename':
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        commandName: 'move',
+        type: cmdArgs.elementType,
+        source: cmdArgs.elementType === 'feature' ? cmdArgs.feature : `${cmdArgs.feature}/${cmdArgs.elementName}`,
+        target: cmdArgs.elementType === 'feature' ? values.newName : `${values.targetFeature}/${values.newName}`,
+      };
+    default:
+<span class="cstat-no" title="statement not covered" >      console.log('Unknown cmd type: ', cmdArgs.type);</span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return null;</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 25 2017 17:16:54 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

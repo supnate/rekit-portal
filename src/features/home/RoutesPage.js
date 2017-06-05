@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
 import { Alert, Icon, Tabs } from 'antd';
+import history from '../../common/history';
 import { CodeView } from './';
 
 const TabPane = Tabs.TabPane;
@@ -18,10 +19,10 @@ export class RoutesPage extends Component {
     const fid = this.props.params.feature;
     switch (tabKey) {
       case 'rules':
-        browserHistory.push(`/${fid}/routes`);
+        history.push(`/${fid}/routes`);
         break;
       case 'code':
-        browserHistory.push(`/${fid}/routes/code`);
+        history.push(`/${fid}/routes/code`);
         break;
       default:
         break;
