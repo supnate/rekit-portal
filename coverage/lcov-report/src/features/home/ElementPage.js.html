@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">6.56% </span>
+        <span class="strong">24.59% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/61</span>
+        <span class='fraction'>15/61</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">5.63% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/71</span>
+        <span class='fraction'>4/71</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">37.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/8</span>
+        <span class='fraction'>3/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">26.92% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/52</span>
+        <span class='fraction'>14/52</span>
       </div>
     </div>
   </div>
@@ -253,27 +253,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -286,12 +280,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -331,8 +331,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -437,14 +437,14 @@ export class ElementPage extends Component {
   getElementData() {
     const { elementById, projectRoot } = this.props.home;
     let file = this.props.match.params.file;
-<span class="cstat-no" title="statement not covered" >    if (!file) <span class="cstat-no" title="statement not covered" >return null;</span></span>
-<span class="cstat-no" title="statement not covered" >    file = decodeURIComponent(file);</span>
-    const fullPath = <span class="cstat-no" title="statement not covered" >projectRoot + file;</span>
-    const arr = <span class="cstat-no" title="statement not covered" >fullPath.split('.');</span>
-    const ext = <span class="cstat-no" title="statement not covered" >arr.length &gt; 1 ? arr.pop() : null;</span>
-    const ele = <span class="cstat-no" title="statement not covered" >elementById[file];</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!file) <span class="cstat-no" title="statement not covered" >return null;</span>
+    file = decodeURIComponent(file);
+    const fullPath = projectRoot + file;
+    const arr = fullPath.split('.');
+    const ext = arr.length &gt; 1 ? arr.pop() : <span class="branch-1 cbranch-no" title="branch not covered" >null;</span>
+    const ele = elementById[file];
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (!ele) <span class="cstat-no" title="statement not covered" >return null;</span></span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!ele) return null;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    return {</span>
       ...ele,
@@ -474,8 +474,8 @@ export class ElementPage extends Component {
     // history.push(`/tools/tests/src%2Ffeatures%2F${feature}%2F${encodeURIComponent(file)}`);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  re</span>nderNotFound() {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  renderNotFound() {
+    return (
       &lt;div className="home-element-page"&gt;
         &lt;span style={{ color: 'red' }}&gt;Element not found, please check the URL or if element exists.&lt;/span&gt;
       &lt;/div&gt;
@@ -515,8 +515,8 @@ export class ElementPage extends Component {
   render() {
     // throw new Error('test');
     const data = this.getElementData();
-<span class="cstat-no" title="statement not covered" >    if (!data) {</span>
-<span class="cstat-no" title="statement not covered" >      return this.renderNotFound();</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!data) {
+      return this.renderNotFound();
     }
 &nbsp;
     const { home } = <span class="cstat-no" title="statement not covered" >this.props;</span>
@@ -601,7 +601,7 @@ export default connect(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 25 2017 17:16:54 GMT+0800 (CST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jun 12 2017 21:03:39 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

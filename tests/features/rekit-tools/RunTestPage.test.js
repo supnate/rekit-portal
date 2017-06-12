@@ -9,9 +9,11 @@ describe('rekit-tools/RunTestPage', () => {
       home: {},
       rekitTools: {},
       actions: {},
-      params: {
-        testFile: 'abc',
-      },
+      match: {
+        params: {
+          testFile: 'abc',
+        },
+      }
     };
     const renderedComponent = shallow(
       <RunTestPage {...props} />

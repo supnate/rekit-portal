@@ -21,11 +21,13 @@ describe('home/ElementPage', () => {
         },
       },
       actions: {},
-      params: {
-        type: 'code',
-        feature: 'f1',
-        file: 'Comp1.js',
-      },
+      match: {
+        params: {
+          type: 'code',
+          feature: 'f1',
+          file: 'Comp1.js',
+        },
+      }
     };
     const renderedComponent = shallow(
       <ElementPage {...props} />

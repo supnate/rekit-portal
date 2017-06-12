@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import { browserHistory } from 'react-router';
 // import { syncHistoryWithStore } from 'react-router-redux';
 import Root from './Root';
+import routeConfig from './common/routeConfig';
 import configStore from './common/configStore';
 
 const store = configStore();
@@ -59,7 +60,7 @@ if (!root) {
 
 render(
   <AppContainer>
-    <Root store={store} />
+    <Root store={store} routeConfig={routeConfig} />
   </AppContainer>,
   root
 );
