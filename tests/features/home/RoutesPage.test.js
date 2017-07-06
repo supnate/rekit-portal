@@ -13,10 +13,12 @@ describe('home/RoutesPage', () => {
         },
         rekit: {},
       },
-      params: {
-        feature: 'f1',
-        type: 'code',
-      },
+      match: {
+        params: {
+          feature: 'f1',
+          type: 'code',
+        },
+      }
     };
     const renderedComponent = shallow(
       <RoutesPage {...props} />

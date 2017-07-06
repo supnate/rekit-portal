@@ -84,7 +84,7 @@ export class RunTestPage extends Component {
           <div className="output-container">
             <ul>
               {output.map((text, i) =>
-                text && <li key={i} dangerouslySetInnerHTML={{ __html: convert.toHtml(text).replace(/color:#555/g, 'color:#777') }} />
+                text && <li key={i} dangerouslySetInnerHTML={{ __html: convert.toHtml(text).replace(/color:#A00/g, 'color:#F00').replace(/color:#555/g, 'color:#777') }} />
               )}
             </ul>
           </div>

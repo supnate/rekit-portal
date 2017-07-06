@@ -13,7 +13,7 @@ export default class RekitSteps extends Component {
         </p>
         <br />
         <Steps>
-          <Step status="process" title="Install rekit" description={<ul><li><span>&gt;</span> npm install -g rekit@next</li></ul>} />
+          <Step status="process" title="Install rekit" description={<ul><li><span>&gt;</span> npm install -g rekit</li></ul>} />
           <Step status="process" title="Create an app" description={<ul><li><span>&gt;</span> rekit create app1</li><li><span>&gt;</span> cd app1</li><li><span>&gt;</span> npm install</li></ul>} />
           <Step status="process" title="Start the app" description={<ul><li><span>&gt;</span> npm start</li></ul>} />
         </Steps>

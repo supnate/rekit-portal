@@ -48,7 +48,6 @@ module.exports = function() { // eslint-disable-line
 
   wp.on('aggregated', (changes) => {
     // changes: an array of all changed files
-    console.log('aggregated: ', changes);
     rekitCore.vio.reset();
     // const newProjectData = fetchProjectData();
     // if (_.isEqual(newProjectData, lastProjectData)) return;

@@ -76,9 +76,9 @@ export class About extends Component {
         </p>
         <h3>Learn more</h3>
         <ul className="learn-more-list">
-          <li><a href="#" target="_blank">Rekit 2.0 is out with great new features!</a></li>
+          <li><a href="https://medium.com/@nate_wang/rekit-2-0-next-generation-react-development-ce8bbba51e94" target="_blank">Rekit 2.0 is out with great new features!</a></li>
           <li><a href="http://rekit.js.org" target="_blank">Rekit docs: rekit.js.org</a></li>
-          <li><a href="#" target="_blank">Feature oriented web development with React, Redux and React-router</a></li>
+          <li><a href="https://medium.com/@nate_wang/feature-oriented-architecture-for-web-applications-2b48e358afb0" target="_blank">Feature oriented web development with React, Redux and React-router</a></li>
           <li><a href="https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da" target="_blank">A new approach to managing Redux actions</a></li>
         </ul>
         <p>

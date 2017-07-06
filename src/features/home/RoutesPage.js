@@ -10,13 +10,13 @@ import { CodeView } from './';
 const TabPane = Tabs.TabPane;
 export class RoutesPage extends Component {
   static propTypes = {
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     home: PropTypes.object.isRequired,
   };
 
   @autobind
   handleTabChange(tabKey) {
-    const fid = this.props.params.feature;
+    const fid = this.props.match.params.feature;
     switch (tabKey) {
       case 'rules':
         history.push(`/${fid}/routes`);
@@ -38,8 +38,9 @@ export class RoutesPage extends Component {
   }
 
   render() {
-    const fid = this.props.params.feature;
-    let tabKey = this.props.params.type;
+    const params = this.props.match.params;
+    const fid = params.feature;
+    let tabKey = params.type;
     if (tabKey !== 'code') tabKey = 'rules';
     const feature = this.props.home.featureById[fid];
     if (!feature) {

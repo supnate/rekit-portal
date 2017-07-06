@@ -48,7 +48,6 @@ export function getMeta(cmdType, cmdArgs) {
 }
 
 export function convertArgs(values, cmdArgs) {
-  console.log('cmd args: ', cmdArgs);
   switch (cmdArgs.type) {
     case 'add-feature':
       return {
