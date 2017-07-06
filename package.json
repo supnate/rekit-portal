@@ -67,7 +67,7 @@
     "instrument": true
   },
   "rekit": {
-    "version": "2.0.0-alpha.4",
+    "version": "2.0.3",
     "devPort": 6078,
     "buildPort": 6079,
     "css": "less"
