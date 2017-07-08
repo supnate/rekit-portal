@@ -15,7 +15,8 @@ const runTest = require('./api/runTest');
 
 const utils = rekitCore.utils;
 
-// rekitCore.utils.setProjectRoot('/Users/nate/workspace2/rekit-portal');
+// rekitCore.utils.setProjectRoot('/Users/nate/workspace/my-app');
+rekitCore.plugin.loadPlugins(rekitCore);
 
 let lastProjectData = null;
 module.exports = function() { // eslint-disable-line
