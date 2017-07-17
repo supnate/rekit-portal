@@ -52,7 +52,9 @@ export class RunTestPage extends Component {
 
   @autobind
   handleTestButtonClick() {
-    this.props.actions.runTest(decodeURIComponent(this.props.match.params.testFile)).catch(this.handleRunTestError);
+    console.log('test file:', this.props.match.params.testFile);
+    const testFile = this.props.match.params.testFile;
+    this.props.actions.runTest(testFile ? decodeURIComponent(testFile) : '').catch(this.handleRunTestError);
   }
   @autobind
   handleTestCoverageClick() {
@@ -62,9 +64,10 @@ export class RunTestPage extends Component {
   render() {
     const output = this.props.rekitTools.runTestOutput || [];
     const { runTestPending, runTestRunning } = this.props.rekitTools;
+    const testFile = this.props.match.params.testFile;
     return (
       <div className="rekit-tools-run-test-page">
-        <h2><label>Run tests: </label>tests/{getTestFilePattern(decodeURIComponent(this.props.match.params.testFile))}</h2>
+        <h2><label>Run tests: </label>tests/{getTestFilePattern(testFile ? decodeURIComponent(testFile) : '')}</h2>
         <Row>
           <Col span="16">
             <Button type="primary" disabled={runTestRunning} onClick={this.handleTestButtonClick}>
