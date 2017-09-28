@@ -52,7 +52,6 @@ export class RunTestPage extends Component {
 
   @autobind
   handleTestButtonClick() {
-    console.log('test file:', this.props.match.params.testFile);
     const testFile = this.props.match.params.testFile;
     this.props.actions.runTest(testFile ? decodeURIComponent(testFile) : '').catch(this.handleRunTestError);
   }
