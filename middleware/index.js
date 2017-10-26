@@ -15,7 +15,7 @@ const runTest = require('./api/runTest');
 
 const utils = rekitCore.utils;
 
-// rekitCore.utils.setProjectRoot('/Users/i305656/workspace/a2');
+rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit');
 rekitCore.plugin.loadPlugins(rekitCore);
 
 let lastProjectData = null;
