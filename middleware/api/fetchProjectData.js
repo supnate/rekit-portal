@@ -6,6 +6,7 @@ const rekitCore = require('rekit-core');
 
 const app = rekitCore.app;
 const utils = rekitCore.utils;
+rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit');
 
 function mapRelPathForDepsByArr(arr) {
   arr.forEach((item) => {

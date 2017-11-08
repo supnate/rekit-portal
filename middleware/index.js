@@ -15,7 +15,7 @@ const runTest = require('./api/runTest');
 
 const utils = rekitCore.utils;
 
-rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit');
+// rekitCore.utils.setProjectRoot('/Users/i305656/workspace/rekit');
 rekitCore.plugin.loadPlugins(rekitCore);
 
 let lastProjectData = null;
@@ -114,23 +114,26 @@ module.exports = function() { // eslint-disable-line
             res.end();
             break;
           }
-          case '/api/file-content':
-            if (!_.startsWith(utils.joinPath(prjRoot, req.query.file), prjRoot)) {
+          case '/api/file-content':{
+            const absPath = utils.joinPath(prjRoot, req.query.file);
+            if (!_.startsWith(absPath, prjRoot)) {
               // prevent ../.. in req.query.file
               res.statusCode = 403;
               res.write('Forbidden: not allowed to access file out of the project.');
               res.end();
               break;
             }
-            if (!fs.existsSync(req.query.file)) {
+
+            if (!fs.existsSync(absPath)) {
               res.statusCode = 404;
               res.write(JSON.stringify({ error: 'Not found.' }));
               res.end();
             } else {
-              res.write(JSON.stringify({ content: getFileContent(req.query.file) }));
+              res.write(JSON.stringify({ content: getFileContent(absPath) }));
               res.end();
             }
             break;
+          }
           case '/api/exec-cmd':
             if (args.readonly) { reply403(res); break; }
             execCmd(req, res);
