@@ -1,5 +1,7 @@
 # Rekit portal
 
+*** THIS REPO HAS BEEN MOVED TO THE MAIN [REKIT](https://github.com/supnate/rekit) REPO. CREATE ISSUES THERE THANKS. ***
+
 Rekit portal is a new dev tool shipped with Rekit 2.0. It's a central place to manage and analyze your Rekit project. Rekit portal itself is also created with Rekit, so it's also a good real-world example of Rekit for reference.
 
 [![Version](http://img.shields.io/npm/v/rekit-portal.svg)](https://www.npmjs.org/package/rekit-portal)
