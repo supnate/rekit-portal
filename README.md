@@ -1,4 +1,4 @@
-## ***NOTE: THIS REPO HAS BEEN MOVED TO THE MAIN [REKIT](https://github.com/supnate/rekit) REPO. CREATE ISSUES THERE THANKS.***
+## ***NOTE: THIS REPO HAS BEEN MOVED TO THE MAIN [REKIT](https://github.com/supnate/rekit) REPO. CREATE ISSUES THERE. THANKS.***
 
 # Rekit portal
 
