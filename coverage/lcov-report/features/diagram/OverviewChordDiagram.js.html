@@ -1,0 +1,1382 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for features/diagram/OverviewChordDiagram.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">features/diagram</a> OverviewChordDiagram.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.1% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>2/181</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/57</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/35</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.16% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>2/173</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { autobind } from 'core-decorators';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
+import { Checkbox, Col, Icon, Popover, Row, Tooltip } from 'antd';
+import history from '../../common/history';
+import { getOverviewChordDiagramData } from './selectors/getOverviewChordDiagramData';
+&nbsp;
+let uidSeed = 0;
+const uidHash = {};
+function <span class="fstat-no" title="function not covered" >uid(</span>key) {
+  // map node key (usually file path) to a short uniq id
+<span class="cstat-no" title="statement not covered" >  if (!uidHash[key]) {</span>
+<span class="cstat-no" title="statement not covered" >    uidHash[key] = `id${uidSeed}`;</span>
+<span class="cstat-no" title="statement not covered" >    uidSeed += 1;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return uidHash[key];</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >drawPieBg(</span>d3Selection) {
+<span class="cstat-no" title="statement not covered" >  d3Selection</span>
+    .attr('class', 'pie-bg')
+    .style('stroke-width', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d.radius)</span>
+    // .transition() // start a transition to bring the new value into view
+    // .duration(300)
+    // .ease(d3.easeLinear)
+    .attr('d', <span class="fstat-no" title="function not covered" >(d</span>) =&gt; {
+      const d3Path = <span class="cstat-no" title="statement not covered" >d3.path();</span>
+<span class="cstat-no" title="statement not covered" >      d3Path.arc(d.x, d.y, d.radius / 2, d.startAngle, d.endAngle);</span>
+<span class="cstat-no" title="statement not covered" >      return d3Path;</span>
+    })
+  ;
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getLinkCssClass(</span>d) {
+  // here source or target is the rekit element, type property doesn't have 's'.
+  const source = <span class="cstat-no" title="statement not covered" >d.source;</span>
+  const target = <span class="cstat-no" title="statement not covered" >d.target;</span>
+  const sf = <span class="cstat-no" title="statement not covered" >source.feature;</span>
+  const tf = <span class="cstat-no" title="statement not covered" >target.feature;</span>
+  let st = <span class="cstat-no" title="statement not covered" >source.type;</span>
+  let tt = <span class="cstat-no" title="statement not covered" >target.type;</span>
+  const sid = <span class="cstat-no" title="statement not covered" >uid(source.file);</span>
+  const tid = <span class="cstat-no" title="statement not covered" >uid(target.file);</span>
+<span class="cstat-no" title="statement not covered" >  if (st === 'component' || st === 'action') <span class="cstat-no" title="statement not covered" >st += 's';</span></span>
+<span class="cstat-no" title="statement not covered" >  if (tt === 'component' || tt === 'action') <span class="cstat-no" title="statement not covered" >tt += 's';</span></span>
+  const cssClass = <span class="cstat-no" title="statement not covered" >[</span>
+    `from-feature-${sf}`,
+    `from-feature-type-${st}`,
+    `to-feature-${tf}`,
+    `to-feature-type-${tt}`,
+    `from-file-${sid}`,
+    `to-file-${tid}`,
+  ];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (source.feature === target.feature) {</span>
+<span class="cstat-no" title="statement not covered" >    cssClass.push('same-feature-dep');</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  cssClass.push('link-line');</span>
+<span class="cstat-no" title="statement not covered" >  return cssClass.join(' ');</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >drawLink(</span>d3Selection) {
+<span class="cstat-no" title="statement not covered" >  d3Selection</span>
+    .attr('marker-end', 'url(#marker)') // eslint-disable-line
+    .attr('class', getLinkCssClass)
+    .attr('d', <span class="fstat-no" title="function not covered" >(d</span>) =&gt; {
+      const d3Path = <span class="cstat-no" title="statement not covered" >d3.path();</span>
+<span class="cstat-no" title="statement not covered" >      d3Path.moveTo(d.x1, d.y1);</span>
+<span class="cstat-no" title="statement not covered" >      d3Path.quadraticCurveTo(d.cpx, d.cpy, d.x2, d.y2);</span>
+<span class="cstat-no" title="statement not covered" >      return d3Path;</span>
+    })
+  ;
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >drawFeatureNameText(</span>d3Selection) {
+<span class="cstat-no" title="statement not covered" >  d3Selection</span>
+    .style('font-size', 12)
+    .style('fill', '#777')
+    .style('overflow', 'hidden')
+    .style('text-overflow', 'ellipsis')
+    .style('cursor', 'default')
+    .attr('dy', -12)
+    .attr('class', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >`text-node feature-${d.id}`)</span>
+    .append('textPath')
+    .attr('xlink:href', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >`#group-${d.type}-${uid(d.id)}`)</span>
+    .style('text-anchor', 'start')
+    .attr('startOffset', '0%')
+    .text(<span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d.name)</span>
+  ;
+}
+&nbsp;
+export class OverviewChordDiagram extends PureComponent {
+  static propTypes = {
+    home: PropTypes.object.isRequired,
+    size: PropTypes.number.isRequired, // eslint-disable-line
+  };
+&nbsp;
+  static defaultProps = {
+    size: 500,
+  };
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(props) {
+<span class="cstat-no" title="statement not covered" >    super(props);</span>
+<span class="cstat-no" title="statement not covered" >    this.state.selectedFeatures = props.home.features;</span>
+  }
+&nbsp;
+  state = {
+    sameFeatureDepsVisible: false,
+    selectedFeatures: [],
+    highlightedGroup: null,
+  };
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidMount() {
+<span class="cstat-no" title="statement not covered" >    this.svg = d3</span>
+      .select(this.d3Node)
+      .append('svg')
+      .on('mousemove', this.handleSvgMousemove)
+    ;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.svg.append('svg:defs').selectAll('marker')</span>
+      .data(['marker'])
+      .enter()
+      .append('svg:marker')
+      .attr('id', String)
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 10)
+      .attr('refY', 0)
+      .attr('markerWidth', 6)
+      .attr('markerHeight', 6)
+      .attr('class', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >`triangle-marker ${d}`)</span>
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5')
+    ;
+<span class="cstat-no" title="statement not covered" >    this.pieBgGroup = this.svg.append('svg:g');</span>
+<span class="cstat-no" title="statement not covered" >    this.linksGroup = this.svg.append('svg:g');</span>
+<span class="cstat-no" title="statement not covered" >    this.featureNamesTextGroup = this.svg.append('svg:g');</span>
+<span class="cstat-no" title="statement not covered" >    this.featureNodesGroup = this.svg.append('svg:g');</span>
+<span class="cstat-no" title="statement not covered" >    this.elementNodesGroup = this.svg.append('svg:g');</span>
+<span class="cstat-no" title="statement not covered" >    this.fileNodesGroup = this.svg.append('svg:g');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.tooltip = d3Tip()</span>
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(<span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >this.props.home.elementById[d.id].name)</span>
+    ;
+<span class="cstat-no" title="statement not covered" >    this.svg.call(this.tooltip);</span>
+<span class="cstat-no" title="statement not covered" >    this.updateDiagram();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  co</span>mponentDidUpdate(prevProps, prevState) {
+    const props = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const state = <span class="cstat-no" title="statement not covered" >this.state;</span>
+<span class="cstat-no" title="statement not covered" >    if (prevProps.home !== props.home || prevProps.size !== props.size || prevState.selectedFeatures !== state.selectedFeatures) {</span>
+<span class="cstat-no" title="statement not covered" >      this.updateDiagram();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (prevState.highlightedGroup !== state.highlightedGroup) {</span>
+<span class="cstat-no" title="statement not covered" >      this.highlightGroup();</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>dateDiagram() {
+    const { home, size } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const diagramData = <span class="cstat-no" title="statement not covered" >getOverviewChordDiagramData(home, size, this.state.selectedFeatures);</span>
+<span class="cstat-no" title="statement not covered" >    this.svg</span>
+      // .transition() // start a transition to bring the new value into view
+      // .duration(300)
+      // .ease(d3.easeLinear)
+      .attr('width', this.props.size)
+      .attr('height', this.props.size)
+    ;
+&nbsp;
+    const pieBg = <span class="cstat-no" title="statement not covered" >this.pieBgGroup.selectAll('path').data(diagramData.outerGroups);</span>
+<span class="cstat-no" title="statement not covered" >    pieBg.exit().remove();</span>
+<span class="cstat-no" title="statement not covered" >    drawPieBg(pieBg.enter().append('svg:path'));</span>
+<span class="cstat-no" title="statement not covered" >    drawPieBg(pieBg);</span>
+&nbsp;
+    const links = <span class="cstat-no" title="statement not covered" >this.linksGroup.selectAll('path').data(diagramData.links);</span>
+<span class="cstat-no" title="statement not covered" >    links.exit().remove();</span>
+<span class="cstat-no" title="statement not covered" >    drawLink(links.enter().append('svg:path'));</span>
+<span class="cstat-no" title="statement not covered" >    drawLink(links);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.drawGroups(diagramData.outerGroups, this.featureNodesGroup);</span>
+<span class="cstat-no" title="statement not covered" >    this.drawGroups(diagramData.innerGroups, this.elementNodesGroup);</span>
+<span class="cstat-no" title="statement not covered" >    this.drawGroups(diagramData.fileGroups, this.fileNodesGroup);</span>
+&nbsp;
+    const featureNamesText = <span class="cstat-no" title="statement not covered" >this.featureNamesTextGroup.selectAll('text').data(diagramData.outerGroups);</span>
+<span class="cstat-no" title="statement not covered" >    featureNamesText.exit().remove();</span>
+<span class="cstat-no" title="statement not covered" >    drawFeatureNameText(featureNamesText.enter().append('svg:text'));</span>
+<span class="cstat-no" title="statement not covered" >    drawFeatureNameText(featureNamesText);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  dr</span>awGroups(groups, container) {
+    const getCssClass = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>) =&gt; {</span>
+      let cssClass = <span class="cstat-no" title="statement not covered" >`group-${d.type}`;</span>
+<span class="cstat-no" title="statement not covered" >      if (d.type === 'feature') <span class="cstat-no" title="statement not covered" >cssClass += ` feature-${d.id}`;</span></span>
+      else <span class="cstat-no" title="statement not covered" >cssClass += ` ${d.type}-of-${d.feature}`;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (d.type === 'file') {</span>
+        const ele = <span class="cstat-no" title="statement not covered" >this.props.home.elementById[d.id];</span>
+        const types = <span class="cstat-no" title="statement not covered" >(ele.type === 'component' || ele.type === 'action') ? `${ele.type}s` : ele.type;</span>
+<span class="cstat-no" title="statement not covered" >        cssClass += ` file-of-type-${types}`;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      cssClass += ' group-node';</span>
+<span class="cstat-no" title="statement not covered" >      return cssClass;</span>
+    };
+&nbsp;
+    const drawNode = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>3Selection) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      d3Selection</span>
+        .attr('id', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >`group-${d.type}-${uid(d.id)}`)</span>
+        .attr('stroke-width', <span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d.strokeWidth)</span>
+        .attr('class', getCssClass)
+        .attr('fill', 'transparent')
+        // .transition() // start a transition to bring the new value into view
+        // .duration(300)
+        // .ease(d3.easeLinear)
+        .attr('d', <span class="fstat-no" title="function not covered" >(d</span>) =&gt; {
+          const d3Path = <span class="cstat-no" title="statement not covered" >d3.path();</span>
+<span class="cstat-no" title="statement not covered" >          d3Path.arc(d.x, d.y, d.radius, d.startAngle, d.endAngle);</span>
+<span class="cstat-no" title="statement not covered" >          return d3Path;</span>
+        })
+        .on('mouseover', this.handleGroupMouseover)
+        .on('mouseout', this.handleGroupMouseout)
+        .on('click', this.handleGroupClick)
+      ;
+      // update tooltip
+      // nodes.selectAll('title').remove();
+      // nodes.append('svg:title')
+      //   .text((d) =&gt; {
+      //     if (d.type === 'file') {
+      //       const ele = this.props.home.elementById[d.id];
+      //       return ele.name;
+      //     }
+      //     return '';
+      //   })
+      // ;
+    };
+&nbsp;
+    const nodes = <span class="cstat-no" title="statement not covered" >container.selectAll('path').data(groups);</span>
+<span class="cstat-no" title="statement not covered" >    nodes.exit().remove();</span>
+<span class="cstat-no" title="statement not covered" >    drawNode(nodes.enter().append('svg:path'));</span>
+<span class="cstat-no" title="statement not covered" >    drawNode(nodes);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  hi</span>ghlightGroup() {
+    const { elementById } = <span class="cstat-no" title="statement not covered" >this.props.home;</span>
+<span class="cstat-no" title="statement not covered" >    if (this.state.highlightedGroup) {</span>
+      const d = <span class="cstat-no" title="statement not covered" >this.state.highlightedGroup;</span>
+<span class="cstat-no" title="statement not covered" >      this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 0.15);</span>
+<span class="cstat-no" title="statement not covered" >      this.svg.selectAll('.link-line').style('stroke-dasharray', '').style('stroke', '#ccc');</span>
+      const highlighted = <span class="cstat-no" title="statement not covered" >[];</span>
+      const lighlightedLines = <span class="cstat-no" title="statement not covered" >[];</span>
+      const dashed = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >      if (d.type === 'feature') {</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.feature-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.actions-of-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.components-of-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.misc-of-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.file-of-${d.id}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.from-feature-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.to-feature-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.from-feature-${d.id}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.to-feature-${d.id}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.text-node.feature-${d.id}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        dashed.push(`.link-line.to-feature-${d.id}`);</span>
+      } else <span class="cstat-no" title="statement not covered" >if (d.type !== 'file') {</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.feature-${d.feature}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.${d.type}-of-${d.feature}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.file-of-${d.feature}.file-of-type-${d.type}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.from-feature-${d.feature}.from-feature-type-${d.type}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.text-node.feature-${d.feature}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        dashed.push(`.link-line.to-feature-${d.feature}.to-feature-type-${d.type}`);</span>
+      } else {
+        const ele = <span class="cstat-no" title="statement not covered" >elementById[d.id];</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.group-node.feature-${ele.feature}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.to-file-${uid(ele.file)}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.link-line.from-file-${uid(ele.file)}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.to-file-${uid(ele.file)}`);</span>
+<span class="cstat-no" title="statement not covered" >        lighlightedLines.push(`.link-line.from-file-${uid(ele.file)}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`.text-node.feature-${ele.feature}`);</span>
+<span class="cstat-no" title="statement not covered" >        highlighted.push(`#group-file-${uid(d.id)}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        dashed.push(`.link-line.to-file-${uid(d.id)}`);</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (highlighted.length) <span class="cstat-no" title="statement not covered" >this.svg.selectAll(highlighted.join(',')).style('opacity', 1);</span></span>
+<span class="cstat-no" title="statement not covered" >      if (lighlightedLines.length) <span class="cstat-no" title="statement not covered" >this.svg.selectAll(lighlightedLines.join(',')).style('stroke', '#aaa');</span></span>
+<span class="cstat-no" title="statement not covered" >      if (dashed.length) <span class="cstat-no" title="statement not covered" >this.svg.selectAll(dashed.join(',')).style('stroke-dasharray', '3, 3');</span></span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.svg.selectAll('.group-node, .link-line, .text-node').style('opacity', 1);</span>
+<span class="cstat-no" title="statement not covered" >      this.svg.selectAll('.link-line').style('stroke-dasharray', '').style('stroke', '#ccc');</span>
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleSvgMousemove(_1, _2, targets) {
+    const { home, size } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+    const diagramData = <span class="cstat-no" title="statement not covered" >getOverviewChordDiagramData(home, size, this.state.selectedFeatures);</span>
+    const [x, y] = <span class="cstat-no" title="statement not covered" >d3.mouse(targets[0]);</span>
+    const d = <span class="cstat-no" title="statement not covered" >Math.sqrt((x - diagramData.x) ** 2 + (y - diagramData.y) ** 2);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (d &gt;= diagramData.radius + 5) {</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({</span>
+        highlightedGroup: null,
+      });
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleGroupMouseover(d) {
+<span class="cstat-no" title="statement not covered" >    if (d.type === 'file') <span class="cstat-no" title="statement not covered" >this.tooltip.show(d);</span></span>
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      highlightedGroup: d,
+    });
+  }
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleGroupMouseout(d) {
+<span class="cstat-no" title="statement not covered" >    this.tooltip.hide(d);</span>
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleGroupClick(d) {
+<span class="cstat-no" title="statement not covered" >    this.tooltip.hide();</span>
+<span class="cstat-no" title="statement not covered" >    if (d.type === 'file') {</span>
+      const { elementById, projectRoot } = <span class="cstat-no" title="statement not covered" >this.props.home;</span>
+      const ele = <span class="cstat-no" title="statement not covered" >elementById[d.id];</span>
+      const file = <span class="cstat-no" title="statement not covered" >ele.file.replace(`${projectRoot}/src/features/${ele.feature}/`, '');</span>
+<span class="cstat-no" title="statement not covered" >      history.push(`/element/${encodeURIComponent(file)}/diagram`);</span>
+    }
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleToggleSameFeatureDepsVisible(evt) {
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      sameFeatureDepsVisible: evt.target.checked,
+    });
+  }
+&nbsp;
+  @autobind
+<span class="fstat-no" title="function not covered" >  ha</span>ndleSelectFeature(fid, selected) {
+    const newSelected = <span class="cstat-no" title="statement not covered" >[...this.state.selectedFeatures];</span>
+<span class="cstat-no" title="statement not covered" >    if (!selected) <span class="cstat-no" title="statement not covered" >_.pull(newSelected, fid);</span></span>
+    else <span class="cstat-no" title="statement not covered" >newSelected.push(fid);</span>
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      selectedFeatures: newSelected,
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderFeaturesSelect() {
+    const { features, featureById } = <span class="cstat-no" title="statement not covered" >this.props.home;</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;ul className="diagram-overview-chord-diagram-feature-select"&gt;
+        {features.map(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {
+          const selected = <span class="cstat-no" title="statement not covered" >this.state.selectedFeatures;</span>
+          const checked = <span class="cstat-no" title="statement not covered" >!selected.length || selected.includes(fid);</span>
+          const disabled = <span class="cstat-no" title="statement not covered" >checked &amp;&amp; selected.length === 1;</span>
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;li key={fid}&gt;
+              &lt;Checkbox
+                checked={checked}
+                disabled={disabled}
+                onChange={<span class="fstat-no" title="function not covered" >ev</span>t =&gt; <span class="cstat-no" title="statement not covered" >this.handleSelectFeature(fid, evt.target.checked)}</span>
+              &gt;{featureById[fid].name}&lt;/Checkbox&gt;
+            &lt;/li&gt;
+          );
+        })}
+      &lt;/ul&gt;
+    );
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nder() {
+    let featureSelectLabel = <span class="cstat-no" title="statement not covered" >'All features';</span>
+<span class="cstat-no" title="statement not covered" >    if (this.state.selectedFeatures.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >      featureSelectLabel = this.props.home.featureById[this.state.selectedFeatures[0]].name;</span>
+    } else <span class="cstat-no" title="statement not covered" >if (this.state.selectedFeatures.length &lt; this.props.home.features.length) {</span>
+<span class="cstat-no" title="statement not covered" >      featureSelectLabel = `${this.state.selectedFeatures.length}/${this.props.home.features.length} features`;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="diagram-overview-chord-diagram"&gt;
+        &lt;Row&gt;
+          &lt;Col span="12"&gt;
+            &lt;Checkbox checked={this.state.sameFeatureDepsVisible} onChange={this.handleToggleSameFeatureDepsVisible}&gt;
+              &lt;span&gt;
+                Show internal deps
+                &lt;Tooltip title="Whether to show internal dependencies inside a feature."&gt;
+                  &amp;nbsp; &lt;Icon style={{ color: '#108ee9', fontSize: 12 }} type="question-circle-o" /&gt;
+                &lt;/Tooltip&gt;
+              &lt;/span&gt;
+            &lt;/Checkbox&gt;
+          &lt;/Col&gt;
+          &lt;Col span="12" style={{ textAlign: 'right' }}&gt;
+            &lt;Popover placement="bottomRight" content={this.renderFeaturesSelect()}&gt;
+              &lt;span style={{ cursor: 'default' }}&gt;{featureSelectLabel} &lt;/span&gt;&lt;Icon type="caret-down" style={{ fontSize: 10 }} /&gt;
+            &lt;/Popover&gt;
+          &lt;/Col&gt;
+        &lt;/Row&gt;
+        &lt;div
+          className={`svg-container ${this.state.sameFeatureDepsVisible ? 'same-feature-deps-visible' : ''}`}
+          ref={<span class="fstat-no" title="function not covered" >(n</span>ode) =&gt; { <span class="cstat-no" title="statement not covered" >this.d3Node = node; </span>}}
+        /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    home: state.home,
+  };
+}
+&nbsp;
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({}, dispatch)
+  };
+}
+&nbsp;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverviewChordDiagram);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 12:15:56 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

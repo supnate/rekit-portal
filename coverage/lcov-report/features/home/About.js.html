@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for features/home/About.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">features/home</a> About.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/8</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint react/jsx-no-target-blank: 0 */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { RekitSteps } from './';
+&nbsp;
+export class About extends Component {
+  static propTypes = {
+    home: PropTypes.object.isRequired,
+  };
+<span class="fstat-no" title="function not covered" >  re</span>nderNormalAbout() {
+    const rekit = <span class="cstat-no" title="statement not covered" >this.props.home.rekit;</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="home-about"&gt;
+        &lt;div className="header"&gt;
+          &lt;img className="logo" src={require('../../images/logo.png')} alt="logo" /&gt;
+          &lt;h3&gt;Rekit Portal&lt;/h3&gt;
+          &lt;span className="version"&gt;Version: v{rekit.portalVersion}&lt;/span&gt;
+        &lt;/div&gt;
+&nbsp;
+        &lt;p&gt;
+          Rekit portal is a web application for managing a Rekit project.
+          It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
+          but also provides tools for analyzing/building/testing a Rekit application.
+        &lt;/p&gt;
+        &lt;div className="versions"&gt;
+          &lt;h5&gt;Application Status&lt;/h5&gt;
+          &lt;p&gt;&lt;label&gt;Created by &lt;a href="https://github.com/supnate/rekit" target="_blank"&gt;Rekit:&lt;/a&gt;&lt;/label&gt;&lt;span&gt; v{rekit.version}&lt;/span&gt;&lt;/p&gt;
+          &lt;p&gt;&lt;label&gt;Depends on &lt;a href="https://github.com/supnate/rekit-core" target="_blank"&gt;Rekit Core:&lt;/a&gt;&lt;/label&gt;&lt;span&gt; v{rekit.coreVersion}&lt;/span&gt;&lt;/p&gt;
+          &lt;p&gt;&lt;label&gt;Depends on &lt;a href="https://github.com/supnate/rekit-portal" target="_blank"&gt;Rekit Portal:&lt;/a&gt;&lt;/label&gt;&lt;span&gt; v{rekit.portalVersion}&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+&nbsp;
+        &lt;p className="feedback"&gt;
+          Any questions or feedback? Please visit: &lt;br /&gt;
+          &lt;a href="https://github.com/supnate/rekit" target="_blank"&gt;https://github.com/supnate/rekit&lt;/a&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nderDemoAbout() {
+    const rekit = <span class="cstat-no" title="statement not covered" >this.props.home.rekit;</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="home-about demo-version"&gt;
+        &lt;div className="header"&gt;
+          &lt;img className="logo" src={require('../../images/logo.png')} alt="logo" /&gt;
+          &lt;h1&gt;Welcome to the Rekit Portal demo!&lt;/h1&gt;
+          &lt;span className="version"&gt;Version: v{rekit.portalVersion}&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;p&gt;
+          This is a demo of Rekit and Rekit portal for you to quickly learn how Rekit helps to creating a scalable web application. Here you are
+          seeing a real Rekit project (Rekit portal itself!) managed by Rekit portal.
+        &lt;/p&gt;
+        &lt;p&gt;
+          Rekit portal itself is also created by Rekit. It&amp;apos;s a web application for managing a Rekit project.
+          It not only provides web UIs for creating/renaming/moving/deleting elements of a Rekit app,
+          but also provides tools for analyzing/building/testing a Rekit application.
+        &lt;/p&gt;
+        &lt;RekitSteps /&gt;
+        &lt;h3&gt;Rekit portal architecture&lt;/h3&gt;
+        &lt;p&gt;
+          Rekit portal is a web app built with Rekit, it uses Rekit&amp;apos;s &lt;a href="#"&gt;feature oriented architecture&lt;/a&gt;. Actually Rekit portal is built up with 5 well decoupled features:
+        &lt;/p&gt;
+        &lt;ol className="features-list"&gt;
+          &lt;li&gt;&lt;b&gt;Common&lt;/b&gt;: provides common utilities, components for all features.&lt;/li&gt;
+          &lt;li&gt;&lt;b&gt;Home&lt;/b&gt;: the foundation feature of Rekit portal, including managing the meta data of the project, main UI layout, project explorer etc.&lt;/li&gt;
+          &lt;li&gt;&lt;b&gt;Diagram&lt;/b&gt;: visualize the project architecture.&lt;/li&gt;
+          &lt;li&gt;&lt;b&gt;Rekit cmds&lt;/b&gt;: provides actions and components for communicating with backend server to create/rename/move/delete Rekit elements like components.&lt;/li&gt;
+          &lt;li&gt;&lt;b&gt;Rekit tools&lt;/b&gt;: provides pages to test or build the project.&lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;p&gt;
+          From the overview diagram in dashboard, you can have a intuitive view of how features work together.
+        &lt;/p&gt;
+        &lt;p&gt;
+          Besides the web UI, Rekit portal also includes an express middleware to use APIs provided by Rekit core to manage the project.
+        &lt;/p&gt;
+        &lt;h3&gt;Learn more&lt;/h3&gt;
+        &lt;ul className="learn-more-list"&gt;
+          &lt;li&gt;&lt;a href="https://medium.com/@nate_wang/rekit-2-0-next-generation-react-development-ce8bbba51e94" target="_blank"&gt;Rekit 2.0 is out with great new features!&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="http://rekit.js.org" target="_blank"&gt;Rekit docs: rekit.js.org&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="https://medium.com/@nate_wang/feature-oriented-architecture-for-web-applications-2b48e358afb0" target="_blank"&gt;Feature oriented web development with React, Redux and React-router&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="https://medium.com/@nate_wang/a-new-approach-for-managing-redux-actions-91c26ce8b5da" target="_blank"&gt;A new approach to managing Redux actions&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+          Any more questions or feedback? Please visit: &lt;a href="https://github.com/supnate/rekit" target="_blank"&gt;https://github.com/supnate/rekit&lt;/a&gt;.
+        &lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
+<span class="fstat-no" title="function not covered" >  re</span>nder() {
+<span class="cstat-no" title="statement not covered" >    if (process.env.REKIT_ENV === 'demo') {</span>
+<span class="cstat-no" title="statement not covered" >      return this.renderDemoAbout();</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return this.renderNormalAbout();</span>
+  }
+}
+&nbsp;
+export default connect(<span class="fstat-no" title="function not covered" >st</span>ate =&gt; (<span class="cstat-no" title="statement not covered" >{ home: state.home })</span>)(About);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 12:15:56 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

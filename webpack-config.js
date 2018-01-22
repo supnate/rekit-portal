@@ -6,6 +6,8 @@ const path = require('path');
 const _ = require('lodash');
 const webpack = require('webpack');
 // const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 const pkgJson = require('./package.json');
 
@@ -91,9 +93,7 @@ module.exports = (type) => { // eslint-disable-line
       publicPath: '/static/'
     },
 
-    stats: {
-      error: true,
-    },
+    stats: 'errors-only',
 
     plugins: _.compact([
       isDist && new webpack.LoaderOptionsPlugin({
@@ -108,6 +108,12 @@ module.exports = (type) => { // eslint-disable-line
       // }),
       isDist && new webpack.optimize.UglifyJsPlugin(),
       isDist && new webpack.optimize.AggressiveMergingPlugin(),
+      new CopyWebpackPlugin([
+        {
+          from: '../../../node_modules/monaco-editor/min/vs',
+          to: 'vs',
+        }
+      ]),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify({

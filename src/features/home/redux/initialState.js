@@ -3,6 +3,7 @@ const initialState = {
   redditReactjsList: [],
   elementById: {},
   fileContentById: {},
+  oldFileContentById: {},
   features: null,
   projectDataNeedReload: false,
   projectFileChanged: false,
@@ -10,10 +11,13 @@ const initialState = {
   fetchProjectDataError: null,
   fetchFileContentPending: false,
   fetchFileContentError: null,
-
+  // editingFile: {
+  //   file: null, // File path
+  //   originalContent: null, // Content before save
+  // },
   demoAlertVisible: false,
-  a2Pending: false,
-  a2Error: null,
+  saveFilePending: false,
+  saveFileError: null,
 };
 
 export default initialState;

@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for features/home/selectors/explorerTreeData.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">features/home/selectors</a> explorerTreeData.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>7/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/27</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.89% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>7/47</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash';
+import { createSelector } from 'reselect';
+&nbsp;
+const srcFilesSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.srcFiles;</span>
+const featuresSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.features;</span>
+const featureByIdSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.featureById;</span>
+const keywordSelector = <span class="fstat-no" title="function not covered" >(s</span>tate, keyword) =&gt; <span class="cstat-no" title="statement not covered" >keyword;</span>
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getMarks(</span>feature, ele) {
+  const marks = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >  switch (ele.type) {</span>
+    case 'component':
+<span class="cstat-no" title="statement not covered" >      if (ele.connectToStore) <span class="cstat-no" title="statement not covered" >marks.push('C');</span></span>
+<span class="cstat-no" title="statement not covered" >      if (_.find(feature.routes, { component: ele.name })) <span class="cstat-no" title="statement not covered" >marks.push('R');</span></span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    case 'action':
+<span class="cstat-no" title="statement not covered" >      if (ele.isAsync) <span class="cstat-no" title="statement not covered" >marks.push('A');</span></span>
+<span class="cstat-no" title="statement not covered" >      break;</span>
+    default:
+<span class="cstat-no" title="statement not covered" >      break;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return marks;</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getComponentsTreeData(</span>feature) {
+  const components = <span class="cstat-no" title="statement not covered" >feature.components;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    key: `${feature.key}-components`,
+    className: 'components',
+    label: 'Components',
+    icon: 'appstore-o',
+    count: components.length,
+    children: components.map(<span class="fstat-no" title="function not covered" >co</span>mp =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+      key: comp.file,
+      className: 'component',
+      label: comp.name,
+      icon: 'appstore-o',
+      searchable: true,
+      marks: getMarks(feature, comp),
+    })),
+  };
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getActionsTreeData(</span>feature) {
+  const actions = <span class="cstat-no" title="statement not covered" >feature.actions;</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    key: `${feature.key}-actions`,
+    className: 'actions',
+    label: 'Actions',
+    icon: 'notification',
+    count: actions.length,
+    children: actions.map(<span class="fstat-no" title="function not covered" >ac</span>tion =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+      key: action.file,
+      className: 'action',
+      label: action.name,
+      icon: 'notification',
+      searchable: true,
+      marks: getMarks(feature, action),
+    })),
+  };
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getChildData(</span>child) {
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    key: child.file,
+    className: child.children ? 'misc-folder' : 'misc-file',
+    label: child.name,
+    icon: child.children ? 'folder' : 'file',
+    searchable: !child.children,
+    children: child.children ? child.children.map(getChildData) : null,
+  };
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getMiscTreeData(</span>feature) {
+  const misc = <span class="cstat-no" title="statement not covered" >feature.misc;</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    key: `${feature.key}-misc`,
+    className: 'misc',
+    label: 'Misc',
+    icon: 'folder',
+    children: misc.map(getChildData),
+  };
+}
+&nbsp;
+export const getExplorerTreeData = createSelector(
+  srcFilesSelector,
+  featuresSelector,
+  featureByIdSelector,
+<span class="fstat-no" title="function not covered" >  (s</span>rcFiles, features, featureById) =&gt; {
+    const featureNodes = <span class="cstat-no" title="statement not covered" >features.map(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {</span>
+      const feature = <span class="cstat-no" title="statement not covered" >featureById[fid];</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        key: feature.key,
+        className: 'feature',
+        label: feature.name,
+        icon: 'book',
+        children: [
+          { label: 'Routes', key: `${fid}-routes`, searchable: false, className: 'routes', icon: 'share-alt', count: feature.routes.length },
+          getActionsTreeData(feature),
+          getComponentsTreeData(feature),
+          getMiscTreeData(feature),
+        ],
+      };
+    });
+&nbsp;
+    const allNodes = <span class="cstat-no" title="statement not covered" >[</span>
+      {
+        key: 'features',
+        label: 'Features',
+        icon: 'features',
+        children: _.compact(featureNodes),
+      },
+      {
+        key: 'others-node',
+        label: 'Others',
+        icon: 'folder',
+        children: srcFiles.map(getChildData),
+      }
+    ];
+<span class="cstat-no" title="statement not covered" >    return { root: true, children: allNodes };</span>
+  }
+);
+&nbsp;
+function <span class="fstat-no" title="function not covered" >filterTreeNode(</span>node, keyword) {
+  const reg = <span class="cstat-no" title="statement not covered" >new RegExp(_.escapeRegExp(keyword), 'i');</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    ...node,
+    children: _.compact(node.children.map(<span class="fstat-no" title="function not covered" >(c</span>hild) =&gt; {
+<span class="cstat-no" title="statement not covered" >      if (child.searchable &amp;&amp; reg.test(child.label)) <span class="cstat-no" title="statement not covered" >return child;</span></span>
+<span class="cstat-no" title="statement not covered" >      if (child.children) {</span>
+        const c = <span class="cstat-no" title="statement not covered" >filterTreeNode(child, keyword);</span>
+<span class="cstat-no" title="statement not covered" >        return c.children.length &gt; 0 ? c : null;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    })),
+  };
+}
+&nbsp;
+export const getFilteredExplorerTreeData = createSelector(
+  getExplorerTreeData,
+  keywordSelector,
+<span class="fstat-no" title="function not covered" >  (t</span>reeData, keyword) =&gt; {
+<span class="cstat-no" title="statement not covered" >    if (!keyword) <span class="cstat-no" title="statement not covered" >return treeData;</span></span>
+<span class="cstat-no" title="statement not covered" >    return filterTreeNode(treeData, keyword);</span>
+  }
+);
+&nbsp;
+// when searching the tree, all nodes should be expanded, the tree component needs expandedKeys property.
+export const getExpandedKeys = createSelector(
+  getFilteredExplorerTreeData,
+<span class="fstat-no" title="function not covered" >  (t</span>reeData) =&gt; {
+    const keys = <span class="cstat-no" title="statement not covered" >[];</span>
+    let arr = <span class="cstat-no" title="statement not covered" >[...treeData.children];</span>
+<span class="cstat-no" title="statement not covered" >    while (arr.length) {</span>
+      const pop = <span class="cstat-no" title="statement not covered" >arr.pop();</span>
+<span class="cstat-no" title="statement not covered" >      if (pop.children) {</span>
+<span class="cstat-no" title="statement not covered" >        keys.push(pop.key);</span>
+<span class="cstat-no" title="statement not covered" >        arr = [...arr, ...pop.children];</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return keys;</span>
+  }
+);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 12:15:56 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

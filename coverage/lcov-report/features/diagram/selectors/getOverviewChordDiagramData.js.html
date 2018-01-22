@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for features/diagram/selectors/getOverviewChordDiagramData.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">features/diagram/selectors</a> getOverviewChordDiagramData.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.79% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>12/154</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.16% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>12/131</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import _ from 'lodash';
+import { createSelector } from 'reselect';
+&nbsp;
+const featuresSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.features;</span>
+const featureByIdSelector = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; <span class="cstat-no" title="statement not covered" >state.featureById;</span>
+const sizeSelector = <span class="fstat-no" title="function not covered" >(s</span>tate, size) =&gt; <span class="cstat-no" title="statement not covered" >size;</span>
+const selectedFeaturesSelector = <span class="fstat-no" title="function not covered" >(s</span>tate, size, selectedFeatures) =&gt; <span class="cstat-no" title="statement not covered" >selectedFeatures;</span>
+&nbsp;
+// constants
+const outerStrokeWidth = 12;
+const innerStrokeWidth = 12;
+const outerGapAngle = Math.PI / 40;
+const innerGapAngle = Math.PI / 360;
+const fileAngle = Math.PI / 120;
+&nbsp;
+const circleGap = 2;
+const textSpace = 20;
+&nbsp;
+function <span class="fstat-no" title="function not covered" >flattenMiscFiles(</span>arr) {
+<span class="cstat-no" title="statement not covered" >  return _.flatten(arr.map(<span class="fstat-no" title="function not covered" >it</span>em =&gt; (<span class="cstat-no" title="statement not covered" >item.children ? flattenMiscFiles(item.children) : item)</span>));</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >getMiscWeight(</span>misc) {
+  // misc files weight should exclude 4 entry files: actions.js, index.js, reducer.js, constants.js
+  let weight = <span class="cstat-no" title="statement not covered" >misc.filter(<span class="fstat-no" title="function not covered" >f </span>=&gt; <span class="cstat-no" title="statement not covered" >/\.js$/.test(f.file))</span>.length - 6;</span>
+<span class="cstat-no" title="statement not covered" >  if (weight &lt;= 0) <span class="cstat-no" title="statement not covered" >weight = 1;</span></span>
+<span class="cstat-no" title="statement not covered" >  return weight;</span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >scaleAngleByWeight(</span>groups, gapAngle, sumAngle) {
+<span class="cstat-no" title="statement not covered" >  if (!groups.length) <span class="cstat-no" title="statement not covered" >return;</span></span>
+  let isCircle = <span class="cstat-no" title="statement not covered" >false;</span>
+<span class="cstat-no" title="statement not covered" >  if (!sumAngle) {</span>
+    // if no sumAngle provided, it's a circle
+<span class="cstat-no" title="statement not covered" >    isCircle = true;</span>
+<span class="cstat-no" title="statement not covered" >    sumAngle = Math.PI * 2;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  sumAngle -= groups.length * gapAngle;</span>
+<span class="cstat-no" title="statement not covered" >  if (!isCircle) <span class="cstat-no" title="statement not covered" >sumAngle += gapAngle;</span></span>
+&nbsp;
+  const sumWeight = <span class="cstat-no" title="statement not covered" >_.sumBy(groups, 'weight');</span>
+&nbsp;
+  let nextStartAngle = <span class="cstat-no" title="statement not covered" >groups[0].startAngle;</span>
+<span class="cstat-no" title="statement not covered" >  groups.forEach(<span class="fstat-no" title="function not covered" >(g</span>roup) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    group.startAngle = nextStartAngle;</span>
+<span class="cstat-no" title="statement not covered" >    group.endAngle = group.startAngle + sumAngle * group.weight / sumWeight;</span>
+<span class="cstat-no" title="statement not covered" >    nextStartAngle = group.endAngle + gapAngle;</span>
+  });
+}
+export const getOverviewChordDiagramData = createSelector(
+  featuresSelector,
+  featureByIdSelector,
+  sizeSelector,
+  selectedFeaturesSelector,
+<span class="fstat-no" title="function not covered" >  (f</span>eatures, featureById, size, selectedFeatures) =&gt; {
+    const circleRadius = <span class="cstat-no" title="statement not covered" >size / 2 - textSpace;</span>
+    const outerRadius = <span class="cstat-no" title="statement not covered" >circleRadius - outerStrokeWidth / 2;</span>
+    const innerRadius = <span class="cstat-no" title="statement not covered" >circleRadius - outerStrokeWidth - circleGap - innerStrokeWidth / 2;</span>
+    const outerCount = <span class="cstat-no" title="statement not covered" >features.length;</span>
+    const outerGroupAngleValue = <span class="cstat-no" title="statement not covered" >Math.PI * 2 / outerCount - outerGapAngle;</span>
+    const x = <span class="cstat-no" title="statement not covered" >size / 2;</span>
+    const y = <span class="cstat-no" title="statement not covered" >size / 2;</span>
+&nbsp;
+    const hash = <span class="cstat-no" title="statement not covered" >_.keyBy(selectedFeatures);</span>
+<span class="cstat-no" title="statement not covered" >    selectedFeatures = features.filter(<span class="fstat-no" title="function not covered" >fi</span>d =&gt; <span class="cstat-no" title="statement not covered" >hash[fid])</span>; </span>// sort selected features using the original order
+&nbsp;
+    // const t = selectedFeatures.shift();
+    // selectedFeatures.push(t);
+&nbsp;
+    const outerGroups = <span class="cstat-no" title="statement not covered" >selectedFeatures.map(<span class="fstat-no" title="function not covered" >(f</span>id, i) =&gt; {</span>
+      const feature = <span class="cstat-no" title="statement not covered" >featureById[fid];</span>
+      const miscFiles = <span class="cstat-no" title="statement not covered" >flattenMiscFiles(feature.misc);</span>
+      const startAngle = <span class="cstat-no" title="statement not covered" >i * Math.PI * 2 / outerCount;</span>
+      const endAngle = <span class="cstat-no" title="statement not covered" >startAngle + outerGroupAngleValue;</span>
+<span class="cstat-no" title="statement not covered" >      return {</span>
+        id: fid,
+        name: feature.name,
+        type: 'feature',
+        x,
+        y,
+        startAngle,
+        endAngle,
+        strokeWidth: outerStrokeWidth,
+        radius: outerRadius,
+        weight: getMiscWeight(miscFiles) + feature.components.length + feature.actions.length,
+      };
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    scaleAngleByWeight(outerGroups, outerGapAngle);</span>
+&nbsp;
+    let innerGroups = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >    outerGroups.forEach(<span class="fstat-no" title="function not covered" >(o</span>uterGroup) =&gt; {</span>
+      const feature = <span class="cstat-no" title="statement not covered" >featureById[outerGroup.id];</span>
+      const types = <span class="cstat-no" title="statement not covered" >[];</span>
+      const miscFiles = <span class="cstat-no" title="statement not covered" >flattenMiscFiles(feature.misc);</span>
+<span class="cstat-no" title="statement not covered" >      if (feature.actions.length &gt; 0) <span class="cstat-no" title="statement not covered" >types.push({ name: 'actions', weight: feature.actions.length });</span></span>
+<span class="cstat-no" title="statement not covered" >      if (feature.components.length &gt; 0) <span class="cstat-no" title="statement not covered" >types.push({ name: 'components', weight: feature.components.length });</span></span>
+      const miscWeight = <span class="cstat-no" title="statement not covered" >getMiscWeight(miscFiles);</span>
+<span class="cstat-no" title="statement not covered" >      if (miscWeight &gt; 0) <span class="cstat-no" title="statement not covered" >types.push({ name: 'misc', weight: miscWeight });</span></span>
+&nbsp;
+      const featureInnerGroups = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >      types.forEach(<span class="fstat-no" title="function not covered" >(t</span>ype, i) =&gt; {</span>
+        const angleValue = <span class="cstat-no" title="statement not covered" >(outerGroup.endAngle - outerGroup.startAngle - (types.length - 1) * innerGapAngle) / types.length;</span>
+        const startAngle = <span class="cstat-no" title="statement not covered" >outerGroup.startAngle + (angleValue + innerGapAngle) * i;</span>
+        const endAngle = <span class="cstat-no" title="statement not covered" >startAngle + angleValue;</span>
+<span class="cstat-no" title="statement not covered" >        featureInnerGroups.push({</span>
+          id: `${outerGroup.id}-${type.name}`,
+          feature: outerGroup.id,
+          type: type.name,
+          x,
+          y,
+          startAngle,
+          endAngle,
+          strokeWidth: innerStrokeWidth,
+          radius: innerRadius,
+          weight: type.weight,
+        });
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      scaleAngleByWeight(featureInnerGroups, innerGapAngle, outerGroup.endAngle - outerGroup.startAngle);</span>
+<span class="cstat-no" title="statement not covered" >      innerGroups = [...innerGroups, ...featureInnerGroups];</span>
+    });
+&nbsp;
+    let links = <span class="cstat-no" title="statement not covered" >[];</span>
+    const connectedFiles = <span class="cstat-no" title="statement not covered" >{};</span> // all files that need to be connected
+    const filesPos = <span class="cstat-no" title="statement not covered" >{};</span>
+<span class="cstat-no" title="statement not covered" >    selectedFeatures.forEach(<span class="fstat-no" title="function not covered" >(f</span>id) =&gt; {</span>
+      const f = <span class="cstat-no" title="statement not covered" >featureById[fid];</span>
+      const allElements = <span class="cstat-no" title="statement not covered" >[...f.components, ...f.actions, ...flattenMiscFiles(f.misc).filter(<span class="fstat-no" title="function not covered" >el</span>e =&gt; <span class="cstat-no" title="statement not covered" >/\.js$/.test(ele.file))</span>];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      allElements.forEach(<span class="fstat-no" title="function not covered" >(e</span>le) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (!ele.deps) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >        if (/^src\/features\/[^/]+\/index\.js$/.test(ele.file)) {</span>
+<span class="cstat-no" title="statement not covered" >          return;</span>
+        }
+        const allDeps = <span class="cstat-no" title="statement not covered" >[</span>
+          ...ele.deps.actions,
+          ...ele.deps.components,
+          ...ele.deps.misc,
+        ].filter(<span class="fstat-no" title="function not covered" >e </span>=&gt; <span class="cstat-no" title="statement not covered" >selectedFeatures.includes(e.feature))</span>; // the dependencies should also in selected features
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!allDeps.length) <span class="cstat-no" title="statement not covered" >return;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        connectedFiles[ele.file] = ele;</span>
+<span class="cstat-no" title="statement not covered" >        allDeps.forEach(<span class="fstat-no" title="function not covered" >(d</span>ep) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >          connectedFiles[dep.file] = dep;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          links.push({</span>
+            source: ele,
+            target: dep,
+          });
+        });
+      });
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    innerGroups.forEach(<span class="fstat-no" title="function not covered" >(i</span>nnerGroup) =&gt; {</span>
+      const f = <span class="cstat-no" title="statement not covered" >featureById[innerGroup.feature];</span>
+      let allEles = <span class="cstat-no" title="statement not covered" >f[innerGroup.type];</span>
+<span class="cstat-no" title="statement not covered" >      if (innerGroup.type === 'misc') <span class="cstat-no" title="statement not covered" >allEles = flattenMiscFiles(allEles);</span></span>
+      const eles = <span class="cstat-no" title="statement not covered" >allEles.filter(<span class="fstat-no" title="function not covered" >e </span>=&gt; <span class="cstat-no" title="statement not covered" >!!connectedFiles[e.file])</span>;</span> // all connected elements of the group
+      const stepAngle = <span class="cstat-no" title="statement not covered" >(innerGroup.endAngle - innerGroup.startAngle) / (eles.length + 1);</span>
+      const radius = <span class="cstat-no" title="statement not covered" >innerRadius - innerStrokeWidth / 2;</span>
+<span class="cstat-no" title="statement not covered" >      eles.forEach(<span class="fstat-no" title="function not covered" >(e</span>, i) =&gt; {</span>
+        const a = <span class="cstat-no" title="statement not covered" >stepAngle * i + stepAngle + innerGroup.startAngle;</span>
+        const fx = <span class="cstat-no" title="statement not covered" >x + radius * Math.cos(a);</span>
+        const fy = <span class="cstat-no" title="statement not covered" >y + radius * Math.sin(a);</span>
+<span class="cstat-no" title="statement not covered" >        filesPos[e.file] = {</span>
+          x: fx,
+          y: fy,
+          file: e.file,
+          angle: a,
+          feature: f.key,
+        };
+      });
+    });
+    // links.forEach((link) =&gt; {
+    //   if (!filesPos[link.source.file]) console.log('cant find pos for: ', `${link.source.feature}/${link.source.name}`);
+    //   if (!filesPos[link.target.file]) console.log('cant find pos for: ', `${link.target.feature}/${link.target.name}`);
+    // });
+&nbsp;
+    // Convert links elements to coordinates
+<span class="cstat-no" title="statement not covered" >    links = links.filter(<span class="fstat-no" title="function not covered" >li</span>nk =&gt; <span class="cstat-no" title="statement not covered" >filesPos[link.source.file] &amp;&amp; filesPos[link.target.file])</span>.map(<span class="fstat-no" title="function not covered" >(l</span>ink) =&gt; {</span>
+      const source = <span class="cstat-no" title="statement not covered" >filesPos[link.source.file];</span>
+      const target = <span class="cstat-no" title="statement not covered" >filesPos[link.target.file];</span>
+&nbsp;
+      const x1 = <span class="cstat-no" title="statement not covered" >source.x;</span>
+      const y1 = <span class="cstat-no" title="statement not covered" >source.y;</span>
+      const x2 = <span class="cstat-no" title="statement not covered" >target.x;</span>
+      const y2 = <span class="cstat-no" title="statement not covered" >target.y;</span>
+&nbsp;
+      const jx = <span class="cstat-no" title="statement not covered" >(x1 + x2) / 2;</span>
+      const jy = <span class="cstat-no" title="statement not covered" >(y1 + y2) / 2;</span>
+&nbsp;
+      // We need a and b to find theta, and we need to know the sign of each to make sure that the orientation is correct.
+      const a = <span class="cstat-no" title="statement not covered" >x2 - x1;</span>
+      const asign = (<span class="cstat-no" title="statement not covered" >a &lt; 0 ? -1 : 1)</span>;
+      const b = <span class="cstat-no" title="statement not covered" >y2 - y1;</span>
+&nbsp;
+      const theta = <span class="cstat-no" title="statement not covered" >Math.atan(b / a);</span>
+&nbsp;
+      // Find the point that's perpendicular to J on side
+      const costheta = <span class="cstat-no" title="statement not covered" >asign * Math.cos(theta);</span>
+      const sintheta = <span class="cstat-no" title="statement not covered" >asign * Math.sin(theta);</span>
+&nbsp;
+      const radius = <span class="cstat-no" title="statement not covered" >innerRadius - innerStrokeWidth / 2;</span>
+      let ang = <span class="cstat-no" title="statement not covered" >Math.abs(source.angle - target.angle);</span>
+<span class="cstat-no" title="statement not covered" >      if (ang &gt; Math.PI) <span class="cstat-no" title="statement not covered" >ang = 2 * Math.PI - ang;</span></span>
+<span class="cstat-no" title="statement not covered" >      ang /= 2;</span>
+      const d1 = <span class="cstat-no" title="statement not covered" >Math.abs(radius * Math.cos(ang));</span>
+      // const d2 = radius - d1;
+      const d2 = <span class="cstat-no" title="statement not covered" >radius * Math.sin(ang);</span>
+&nbsp;
+      let d = <span class="cstat-no" title="statement not covered" >d1;</span>
+<span class="cstat-no" title="statement not covered" >      if (d &gt; d2 * 2) <span class="cstat-no" title="statement not covered" >d = d2 * 2;</span></span>
+      let s = <span class="cstat-no" title="statement not covered" >source.angle;</span>
+      let t = <span class="cstat-no" title="statement not covered" >target.angle;</span>
+<span class="cstat-no" title="statement not covered" >      if (Math.abs(s - t) &gt; Math.PI) {</span>
+<span class="cstat-no" title="statement not covered" >        if (s &lt; t) <span class="cstat-no" title="statement not covered" >s += 2 * Math.PI;</span></span>
+        else <span class="cstat-no" title="statement not covered" >t += 2 * Math.PI;</span>
+      }
+      const m = <span class="cstat-no" title="statement not covered" >(s &lt; t) ? d : -d;</span>
+      // if (source.angle - target.angle &gt; Math.PI) d = -d;
+&nbsp;
+      const m1 = <span class="cstat-no" title="statement not covered" >m * sintheta;</span>
+      const m2 = <span class="cstat-no" title="statement not covered" >m * costheta;</span>
+&nbsp;
+      // Use c and d to find cpx and cpy
+      const cpx = <span class="cstat-no" title="statement not covered" >jx - m1;</span>
+      const cpy = <span class="cstat-no" title="statement not covered" >jy + m2;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return { x1, y1, x2, y2, cpx, cpy, source: link.source, target: link.target };</span>
+    });
+&nbsp;
+    // create fileNodes
+    // each file has a link should display a node for user interaction
+    const fileGroups = <span class="cstat-no" title="statement not covered" >{};</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    _.keys(connectedFiles).forEach(<span class="fstat-no" title="function not covered" >(f</span>ile) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (fileGroups[file]) <span class="cstat-no" title="statement not covered" >return;</span></span>
+      const pos = <span class="cstat-no" title="statement not covered" >filesPos[file];</span>
+<span class="cstat-no" title="statement not covered" >      fileGroups[file] = {</span>
+        id: file,
+        type: 'file',
+        feature: pos.feature,
+        x,
+        y,
+        radius: innerRadius,
+        startAngle: pos.angle - fileAngle / 2,
+        endAngle: pos.angle + fileAngle / 2,
+        strokeWidth: innerStrokeWidth,
+      };
+&nbsp;
+      // featureInnerGroups.push({
+      //     id: `${outerGroup.id}-${type.name}`,
+      //     feature: outerGroup.id,
+      //     type: type.name,
+      //     x,
+      //     y,
+      //     startAngle,
+      //     endAngle,
+      //     strokeWidth: innerStrokeWidth,
+      //     radius: innerRadius,
+      //     weight: type.weight,
+      //   });
+    });
+&nbsp;
+    // links.forEach((link) =&gt; {
+    //   const sf = link.source.file;
+    //   const tf = link.target.file;
+&nbsp;
+    //   if (!fileGroups
+    //   console.log(link.source.file);
+    //   console.log(link.target.file);
+    // });
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      mainCircle: { x, y, radius: outerRadius + outerStrokeWidth / 2 },
+      innerGroups,
+      outerGroups,
+      fileGroups: _.values(fileGroups),
+      links,
+      x,
+      y,
+      radius: outerRadius + outerStrokeWidth / 2,
+    };
+  }
+);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 12:15:56 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

@@ -23,14 +23,14 @@ export default class LogViewer extends PureComponent {
   renderDiffLine(line) {
     if (line.added) {
       return line.value.split('\n').filter(l => !!l).map(text => (
-        <li>
+        <li key={text}>
           <span style={{ color: 'green' }}>+++</span>
           <span style={{ marginLeft: 5 }}>{text}</span>
         </li>
       ));
     } else if (line.removed) {
       return line.value.split('\n').filter(l => !!l).map(text => (
-        <li>
+        <li key={text}>
           <span style={{ color: 'red' }}>---</span>
           <span style={{ marginLeft: 5 }}>{text}</span>
         </li>

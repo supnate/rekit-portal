@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">24% </span>
+        <span class="strong">26.92% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/25</span>
+        <span class='fraction'>7/26</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>3/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">12.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/7</span>
+        <span class='fraction'>1/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">24% </span>
+        <span class="strong">26.92% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/25</span>
+        <span class='fraction'>7/26</span>
       </div>
     </div>
   </div>
@@ -120,9 +120,7 @@
 75
 76
 77
-78
-79
-80</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+78</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,23 +180,21 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import 'babel-polyfill';
@@ -261,23 +257,21 @@ let root = document.getElementById('react-root');
 <span class="cstat-no" title="statement not covered" >  document.body.appendChild(root);</span>
 }
 &nbsp;
-render(
-  &lt;AppContainer&gt;
-    &lt;Root store={store} routeConfig={routeConfig} /&gt;
-  &lt;/AppContainer&gt;,
-  root
-);
+function renderApp(app) {
+  render(
+    &lt;AppContainer&gt;
+      {app}
+    &lt;/AppContainer&gt;,
+    root,
+  );
+}
 &nbsp;
-// Hot Module Replacement API
+renderApp(&lt;Root store={store} routeConfig={routeConfig} /&gt;);
+&nbsp;
 <span class="missing-if-branch" title="if path not taken" >I</span>if (module.hot) {
-<span class="cstat-no" title="statement not covered" >  module.hot.accept('./Root', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-    const NextRoot = <span class="cstat-no" title="statement not covered" >require('./Root').default;</span> // eslint-disable-line
-<span class="cstat-no" title="statement not covered" >    render(</span>
-      &lt;AppContainer&gt;
-        &lt;NextRoot store={store} /&gt;
-      &lt;/AppContainer&gt;,
-      root
-    );
+<span class="cstat-no" title="statement not covered" >  module.hot.accept('./common/routeConfig', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+    const nextRouteConfig = <span class="cstat-no" title="statement not covered" >require('./common/routeConfig').default;</span> // eslint-disable-line
+<span class="cstat-no" title="statement not covered" >    renderApp(&lt;Root store={store} routeConfig={nextRouteConfig} /&gt;);</span>
   });
 }
 &nbsp;</pre></td></tr>
@@ -286,7 +280,7 @@ render(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 28 2017 11:30:18 GMT+0800 (CST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Jan 22 2018 13:11:26 GMT+0800 (CST)
 </div>
 </div>
 <script src="../prettify.js"></script>
